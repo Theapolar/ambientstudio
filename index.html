@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pine Forest - Intelligent Ambient Remixer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at center, #0f1c14 0%, #060907 100%);
+        }
+        .slot-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slot-active {
+            border-color: rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.03);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.05);
+        }
+        .drift-glowing {
+            box-shadow: 0 0 20px 2px rgba(16, 185, 129, 0.2);
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px 2px rgba(16, 185, 129, 0.2); }
+            50% { box-shadow: 0 0 35px 8px rgba(16, 185, 129, 0.4); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen text-slate-200 py-12 px-4 select-none">
+
+    <!-- App Container -->
+    <div class="max-w-2xl w-full flex flex-col space-y-10 z-10">
+        
+        <!-- Header -->
+        <div class="text-center space-y-3">
+            <span class="text-xs tracking-[0.3em] text-emerald-500 uppercase font-semibold">PineDesign Studio</span>
+            <h1 class="text-4xl font-light tracking-wide text-stone-100">Ambient Studio Remixer</h1>
+            <p class="text-sm text-stone-400 font-light max-w-md mx-auto">
+                Your high-fidelity 320kbps Norwegian recordings, automated and self-harmonizing in real-time.
+            </p>
+        </div>
+
+        <!-- Master Play and Intelligent Drift Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <!-- Master Play Button -->
+            <button id="master-play" class="w-full sm:w-auto px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold tracking-wide flex items-center justify-center gap-3 shadow-lg transition-all duration-300 hover:scale-102 active:scale-98">
+                <svg id="play-icon" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pause-icon" class="w-5 h-5 fill-current hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <span id="play-btn-text">Start Soundstage</span>
+            </button>
+
+            <!-- Auto-Drift Mode Button -->
+            <button id="drift-btn" class="w-full sm:w-auto px-8 py-4 rounded-full border border-emerald-500/30 bg-emerald-950/20 text-emerald-400 font-medium tracking-wide flex items-center justify-center gap-3 transition-all duration-300 hover:bg-emerald-950/40 hover:border-emerald-500/50">
+                <svg class="w-5 h-5 fill-none stroke-current" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.656 48.656 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3M4.5 12l-3 3m3-3l3 3m1.5-6.662a48.524 48.524 0 017.324 0M5.138 15.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7m-14.648 0l-3-3m3 3l3-3" />
+                </svg>
+                <span id="drift-btn-text">Enable Auto-Drift Remixing</span>
+            </button>
+        </div>
+
+        <!-- The 3 Drag & Drop Slots + Synth Pad -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- SLOT 0: 432Hz Synth Pad (Built-in Core Engine) -->
+            <div class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4 slot-active">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Built-In Pad</span>
+                        <span class="text-xs text-stone-500">A=432Hz</span>
+                    </div>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Harmonic Velvet Pad</h3>
+                    <p class="text-xs text-stone-400 font-light mt-1">Generates G-Major background swells in real-time to bind your files together.</p>
+                </div>
+                <div class="space-y-2 mt-auto">
+                    <div class="flex justify-between text-xs text-stone-400">
+                        <span>Pad Level</span>
+                        <span id="val-synth">60%</span>
+                    </div>
+                    <input id="vol-synth" type="range" min="0" max="100" value="60" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+            </div>
+
+            <!-- SLOT 1: Grounding Layer (Nature Loops) -->
+            <div id="card-1" class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-medium">Slot A: Grounding</span>
+                        <span id="status-1" class="text-[10px] text-stone-500">Empty</span>
+                    </div>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Nature Loop</h3>
+                    <p class="text-xs text-stone-400 font-light mt-1">Recommended files: <strong class="text-stone-300">flowing water.mp3</strong> or <strong class="text-stone-300">soft wind.mp3</strong></p>
+                    
+                    <!-- File Input -->
+                    <label class="mt-3 block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-3 text-center cursor-pointer transition-colors duration-300">
+                        <span class="text-xs text-stone-400 font-light">Choose or drop audio file</span>
+                        <input id="file-1" type="file" accept="audio/*" class="hidden">
+                    </label>
+                </div>
+                <div class="space-y-2 mt-auto">
+                    <div class="flex justify-between text-xs text-stone-400">
+                        <span>Layer Level</span>
+                        <span id="val-1">50%</span>
+                    </div>
+                    <input id="vol-1" type="range" min="0" max="100" value="50" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+            </div>
+
+            <!-- SLOT 2: Ambient Layer (Texture) -->
+            <div id="card-2" class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-medium">Slot B: Texture</span>
+                        <span id="status-2" class="text-[10px] text-stone-500">Empty</span>
+                    </div>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Organic Texture</h3>
+                    <p class="text-xs text-stone-400 font-light mt-1">Recommended files: <strong class="text-stone-300">fireplace.mp3</strong> or <strong class="text-stone-300">soft wind.mp3</strong></p>
+                    
+                    <!-- File Input -->
+                    <label class="mt-3 block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-3 text-center cursor-pointer transition-colors duration-300">
+                        <span class="text-xs text-stone-400 font-light">Choose or drop audio file</span>
+                        <input id="file-2" type="file" accept="audio/*" class="hidden">
+                    </label>
+                </div>
+                <div class="space-y-2 mt-auto">
+                    <div class="flex justify-between text-xs text-stone-400">
+                        <span>Layer Level</span>
+                        <span id="val-2">50%</span>
+                    </div>
+                    <input id="vol-2" type="range" min="0" max="100" value="50" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+            </div>
+
+            <!-- SLOT 3: Harmonic Sparks (Instrumental/Chords) -->
+            <div id="card-3" class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Slot C: Sparks</span>
+                        <span id="status-3" class="text-[10px] text-stone-500">Empty</span>
+                    </div>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Tonal / Melody Spark</h3>
+                    <p class="text-xs text-stone-400 font-light mt-1">Recommended G-key files: <strong class="text-stone-300">Sample_Floor-pads.mp3</strong> or <strong class="text-stone-300">Sample_bass-shimmer.mp3</strong></p>
+                    
+                    <!-- File Input -->
+                    <label class="mt-3 block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-3 text-center cursor-pointer transition-colors duration-300">
+                        <span class="text-xs text-stone-400 font-light">Choose or drop G-key audio</span>
+                        <input id="file-3" type="file" accept="audio/*" class="hidden">
+                    </label>
+
+                    <!-- Auto-Harmonizer Badge -->
+                    <div id="harmonizer-badge" class="mt-2 text-[10px] tracking-wide text-stone-500 italic flex items-center gap-1.5 duration-500">
+                        <span class="w-1.5 h-1.5 rounded-full bg-stone-700" id="harmonizer-dot"></span>
+                        <span id="harmonizer-text">Auto-Harmonizer inactive</span>
+                    </div>
+                </div>
+                <div class="space-y-2 mt-auto">
+                    <div class="flex justify-between text-xs text-stone-400">
+                        <span>Layer Level</span>
+                        <span id="val-3">50%</span>
+                    </div>
+                    <input id="vol-3" type="range" min="0" max="100" value="50" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Live Status Screen -->
+        <div id="console-box" class="text-left text-[10px] font-mono text-stone-400 bg-black/60 p-4 rounded-2xl border border-white/5 w-full max-h-40 overflow-y-auto">
+            <strong class="text-stone-300">Intelligent Studio Console:</strong>
+            <div id="console-text" class="text-emerald-500 mt-1">Console online. Import your WAV/MP3 files to build an interactive soundstage...</div>
+        </div>
+        
+    </div>
+
+    <!-- Background Forest Ambient Grid -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_800px_at_50%_-200px,rgba(16,185,129,0.05),transparent)] pointer-events-none"></div>
+
+    <script>
+        // WEB AUDIO CONTEXT ENGINE
+        let audioCtx = null;
+        let isPlaying = false;
+        let isDrifting = false;
+        let referencePitch = 432.0;
+
+        let currentChordIndex = -1;
+        let chordInterval = null;
+        let driftInterval = null;
+
+        // Sound Engine Routing Nodes
+        let masterGain = null;
+        let synthGainNode = null;
+        let lowpassFilter = null;
+
+        // Custom Slots Data Array (nature / custom samples)
+        const slots = [
+            { id: 1, fileInput: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null },
+            { id: 2, fileInput: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null },
+            { id: 3, fileInput: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null }
+        ];
+
+        // Active Synth Voice Tracker
+        let activeSynthNodes = [];
+
+        // G Major Progression Chords (And their semitone shift relative to G)
+        const chords = [
+            { name: "G Major", notes: [43, 50, 55, 59, 62], semitoneShift: 0 }, // G2, D3, G3, B3, D4 -> Root G
+            { name: "C Major", notes: [36, 55, 60, 64, 67], semitoneShift: -7 }, // C2, G3, C4, E4, G4 -> C is -7 semitones
+            { name: "E Minor", notes: [40, 59, 64, 67, 71], semitoneShift: -3 }, // E2, B3, E4, G4, B4 -> E is -3 semitones
+            { name: "D Major", notes: [38, 57, 62, 66, 69], semitoneShift: -5 }  // D2, A3, D4, F#4, A4 -> D is -5 semitones
+        ];
+
+        // UI Selectors
+        const masterPlayBtn = document.getElementById('master-play');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        const playBtnText = document.getElementById('play-btn-text');
+        const driftBtn = document.getElementById('drift-btn');
+        const driftBtnText = document.getElementById('drift-btn-text');
+        
+        const volSynthSlider = document.getElementById('vol-synth');
+        const valSynthText = document.getElementById('val-synth');
+        
+        const consoleBox = document.getElementById('console-box');
+        const consoleText = document.getElementById('console-text');
+
+        const harmonizerBadge = document.getElementById('harmonizer-badge');
+        const harmonizerText = document.getElementById('harmonizer-text');
+        const harmonizerDot = document.getElementById('harmonizer-dot');
+
+        // Initialize slots selectors
+        slots.forEach(slot => {
+            slot.fileInput = document.getElementById(`file-${slot.id}`);
+            slot.volSlider = document.getElementById(`vol-${slot.id}`);
+            slot.volVal = document.getElementById(`val-${slot.id}`);
+            slot.card = document.getElementById(`card-${slot.id}`);
+            slot.status = document.getElementById(`status-${slot.id}`);
+
+            // Handle Local File Imports
+            slot.fileInput.addEventListener('change', (e) => {
+                handleFileSelect(slot, e.target.files[0]);
+            });
+        });
+
+        function logMsg(msg, isError = false) {
+            console.log(msg);
+            const d = new Date();
+            const color = isError ? 'text-red-400 font-bold' : 'text-emerald-500';
+            consoleText.innerHTML += `<div class="mt-1 ${color}">[${d.toLocaleTimeString()}] ${msg}</div>`;
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+        }
+
+        // Global Error Boundary
+        window.onerror = function (message, url, lineNo) {
+            logMsg(`Global error: ${message} at line ${lineNo}`, true);
+            return false;
+        };
+
+        function midiToFreq(midiNote, reference) {
+            return reference * (2.0 ** ((midiNote - 69) / 12.0));
+        }
+
+        // Bulletproof Legacy Stereo Panner Fallback for Safari/iOS
+        function createSafePanner(ctx, panValue, now) {
+            if (ctx.createStereoPanner) {
+                const panner = ctx.createStereoPanner();
+                panner.pan.setValueAtTime(panValue, now);
+                return panner;
+            } else {
+                const panner = ctx.createPanner();
+                panner.panningModel = 'equalpower';
+                panner.setPosition(panValue, 0, 1 - Math.abs(panValue));
+                return panner;
+            }
+        }
+
+        // Handle loading and decoding local files in browser memory
+        function handleFileSelect(slot, file) {
+            if (!file) return;
+            logMsg(`Reading file: "${file.name}" for Slot ${slot.id}...`);
+            slot.status.innerText = "Loading...";
+            
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                // We need an AudioContext to decode
+                const tempCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                
+                tempCtx.decodeAudioData(evt.target.result, (buffer) => {
+                    slot.audioBuffer = buffer;
+                    slot.card.classList.add('slot-active');
+                    slot.status.innerText = "Ready";
+                    slot.status.className = "text-[10px] text-emerald-400 font-bold";
+                    logMsg(`Successfully loaded and decoded "${file.name}" (${(buffer.duration).toFixed(1)}s loop)`);
+                    
+                    if (slot.id === 3) {
+                        harmonizerBadge.className = "mt-2 text-[10px] tracking-wide text-emerald-400/85 font-medium flex items-center gap-1.5 duration-500";
+                        harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping";
+                        harmonizerText.innerText = "Auto-Harmonizer active (A=432Hz locked)";
+                    }
+
+                    // If already playing, instantly trigger and play the new layer!
+                    if (isPlaying) {
+                        playSlotBuffer(slot);
+                    }
+                }, (err) => {
+                    slot.status.innerText = "Error";
+                    slot.status.className = "text-[10px] text-red-400 font-bold";
+                    logMsg(`Failed to decode "${file.name}". Is it a valid WAV/MP3?`, true);
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // Async Loader for relative server files (CORS-friendly on HTTP server)
+        async function loadRelativeAsset(slot, url) {
+            if (!audioCtx) return;
+            slot.status.innerText = "Loading...";
+            logMsg(`HTTP Server: Auto-fetching loop "${url}"...`);
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const arrayBuffer = await response.arrayBuffer();
+                audioCtx.decodeAudioData(arrayBuffer, (decodedBuffer) => {
+                    slot.audioBuffer = decodedBuffer;
+                    slot.card.classList.add('slot-active');
+                    slot.status.innerText = "Ready";
+                    slot.status.className = "text-[10px] text-emerald-400 font-bold";
+                    logMsg(`Successfully loaded relative asset: ${url}`);
+                    
+                    if (slot.id === 3) {
+                        harmonizerBadge.className = "mt-2 text-[10px] tracking-wide text-emerald-400/85 font-medium flex items-center gap-1.5 duration-500";
+                        harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping";
+                        harmonizerText.innerText = "Auto-Harmonizer active (A=432Hz locked)";
+                    }
+
+                    if (isPlaying) {
+                        playSlotBuffer(slot);
+                    }
+                }, (err) => {
+                    slot.status.innerText = "Error";
+                    slot.status.className = "text-[10px] text-red-400 font-bold";
+                    logMsg(`Decode error on auto-load: ${url}`, true);
+                });
+            } catch (e) {
+                slot.status.innerText = "CORS Block";
+                slot.status.className = "text-[10px] text-yellow-400 font-medium";
+                logMsg(`Local file block: "${url}". Please drag-and-drop the file manually or run via local HTTP server to activate auto-loading.`, false);
+            }
+        }
+
+        // Initialize Audio Graph
+        function initAudio() {
+            logMsg("Initializing Master Audio Context...");
+            try {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+                
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                // 1. Master volume node
+                masterGain = audioCtx.createGain();
+                masterGain.connect(audioCtx.destination);
+                masterGain.gain.setValueAtTime(0.8, audioCtx.currentTime); 
+
+                // 2. Warm lowpass filter for the synth pad (keeps it soft and sub-aquatic)
+                lowpassFilter = audioCtx.createBiquadFilter();
+                lowpassFilter.connect(masterGain);
+                lowpassFilter.type = 'lowpass';
+                lowpassFilter.frequency.setValueAtTime(450, audioCtx.currentTime);
+                lowpassFilter.Q.setValueAtTime(0.8, audioCtx.currentTime);
+
+                // 3. Sub-synth master gain
+                synthGainNode = audioCtx.createGain();
+                synthGainNode.connect(lowpassFilter);
+                synthGainNode.gain.setValueAtTime(volSynthSlider.value / 100, audioCtx.currentTime);
+
+                // Setup the 3 Slots Gain Routing Node
+                slots.forEach(slot => {
+                    slot.gainNode = audioCtx.createGain();
+                    slot.gainNode.connect(masterGain);
+                    slot.gainNode.gain.setValueAtTime(slot.volSlider.value / 100, audioCtx.currentTime);
+                });
+
+                logMsg("Acoustic routing graph successfully built.");
+            } catch (e) {
+                logMsg("initAudio Error: " + e.message, true);
+                throw e;
+            }
+        }
+
+        // Play Synthesizer Chord voices (same "Warm Velvet" code!)
+        function playSynthChord(chord, crossfadeDuration = 8.0, sustainDuration = 25.0) {
+            const now = audioCtx.currentTime;
+            const nodes = [];
+            const detuneHz = 0.15;
+            
+            logMsg(`Playing Synth background Pad: ${chord.name}...`);
+            try {
+                chord.notes.forEach((note, index) => {
+                    const freq = midiToFreq(note, referencePitch);
+                    const isBass = index === 0;
+
+                    const oscL = audioCtx.createOscillator();
+                    oscL.type = 'sine';
+                    oscL.frequency.setValueAtTime(freq - detuneHz, now);
+
+                    const oscR = audioCtx.createOscillator();
+                    oscR.type = 'sine';
+                    oscR.frequency.setValueAtTime(freq + detuneHz, now);
+
+                    const panL = createSafePanner(audioCtx, -0.6, now);
+                    const panR = createSafePanner(audioCtx, 0.6, now);
+
+                    const envelopeGain = audioCtx.createGain();
+                    envelopeGain.gain.setValueAtTime(0, now);
+
+                    const lfoGain = audioCtx.createGain();
+                    lfoGain.gain.setValueAtTime(1.0, now);
+
+                    const lfoOsc = audioCtx.createOscillator();
+                    lfoOsc.type = 'sine';
+                    lfoOsc.frequency.setValueAtTime(0.04 + (index * 0.008), now);
+
+                    const lfoModScale = audioCtx.createGain();
+                    const baseVolume = isBass ? 0.28 : (index === 1 ? 0.18 : 0.12);
+                    lfoModScale.gain.setValueAtTime(0.15, now);
+
+                    // Connect LFO Graph
+                    lfoOsc.connect(lfoModScale);
+                    lfoModScale.connect(lfoGain.gain);
+
+                    // Connect Notes
+                    oscL.connect(panL);
+                    panL.connect(envelopeGain);
+                    oscR.connect(panR);
+                    panR.connect(envelopeGain);
+
+                    envelopeGain.connect(lfoGain);
+                    lfoGain.connect(synthGainNode);
+
+                    // Volume Envelope
+                    const targetBaseVolume = baseVolume * 0.65;
+                    envelopeGain.gain.setValueAtTime(0, now);
+                    envelopeGain.gain.linearRampToValueAtTime(targetBaseVolume, now + crossfadeDuration);
+                    envelopeGain.gain.setValueAtTime(targetBaseVolume, now + sustainDuration - crossfadeDuration);
+                    envelopeGain.gain.linearRampToValueAtTime(0, now + sustainDuration);
+
+                    oscL.start(now);
+                    oscR.start(now);
+                    lfoOsc.start(now);
+
+                    oscL.stop(now + sustainDuration);
+                    oscR.stop(now + sustainDuration);
+                    lfoOsc.stop(now + sustainDuration);
+
+                    nodes.push(oscL, oscR, envelopeGain, panL, panR, lfoOsc, lfoModScale, lfoGain);
+                });
+
+                activeSynthNodes.push({
+                    nodes: nodes,
+                    expireTime: now + sustainDuration
+                });
+            } catch (e) {
+                logMsg("playSynthChord Error: " + e.message, true);
+            }
+        }
+
+        // Loop loaded local buffers through their Slot Gains
+        function playSlotBuffer(slot) {
+            if (!slot.audioBuffer || !audioCtx) return;
+            
+            // Stop any existing loop first
+            stopSlotBuffer(slot);
+
+            const now = audioCtx.currentTime;
+            logMsg(`Triggering Slot ${slot.id} loop buffer...`);
+            
+            try {
+                const source = audioCtx.createBufferSource();
+                source.buffer = slot.audioBuffer;
+                source.loop = true; // Auto-loop the nature sound or chime!
+
+                // Connect to the slot's independent gain control
+                source.connect(slot.gainNode);
+                
+                // If it is our Tonal Spark Slot (Slot C / id: 3), let's pitch-shift/harmonize it dynamically!
+                if (slot.id === 3 && currentChordIndex !== -1) {
+                    const currentChord = chords[currentChordIndex];
+                    const targetRate = Math.pow(2.0, currentChord.semitoneShift / 12.0);
+                    source.playbackRate.setValueAtTime(targetRate, now);
+                    logMsg(`Harmonizer: Transposed loaded Slot C sample to match initial chord ${currentChord.name} (pitch ratio: ${targetRate.toFixed(3)})`);
+                }
+                
+                source.start(now);
+                slot.sourceNode = source;
+            } catch (e) {
+                logMsg(`Slot ${slot.id} Play Error: ` + e.message, true);
+            }
+        }
+
+        function stopSlotBuffer(slot) {
+            if (slot.sourceNode) {
+                try {
+                    slot.sourceNode.stop();
+                    slot.sourceNode.disconnect();
+                } catch(e){}
+                slot.sourceNode = null;
+            }
+        }
+
+        // Step through progression
+        function stepProgression() {
+            try {
+                currentChordIndex = (currentChordIndex + 1) % chords.length;
+                const currentChord = chords[currentChordIndex];
+                
+                // Play background pad chord
+                playSynthChord(currentChord, 8.0, 25.0);
+                
+                // DYNAMIC HARMONIZER: Transpose Slot C (Instrumental Spark) to fit the new chord!
+                const slot3 = slots[2]; // Slot C is index 2
+                if (slot3.sourceNode) {
+                    const now = audioCtx.currentTime;
+                    // Calculate target playback speed based on the semitone offset relative to G Major
+                    const targetRate = Math.pow(2.0, currentChord.semitoneShift / 12.0);
+                    
+                    logMsg(`Harmonizer: Pitch-shifting Slot C sample to match "${currentChord.name}" (gliding speed to x${targetRate.toFixed(3)})...`);
+                    
+                    // Smooth, click-free pitch glide (exponential tape-glide curve!)
+                    slot3.sourceNode.playbackRate.setTargetAtTime(targetRate, now, 0.6);
+                    
+                    // Update UI indicator
+                    const dirSymbol = currentChord.semitoneShift < 0 ? "↓" : "↑";
+                    const semitoneText = currentChord.semitoneShift === 0 ? "Root" : `${dirSymbol}${Math.abs(currentChord.semitoneShift)} semitones`;
+                    harmonizerText.innerText = `Auto-Harmonizing to ${currentChord.name} (${semitoneText} / x${targetRate.toFixed(2)})`;
+                } else if (slot3.audioBuffer) {
+                    harmonizerText.innerText = `Auto-Harmonizer locked. Next chord: ${currentChord.name}`;
+                }
+                
+                // Clean up synth notes
+                const now = audioCtx.currentTime;
+                activeSynthNodes = activeSynthNodes.filter(item => {
+                    if (now > item.expireTime) {
+                        item.nodes.forEach(node => {
+                            try { node.disconnect(); } catch(e){}
+                        });
+                        return false;
+                    }
+                    return true;
+                });
+            } catch (e) {
+                logMsg("stepProgression Error: " + e.message, true);
+            }
+        }
+
+        // INTELLIGENT AUTO-DRIFT REMIXER
+        function runAutoDrift() {
+            logMsg("Auto-Drift Remixing Engaged. Designing randomized soundscapes...");
+            
+            function driftMix() {
+                if (!isPlaying || !isDrifting) return;
+                
+                logMsg("Intelligent Remixer calculating new acoustic parameters...");
+                
+                slots.forEach(slot => {
+                    if (slot.audioBuffer) {
+                        const now = audioCtx.currentTime;
+                        const randomTarget = 0.15 + (Math.random() * 0.65);
+                        const fadeDuration = 10 + (Math.random() * 15);
+                        
+                        logMsg("Remixer drifting Slot " + slot.id + " volume to " + Math.round(randomTarget*100) + "% over " + Math.round(fadeDuration) + "s...");
+                        
+                        slot.volSlider.value = Math.round(randomTarget * 100);
+                        slot.volVal.innerText = `${Math.round(randomTarget * 100)}%`;
+                        
+                        slot.gainNode.gain.setValueAtTime(slot.gainNode.gain.value, now);
+                        slot.gainNode.gain.exponentialRampToValueAtTime(randomTarget, now + fadeDuration);
+                    }
+                });
+                
+                // Drift pad
+                const now = audioCtx.currentTime;
+                const randomSynthTarget = 0.3 + (Math.random() * 0.5);
+                const fadeDurationSynth = 12 + (Math.random() * 12);
+                logMsg(`Remixer drifting Synth Pad volume to ${Math.round(randomSynthTarget*100)}%...`);
+                volSynthSlider.value = Math.round(randomSynthTarget * 100);
+                valSynthText.innerText = `${Math.round(randomSynthTarget * 100)}%`;
+                
+                synthGainNode.gain.setValueAtTime(synthGainNode.gain.value, now);
+                synthGainNode.gain.exponentialRampToValueAtTime(randomSynthTarget, now + fadeDurationSynth);
+            }
+            
+            driftMix();
+            driftInterval = setInterval(driftMix, 25000);
+        }
+
+        // Toggle Play
+        function togglePlay() {
+            try {
+                if (isPlaying) {
+                    isPlaying = false;
+                    isDrifting = false;
+                    
+                    playIcon.classList.remove('hidden');
+                    pauseIcon.classList.add('hidden');
+                    playBtnText.innerText = "Start Soundstage";
+                    
+                    driftBtn.classList.remove('drift-glowing');
+                    driftBtnText.innerText = "Enable Auto-Drift Remixing";
+                    
+                    clearInterval(chordInterval);
+                    clearInterval(driftInterval);
+                    
+                    logMsg("Stopping master soundstage and freeing audio blocks...");
+                    
+                    if (masterGain && audioCtx) {
+                        const now = audioCtx.currentTime;
+                        masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+                        masterGain.gain.linearRampToValueAtTime(0, now + 1.2);
+                        
+                        setTimeout(() => {
+                            activeSynthNodes.forEach(item => {
+                                item.nodes.forEach(node => {
+                                    try { node.stop(); } catch(e){}
+                                    try { node.disconnect(); } catch(e){}
+                                });
+                            });
+                            activeSynthNodes = [];
+
+                            slots.forEach(slot => {
+                                stopSlotBuffer(slot);
+                                try { slot.gainNode.disconnect(); } catch(e){}
+                            });
+                            
+                            if (audioCtx) {
+                                audioCtx.close();
+                                audioCtx = null;
+                            }
+                            
+                            // Reset UI state
+                            harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-stone-700";
+                            harmonizerText.innerText = slots[2].audioBuffer ? "Auto-Harmonizer locked. Ready." : "Auto-Harmonizer inactive";
+                            
+                            logMsg("Soundstage closed. System sleeping.");
+                        }, 1400);
+                    }
+                } else {
+                    isPlaying = true;
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                    playBtnText.innerText = "Pause Soundstage";
+                    
+                    // Build audio Context
+                    initAudio();
+                    currentChordIndex = -1;
+                    
+                    // Play synth
+                    stepProgression();
+                    chordInterval = setInterval(stepProgression, 17000);
+                    
+                    // Trigger loops for loaded buffers
+                    slots.forEach(slot => {
+                        if (slot.audioBuffer) {
+                            playSlotBuffer(slot);
+                        }
+                    });
+
+                    // AUTO-LOAD TRIGGER:
+                    // If running via HTTP server (CORS-friendly), automatically load relative files!
+                    if (window.location.protocol.startsWith('http')) {
+                        logMsg("HTTP Server active! Initiating local auto-loading sequence...");
+                        loadRelativeAsset(slots[0], "./flowing water.mp3");
+                        loadRelativeAsset(slots[1], "./fireplace.mp3");
+                        loadRelativeAsset(slots[2], "./Sample_Floor-pads.mp3");
+                    } else {
+                        logMsg("Local File protocol (file://) active. Drag and drop your files manually.");
+                    }
+                }
+            } catch (e) {
+                logMsg("togglePlay Error: " + e.message, true);
+            }
+        }
+
+        // Master Play Click Listener
+        masterPlayBtn.addEventListener('click', () => {
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume().then(() => togglePlay());
+            } else {
+                togglePlay();
+            }
+        });
+
+        // Drift Mode Click Listener
+        driftBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                logMsg("Please start the Soundstage first to enable Auto-Drift.", true);
+                return;
+            }
+            
+            if (isDrifting) {
+                isDrifting = false;
+                driftBtn.classList.remove('drift-glowing');
+                driftBtnText.innerText = "Enable Auto-Drift Remixing";
+                clearInterval(driftInterval);
+                logMsg("Auto-Drift disabled. Custom sliders are active.");
+            } else {
+                isDrifting = true;
+                driftBtn.classList.add('drift-glowing');
+                driftBtnText.innerText = "Auto-Drifting Active!";
+                runAutoDrift();
+            }
+        });
+
+        // Volume Sliders Bindings
+        volSynthSlider.addEventListener('input', () => {
+            const val = volSynthSlider.value;
+            valSynthText.innerText = `${val}%`;
+            if (synthGainNode && audioCtx) {
+                synthGainNode.gain.setTargetAtTime(val / 100, audioCtx.currentTime, 0.08);
+            }
+        });
+
+        slots.forEach(slot => {
+            slot.volSlider.addEventListener('input', () => {
+                const val = slot.volSlider.value;
+                slot.volVal.innerText = `${val}%`;
+                if (slot.gainNode && audioCtx) {
+                    slot.gainNode.gain.setTargetAtTime(val / 100, audioCtx.currentTime, 0.08);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
