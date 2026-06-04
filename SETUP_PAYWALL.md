@@ -49,6 +49,28 @@ In Netlify → **Site configuration → Environment variables**, add:
 Then **Deploys → Trigger deploy → Deploy site** so the function reloads with the variable.
 Until this is set, `verify-license` returns *"Server not configured: set GUMROAD_PRODUCT_ID."*
 
+## 2b. Selling on Etsy — the shared rotatable key
+
+Etsy can't mint per-sale Gumroad keys, so Etsy buyers all use **one shared key** that the
+app's verify function also accepts. It's rotatable via env vars (no code change).
+
+**Set it up:**
+1. Netlify → Environment variables → add `ETSY_UNLOCK_KEY` = a hard-to-guess value
+   (e.g. `ETSY-EDCV-OKJ2-HQUV-K6P1`). **Trigger deploy.**
+2. In your Etsy digital-download listing, deliver that key + "paste into the app's
+   Export panel → Have a key? → Unlock", and the app link https://pinedesignstudio.netlify.app/
+3. (Optional, on rotation) move the old value to `ETSY_UNLOCK_KEY_PREV` and set a new
+   `ETSY_UNLOCK_KEY`. The function accepts both, so existing buyers keep working while you
+   hand the new key to new buyers.
+
+**Detecting a leak:** every Etsy unlock is logged. Netlify → **Logs / Functions →
+`verify-license`** and look for `[ETSY-UNLOCK]` lines. Normal = a trickle from scattered
+IPs. A **leak** = a sudden flood of unlocks from many different IPs/locations. If you see
+that, rotate the key (step 3) and re-issue the new one in your Etsy listing.
+
+> Trade-off: a shared key can leak (one buyer posts it publicly). Rotation is your fix.
+> For leak-proof per-buyer keys instead, use Gumroad 100%-off codes delivered via Etsy.
+
 ## 3. Test the whole flow
 1. Open https://pinedesignstudio.netlify.app/ . Confirm it says "Free version · mix & listen freely · exports capped at 60s" and shows the "Get the full version →" link.
 2. Buy your own product on Gumroad (you can refund yourself) to get a real key.

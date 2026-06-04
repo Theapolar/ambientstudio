@@ -1,8 +1,15 @@
-// Verifies a Gumroad license key for Ambient Studio.
+// Verifies a license key for Ambient Studio. Two paths:
 //
-// Set GUMROAD_PRODUCT_ID in your Netlify environment variables (Site settings ->
-// Environment variables). For a one-time product you can use either the numeric
-// product_id or the product permalink — Gumroad's verify endpoint accepts product_id.
+// 1. Gumroad keys (unique per sale) — checked against Gumroad's API.
+//    Set GUMROAD_PRODUCT_ID in Netlify env vars to the product's *Product ID* string
+//    (from the product's License-key panel — NOT the permalink).
+//
+// 2. Shared Etsy key(s) — one reusable key handed to Etsy buyers (Etsy can't mint
+//    per-sale Gumroad keys). ROTATABLE: set ETSY_UNLOCK_KEY (current) and, after a
+//    rotation, ETSY_UNLOCK_KEY_PREV (the old one) so existing buyers keep working
+//    during a changeover. Change these env vars + redeploy to rotate — no code change.
+//    Every successful Etsy unlock is logged (timestamp, IP, browser) so a leak shows
+//    up as a flood of unlocks from many different IPs in the Netlify function logs.
 //
 // The browser app POSTs { "license_key": "XXXX-..." } and gets back { valid, message }.
 
@@ -26,6 +33,23 @@ exports.handler = async (event) => {
     if (!license_key) {
       return { statusCode: 200, headers: cors, body: JSON.stringify({ valid: false, message: 'No license key provided.' }) };
     }
+
+    // --- Path 2: shared Etsy key (rotatable). Checked first so it never hits Gumroad. ---
+    const submitted = String(license_key).trim().toUpperCase();
+    const etsyKeys = [process.env.ETSY_UNLOCK_KEY, process.env.ETSY_UNLOCK_KEY_PREV]
+      .filter(Boolean)
+      .map(k => k.trim().toUpperCase());
+    const matchedIdx = etsyKeys.indexOf(submitted);
+    if (matchedIdx !== -1) {
+      const h = event.headers || {};
+      const ip = h['x-nf-client-connection-ip'] || (h['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+      const ua = (h['user-agent'] || 'unknown').slice(0, 120);
+      // Leak signal: scan Netlify function logs for [ETSY-UNLOCK]. A spike across many
+      // distinct IPs = the shared key is circulating; rotate ETSY_UNLOCK_KEY.
+      console.log(`[ETSY-UNLOCK] ts=${new Date().toISOString()} key=${matchedIdx === 0 ? 'current' : 'previous'} ip=${ip} ua="${ua}"`);
+      return { statusCode: 200, headers: cors, body: JSON.stringify({ valid: true, message: 'Unlocked (Etsy)', source: 'etsy' }) };
+    }
+
     if (!productId) {
       return { statusCode: 500, headers: cors, body: JSON.stringify({ valid: false, message: 'Server not configured: set GUMROAD_PRODUCT_ID.' }) };
     }
