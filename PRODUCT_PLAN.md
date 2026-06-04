@@ -18,7 +18,7 @@ _Last updated: 2026-06-03_
   - Edits to `index.html` appear on browser refresh — no restart needed.
   - Manage: `systemctl --user {status|restart|stop} ambient-studio`
 - **Product name:** "Ambient Soundscape Studio" by **PineDesign Studios** (brand kicker). Gumroad product permalink `ambientstudio` → https://theaborch.gumroad.com/l/ambientstudio.
-- **Sellable site (paywall live):** Netlify, Git-connected to **github.com/Theapolar/ambientstudio** (private). Pushes to `main` auto-rebuild. Live at **https://pinedesignstudio.netlify.app/**. Build runs `bash build_public.sh` → `public/`; functions in `netlify/functions`. Requires Netlify env var `GUMROAD_PRODUCT_ID=ambientstudio` for key verification.
+- **Sellable site (paywall live):** Netlify, Git-connected to **github.com/Theapolar/ambientstudio** (private). Pushes to `main` auto-rebuild. Live at **https://pinedesignstudio.netlify.app/**. Build runs `bash build_public.sh` → `public/`; functions in `netlify/functions`. Requires Netlify env var `GUMROAD_PRODUCT_ID` = the real Gumroad **Product ID** string (from the product's License key panel), NOT the permalink — the permalink matches the product but fails key verification. Paywall confirmed working end-to-end 2026-06-04.
 - **Free demo site:** GitHub Pages via `./deploy.sh` → `Theapolar.github.io/ambient` (static — license check 404s, so it stays in free mode; good as a "try it" link).
 - **Backups / old versions:** `~/_archive/` (pre-Phase-A backup + retired `ambient_remixer.html`).
 

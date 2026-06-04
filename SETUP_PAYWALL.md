@@ -38,8 +38,13 @@ No CLI needed.
 
 ### ⚠️ Required one-time env var (otherwise keys won't unlock)
 In Netlify → **Site configuration → Environment variables**, add:
-- `GUMROAD_PRODUCT_ID` = **`ambientstudio`**  (your Gumroad permalink — from the product URL
-  `https://theaborch.gumroad.com/l/ambientstudio`)
+- `GUMROAD_PRODUCT_ID` = the **Product ID string** (NOT the permalink). Get it in Gumroad on
+  the product's **License key** panel — "use your product ID to verify licenses through the
+  API" shows a copyable string. Use that exact string.
+
+> ⚠️ Do **not** use the permalink `ambientstudio` here. It half-works (matches the product but
+> fails license verification with *"That license does not exist for the provided product"*).
+> Only the real Product ID validates keys. Confirmed working 2026-06-04.
 
 Then **Deploys → Trigger deploy → Deploy site** so the function reloads with the variable.
 Until this is set, `verify-license` returns *"Server not configured: set GUMROAD_PRODUCT_ID."*
