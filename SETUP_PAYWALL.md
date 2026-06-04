@@ -21,18 +21,31 @@ can do (it's tied to your accounts/money). Follow these once.
 > For content delivery you can either let Gumroad deliver a little "Welcome — here's your key
 > and the app link" file, or just rely on the key shown to buyers after purchase.
 
-## 2. Deploy to Netlify  *(you, ~10 min)*
-1. Create a free account at netlify.com.
-2. Install the CLI:  `npm install -g netlify-cli`  then  `netlify login`.
-3. From this folder, build the clean public site:  `./build_public.sh`
-4. First deploy:  `netlify deploy` (preview) → check it → `netlify deploy --prod`.
-   - Netlify auto-detects `netlify.toml` (publish = `public`, functions = `netlify/functions`).
-5. In the Netlify dashboard → **Site settings → Environment variables**, add:
-   - `GUMROAD_PRODUCT_ID` = the Product ID / permalink from step 1.6
-6. Redeploy (`netlify deploy --prod`) so the function picks up the variable.
+## 2. Deploy to Netlify  *(Git-connected — DONE)*
+
+This project is now deployed via **Netlify's GitHub integration** (auto-rebuilds on every
+`git push`), not the manual CLI. The pieces:
+
+- **GitHub repo:** https://github.com/Theapolar/ambientstudio  (private; `main` branch)
+- **Live site:** https://pinedesignstudio.netlify.app/
+- **Build settings** (auto-detected from `netlify.toml`):
+  - Build command: `bash build_public.sh`  →  assembles the clean `public/` folder
+  - Publish dir: `public`  ·  Functions: `netlify/functions`
+  - `NODE_VERSION = 20`
+
+**To update the live site:** commit + `git push origin main` — Netlify rebuilds automatically.
+No CLI needed.
+
+### ⚠️ Required one-time env var (otherwise keys won't unlock)
+In Netlify → **Site configuration → Environment variables**, add:
+- `GUMROAD_PRODUCT_ID` = **`ambientstudio`**  (your Gumroad permalink — from the product URL
+  `https://theaborch.gumroad.com/l/ambientstudio`)
+
+Then **Deploys → Trigger deploy → Deploy site** so the function reloads with the variable.
+Until this is set, `verify-license` returns *"Server not configured: set GUMROAD_PRODUCT_ID."*
 
 ## 3. Test the whole flow
-1. Open your Netlify URL. Confirm it says "Free version · exports limited to 60s".
+1. Open https://pinedesignstudio.netlify.app/ . Confirm it says "Free version · mix & listen freely · exports capped at 60s" and shows the "Get the full version →" link.
 2. Buy your own product on Gumroad (you can refund yourself) to get a real key.
 3. In the app: **Export panel → "Have a key?" → paste key → Unlock.** It should switch to
    "✓ Full version unlocked" and enable the longer export lengths.
