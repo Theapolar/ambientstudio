@@ -1,0 +1,14 @@
+# Netlify config for Ambient Studio.
+# We publish a clean ./public folder (built by ./build_public.sh) so internal
+# files (PRODUCT_PLAN.md, scripts, setup notes) are NEVER exposed on the live site.
+# Functions are read from ./netlify/functions regardless of the publish dir.
+
+[build]
+  # Git-based deploys: Netlify runs this to assemble the clean ./public folder
+  # (CLI deploys can still run ./build_public.sh by hand — same result).
+  command = "bash build_public.sh"
+  publish = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"

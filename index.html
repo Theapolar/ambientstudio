@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pine Forest - Intelligent Ambient Remixer</title>
+    <title>Ambient Soundscape Studio — Meditation &amp; Ambient Music Maker | PineDesign Studios</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -40,10 +40,10 @@
         
         <!-- Header -->
         <div class="text-center space-y-3">
-            <span class="text-xs tracking-[0.3em] text-emerald-500 uppercase font-semibold">PineDesign Studio</span>
-            <h1 class="text-4xl font-light tracking-wide text-stone-100">Ambient Studio Remixer</h1>
+            <span class="text-xs tracking-[0.3em] text-emerald-500 uppercase font-semibold">PineDesign Studios</span>
+            <h1 class="text-4xl font-light tracking-wide text-stone-100">Ambient Soundscape Studio</h1>
             <p class="text-sm text-stone-400 font-light max-w-md mx-auto">
-                Your high-fidelity 320kbps Norwegian recordings, automated and self-harmonizing in real-time.
+                Build endless meditation &amp; ambient soundscapes — layer nature and ASMR textures over self-tuning 432Hz pads, add binaural beats, gentle pulses and bells, then export royalty-free tracks at any session length.
             </p>
         </div>
 
@@ -61,49 +61,101 @@
                 <svg class="w-5 h-5 fill-none stroke-current" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.656 48.656 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3M4.5 12l-3 3m3-3l3 3m1.5-6.662a48.524 48.524 0 017.324 0M5.138 15.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7m-14.648 0l-3-3m3 3l3-3" />
                 </svg>
-                <span id="drift-btn-text">Enable Auto-Drift Remixing</span>
+                <span id="drift-btn-text">Enable Auto-Drift</span>
+            </button>
+
+        </div>
+
+        <!-- Surrender & Shuffle -->
+        <div class="flex justify-center -mt-4">
+            <button id="shuffle-btn" class="px-7 py-3 rounded-full bg-gradient-to-r from-emerald-600/80 to-teal-600/80 hover:from-emerald-500 hover:to-teal-500 text-white font-medium tracking-wide flex items-center justify-center gap-2.5 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+                <span>Surrender &amp; Shuffle</span>
             </button>
         </div>
 
-        <!-- The 3 Drag & Drop Slots + Synth Pad -->
+        <!-- The 3 Dynamic Slots + Synth Pad -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- SLOT 0: 432Hz Synth Pad (Built-in Core Engine) -->
+            <!-- SLOT 0: Customizable Synth Pad -->
             <div class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4 slot-active">
                 <div>
                     <div class="flex justify-between items-start">
-                        <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Built-In Pad</span>
-                        <span class="text-xs text-stone-500">A=432Hz</span>
+                        <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Acoustic Floor</span>
+                        <span id="tuning-label" class="text-xs text-stone-500">432Hz</span>
                     </div>
-                    <h3 class="text-lg font-normal text-stone-200 mt-2">Harmonic Velvet Pad</h3>
-                    <p class="text-xs text-stone-400 font-light mt-1">Generates G-Major background swells in real-time to bind your files together.</p>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Harmonic Floor Swells</h3>
+                    <p class="text-xs text-stone-400 font-light mt-1 mb-3">Generates procedural background pads in real-time to bind your soundstage together.</p>
+
+                    <!-- Synth Control Inputs -->
+                    <div class="grid grid-cols-1 gap-2 mt-2">
+                        <!-- Timbre Select -->
+                        <div class="flex justify-between items-center text-xs text-stone-400 bg-stone-950/40 p-2 rounded-xl border border-white/5">
+                            <span>Pad Timbre</span>
+                            <select id="synth-timbre" class="bg-stone-900 border border-white/10 rounded-lg p-1 text-[11px] text-stone-300 focus:outline-none">
+                                <option value="sine">Velvet Sine (Warm)</option>
+                                <option value="triangle">Breathy Pipe (Triangle)</option>
+                                <option value="sawtooth">Analog Brass (Filtered Saw)</option>
+                            </select>
+                        </div>
+
+                        <!-- Solfeggio / Tuning Select -->
+                        <div class="flex justify-between items-center text-xs text-stone-400 bg-stone-950/40 p-2 rounded-xl border border-white/5">
+                            <span>Base Tuning</span>
+                            <select id="synth-tuning" class="bg-stone-900 border border-white/10 rounded-lg p-1 text-[11px] text-stone-300 focus:outline-none">
+                                <option value="432">432 Hz (Cosmic Harmony)</option>
+                                <option value="528">528 Hz (Transformation)</option>
+                                <option value="440">440 Hz (Standard Concert)</option>
+                            </select>
+                        </div>
+
+                        <!-- Motion Mode Select -->
+                        <div class="flex justify-between items-center text-xs text-stone-400 bg-stone-950/40 p-2 rounded-xl border border-white/5">
+                            <span>Movement Mode</span>
+                            <select id="synth-movement" class="bg-stone-900 border border-white/10 rounded-lg p-1 text-[11px] text-stone-300 focus:outline-none">
+                                <option value="deepbass" selected>Deep Bass Swells (Warm)</option>
+                                <option value="swells">Serene Swells (Chords)</option>
+                                <option value="drone">Static Drone (G-Root)</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="space-y-2 mt-auto">
+                <div class="space-y-2 mt-auto pt-2">
                     <div class="flex justify-between text-xs text-stone-400">
                         <span>Pad Level</span>
-                        <span id="val-synth">60%</span>
+                        <span id="val-synth">45%</span>
                     </div>
-                    <input id="vol-synth" type="range" min="0" max="100" value="60" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                    <input id="vol-synth" type="range" min="0" max="100" value="45" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
                 </div>
             </div>
 
-            <!-- SLOT 1: Grounding Layer (Nature Loops) -->
+            <!-- SLOT 1: Grounding Layer -->
             <div id="card-1" class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
                 <div>
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-medium">Slot A: Grounding</span>
-                        <span id="status-1" class="text-[10px] text-stone-500">Empty</span>
+                        <div class="flex items-center gap-2">
+                            <button id="lock-1" class="text-stone-600 hover:text-emerald-400 transition-colors text-xs leading-none" title="Lock this layer so Shuffle keeps it">🔓</button>
+                            <span id="status-1" class="text-[10px] text-stone-500">Empty</span>
+                        </div>
                     </div>
                     <h3 class="text-lg font-normal text-stone-200 mt-2">Nature Loop</h3>
-                    <p class="text-xs text-stone-400 font-light mt-1">Recommended files: <strong class="text-stone-300">flowing water.mp3</strong> or <strong class="text-stone-300">soft wind.mp3</strong></p>
+                    <p class="text-xs text-stone-400 font-light mt-1 mb-3">Choose from your library or drop your own loop:</p>
                     
+                    <!-- Sound Library Dropdown -->
+                    <select id="library-select-1" class="bg-stone-900/80 border border-white/10 rounded-xl p-2.5 text-xs text-stone-300 w-full mb-3 focus:outline-none focus:border-emerald-500/40">
+                        <option value="">[ Select Grounding Sound... ]</option>
+                    </select>
+
+                    <span class="text-[10px] text-stone-500 block text-center mb-1">- or import local file -</span>
+
                     <!-- File Input -->
-                    <label class="mt-3 block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-3 text-center cursor-pointer transition-colors duration-300">
-                        <span class="text-xs text-stone-400 font-light">Choose or drop audio file</span>
+                    <label class="block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-2.5 text-center cursor-pointer transition-colors duration-300">
+                        <span class="text-xs text-stone-400 font-light">Choose or drop file</span>
                         <input id="file-1" type="file" accept="audio/*" class="hidden">
                     </label>
                 </div>
-                <div class="space-y-2 mt-auto">
+                <div class="space-y-2 mt-auto pt-4">
                     <div class="flex justify-between text-xs text-stone-400">
                         <span>Layer Level</span>
                         <span id="val-1">50%</span>
@@ -117,18 +169,28 @@
                 <div>
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-medium">Slot B: Texture</span>
-                        <span id="status-2" class="text-[10px] text-stone-500">Empty</span>
+                        <div class="flex items-center gap-2">
+                            <button id="lock-2" class="text-stone-600 hover:text-emerald-400 transition-colors text-xs leading-none" title="Lock this layer so Shuffle keeps it">🔓</button>
+                            <span id="status-2" class="text-[10px] text-stone-500">Empty</span>
+                        </div>
                     </div>
                     <h3 class="text-lg font-normal text-stone-200 mt-2">Organic Texture</h3>
-                    <p class="text-xs text-stone-400 font-light mt-1">Recommended files: <strong class="text-stone-300">fireplace.mp3</strong> or <strong class="text-stone-300">soft wind.mp3</strong></p>
+                    <p class="text-xs text-stone-400 font-light mt-1 mb-3">Choose from your library or drop your own loop:</p>
                     
+                    <!-- Sound Library Dropdown -->
+                    <select id="library-select-2" class="bg-stone-900/80 border border-white/10 rounded-xl p-2.5 text-xs text-stone-300 w-full mb-3 focus:outline-none focus:border-emerald-500/40">
+                        <option value="">[ Select Texture Sound... ]</option>
+                    </select>
+
+                    <span class="text-[10px] text-stone-500 block text-center mb-1">- or import local file -</span>
+
                     <!-- File Input -->
-                    <label class="mt-3 block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-3 text-center cursor-pointer transition-colors duration-300">
-                        <span class="text-xs text-stone-400 font-light">Choose or drop audio file</span>
+                    <label class="block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-2.5 text-center cursor-pointer transition-colors duration-300">
+                        <span class="text-xs text-stone-400 font-light">Choose or drop file</span>
                         <input id="file-2" type="file" accept="audio/*" class="hidden">
                     </label>
                 </div>
-                <div class="space-y-2 mt-auto">
+                <div class="space-y-2 mt-auto pt-4">
                     <div class="flex justify-between text-xs text-stone-400">
                         <span>Layer Level</span>
                         <span id="val-2">50%</span>
@@ -137,19 +199,39 @@
                 </div>
             </div>
 
-            <!-- SLOT 3: Harmonic Sparks (Instrumental/Chords) -->
+            <!-- SLOT 3: Harmonic Sparks -->
             <div id="card-3" class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
                 <div>
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Slot C: Sparks</span>
-                        <span id="status-3" class="text-[10px] text-stone-500">Empty</span>
+                        <div class="flex items-center gap-2">
+                            <button id="lock-3" class="text-stone-600 hover:text-emerald-400 transition-colors text-xs leading-none" title="Lock this layer so Shuffle keeps it">🔓</button>
+                            <span id="status-3" class="text-[10px] text-stone-500">Empty</span>
+                        </div>
                     </div>
                     <h3 class="text-lg font-normal text-stone-200 mt-2">Tonal / Melody Spark</h3>
-                    <p class="text-xs text-stone-400 font-light mt-1">Recommended G-key files: <strong class="text-stone-300">Sample_Floor-pads.mp3</strong> or <strong class="text-stone-300">Sample_bass-shimmer.mp3</strong></p>
-                    
+                    <p class="text-xs text-stone-400 font-light mt-1 mb-3">Tonal samples that follow the chords via the Auto-Harmonizer:</p>
+
+                    <!-- Sound Library Dropdown -->
+                    <select id="library-select-3" class="bg-stone-900/80 border border-white/10 rounded-xl p-2.5 text-xs text-stone-300 w-full mb-3 focus:outline-none focus:border-emerald-500/40">
+                        <option value="">[ Select Melody Spark... ]</option>
+                    </select>
+
+                    <!-- Harmonizer mode -->
+                    <div class="flex justify-between items-center text-xs text-stone-400 bg-stone-950/40 p-2 rounded-xl border border-white/5 mb-1">
+                        <span>Harmonizer</span>
+                        <select id="harmonizer-mode" class="bg-stone-900 border border-white/10 rounded-lg p-1 text-[11px] text-stone-300 focus:outline-none">
+                            <option value="off" selected>Off (natural pitch)</option>
+                            <option value="smooth">Smooth (no swoosh)</option>
+                            <option value="glide">Glide (tape sweep)</option>
+                        </select>
+                    </div>
+
+                    <span class="text-[10px] text-stone-500 block text-center mb-1">- or import local file -</span>
+
                     <!-- File Input -->
-                    <label class="mt-3 block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-3 text-center cursor-pointer transition-colors duration-300">
-                        <span class="text-xs text-stone-400 font-light">Choose or drop G-key audio</span>
+                    <label class="block border border-dashed border-stone-700 hover:border-emerald-500/40 rounded-xl p-2.5 text-center cursor-pointer transition-colors duration-300">
+                        <span class="text-xs text-stone-400 font-light">Choose or drop file</span>
                         <input id="file-3" type="file" accept="audio/*" class="hidden">
                     </label>
 
@@ -159,7 +241,7 @@
                         <span id="harmonizer-text">Auto-Harmonizer inactive</span>
                     </div>
                 </div>
-                <div class="space-y-2 mt-auto">
+                <div class="space-y-2 mt-auto pt-4">
                     <div class="flex justify-between text-xs text-stone-400">
                         <span>Layer Level</span>
                         <span id="val-3">50%</span>
@@ -170,10 +252,216 @@
 
         </div>
 
+        <!-- ============ PULSE / SUB-BASS RHYTHM ============ -->
+        <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+            <div class="flex justify-between items-start gap-4">
+                <div>
+                    <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Pulse Engine</span>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Warm Sub-Bass Pulse</h3>
+                    <p class="text-xs text-stone-400 font-light mt-1">Slow, deep, chord-locked beats beneath your mix — fully synthesized, so it always stays in tune with the harmony.</p>
+                </div>
+                <button id="pulse-toggle" class="shrink-0 px-5 py-2.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 text-emerald-400 text-xs font-semibold tracking-wide hover:bg-emerald-950/40 transition-all">Enable Pulse</button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Tempo (<span id="pulse-tempo-val">60</span> BPM)</span>
+                    <input id="pulse-tempo" type="range" min="40" max="90" value="60" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Pattern</span>
+                    <select id="pulse-pattern" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                        <option value="pulse">Steady Pulse</option>
+                        <option value="sparse" selected>Sparse (every 2nd beat)</option>
+                        <option value="heartbeat">Heartbeat</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Level (<span id="pulse-level-val">50</span>%)</span>
+                    <input id="pulse-level" type="range" min="0" max="100" value="50" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ SESSION BELLS ============ -->
+        <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+            <div>
+                <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Session Bells</span>
+                <h3 class="text-lg font-normal text-stone-200 mt-2">Bells &amp; Timing</h3>
+                <p class="text-xs text-stone-400 font-light mt-1">Soft singing-bowl tones to open, mark, and close a session — tuned to your mix.</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <label class="flex items-center justify-between text-xs text-stone-400 bg-stone-950/40 p-2 rounded-xl border border-white/5 cursor-pointer">
+                    <span>Start bell</span>
+                    <input id="bell-start" type="checkbox" class="accent-emerald-500 w-4 h-4">
+                </label>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Interval bell</span>
+                    <select id="bell-interval" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                        <option value="0" selected>Off</option>
+                        <option value="1">Every 1 min</option>
+                        <option value="2">Every 2 min</option>
+                        <option value="3">Every 3 min</option>
+                        <option value="5">Every 5 min</option>
+                        <option value="10">Every 10 min</option>
+                    </select>
+                </div>
+                <label class="flex items-center justify-between text-xs text-stone-400 bg-stone-950/40 p-2 rounded-xl border border-white/5 cursor-pointer">
+                    <span>Ending bell</span>
+                    <input id="bell-end" type="checkbox" class="accent-emerald-500 w-4 h-4">
+                </label>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Level (<span id="bell-level-val">60</span>%)</span>
+                    <input id="bell-level" type="range" min="0" max="100" value="60" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+            </div>
+            <p class="text-[10px] text-stone-600 leading-relaxed">In the live preview you'll hear the start &amp; interval bells. The <strong>ending bell</strong> rings near the close of your <strong>exported</strong> track (live playback has no fixed end).</p>
+        </div>
+
+        <!-- ============ BRAINWAVE ENTRAINMENT (BINAURAL / ISOCHRONIC) ============ -->
+        <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+            <div>
+                <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Entrainment</span>
+                <h3 class="text-lg font-normal text-stone-200 mt-2">Binaural &amp; Isochronic Tones</h3>
+                <p class="text-xs text-stone-400 font-light mt-1">Subtle pure tones tuned to brainwave rhythms, layered beneath the mix. Many find them deeply settling.</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Mode</span>
+                    <select id="entrain-mode" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                        <option value="off" selected>Off</option>
+                        <option value="binaural">Binaural (headphones)</option>
+                        <option value="isochronic">Isochronic (speakers OK)</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Brainwave band</span>
+                    <select id="entrain-band" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                        <option value="2.5">Delta · Deep sleep (2.5 Hz)</option>
+                        <option value="6">Theta · Meditation (6 Hz)</option>
+                        <option value="10" selected>Alpha · Relaxed (10 Hz)</option>
+                        <option value="18">Beta · Focus (18 Hz)</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Carrier (<span id="entrain-carrier-val">200</span> Hz)</span>
+                    <input id="entrain-carrier" type="range" min="80" max="400" value="200" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Level (<span id="entrain-level-val">40</span>%)</span>
+                    <input id="entrain-level" type="range" min="0" max="100" value="40" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+            </div>
+            <p class="text-[10px] text-stone-600 leading-relaxed">🎧 Binaural beats require headphones (each ear hears a slightly different tone). Isochronic tones pulse a single tone on/off and work on speakers. Keep levels gentle; not a medical treatment.</p>
+        </div>
+
+        <!-- ============ STUDIO EXPORTS & PRESETS ============ -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Render / Export Panel -->
+            <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+                <div>
+                    <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Studio Export</span>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Render Session Track</h3>
+                    <p class="text-xs text-stone-400 font-light mt-1">Bounce a fixed-length, high-quality file of your current mix — fast offline render, not real-time.</p>
+                </div>
+
+                <!-- License / unlock bar -->
+                <div id="license-bar" class="rounded-xl border border-white/5 bg-stone-950/40 p-3 text-xs space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <span id="license-status" class="text-stone-400">Free version · mix &amp; listen freely · exports capped at 60s</span>
+                        <div class="flex items-center gap-3 shrink-0">
+                            <a id="license-buy" href="#" target="_blank" rel="noopener" class="text-emerald-400 hover:text-emerald-300 font-semibold whitespace-nowrap">Get the full version →</a>
+                            <button id="license-toggle" class="text-stone-400 hover:text-stone-200 underline underline-offset-2 whitespace-nowrap">Have a key?</button>
+                        </div>
+                    </div>
+                    <div id="license-unlock-row" class="hidden space-y-1.5">
+                        <div class="flex gap-2">
+                            <input id="license-key-input" type="text" placeholder="Paste your license key" class="flex-1 bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-200 focus:outline-none focus:border-emerald-500/40">
+                            <button id="license-unlock-btn" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold shrink-0">Unlock</button>
+                        </div>
+                        <p class="text-[10px] text-stone-500">Your key is in your purchase receipt. No key yet? <a id="license-buy-inline" href="#" target="_blank" rel="noopener" class="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Buy the full version</a>.</p>
+                    </div>
+                    <div id="license-msg" class="text-[10px] min-h-[12px]"></div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Length -->
+                    <div class="flex flex-col gap-1 text-xs text-stone-400">
+                        <span>Length</span>
+                        <select id="render-length" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                            <option value="60">1 minute (preview)</option>
+                            <option value="300">5 minutes</option>
+                            <option value="600" selected>10 minutes</option>
+                            <option value="1200">20 minutes</option>
+                            <option value="1800">30 minutes</option>
+                            <option value="3600">60 minutes</option>
+                        </select>
+                    </div>
+                    <!-- Format -->
+                    <div class="flex flex-col gap-1 text-xs text-stone-400">
+                        <span>Format</span>
+                        <select id="render-format" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                            <option value="wav" selected>WAV (16-bit, lossless)</option>
+                            <option value="mp3">MP3 (320 kbps)</option>
+                        </select>
+                    </div>
+                    <!-- Fade in -->
+                    <div class="flex flex-col gap-1 text-xs text-stone-400">
+                        <span>Fade in (sec)</span>
+                        <input id="render-fadein" type="number" min="0" max="60" value="6" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                    </div>
+                    <!-- Fade out -->
+                    <div class="flex flex-col gap-1 text-xs text-stone-400">
+                        <span>Fade out (sec)</span>
+                        <input id="render-fadeout" type="number" min="0" max="60" value="8" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                    </div>
+                </div>
+
+                <label class="flex items-center justify-between text-xs text-stone-400 bg-stone-950/40 p-2 rounded-xl border border-white/5 cursor-pointer">
+                    <span>Normalize level (peak to −1 dB)</span>
+                    <input id="render-normalize" type="checkbox" checked class="accent-emerald-500 w-4 h-4">
+                </label>
+
+                <button id="render-btn" class="w-full px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold tracking-wide flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+                    <span id="render-btn-text">Render &amp; Download</span>
+                </button>
+                <div id="render-progress" class="text-[10px] text-stone-500 text-center min-h-[14px]"></div>
+            </div>
+
+            <!-- Preset Panel -->
+            <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+                <div>
+                    <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Preset Recipes</span>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Save Your Signature Sound</h3>
+                    <p class="text-xs text-stone-400 font-light mt-1">Store every setting as a reusable recipe so your brand sound stays consistent across tracks.</p>
+                </div>
+
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Load a saved recipe</span>
+                    <select id="preset-select" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                        <option value="">[ Select preset... ]</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="preset-save-btn" class="px-4 py-2.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 text-emerald-400 text-xs font-medium hover:bg-emerald-950/40 transition-all">Save current</button>
+                    <button id="preset-delete-btn" class="px-4 py-2.5 rounded-full border border-red-500/30 bg-red-950/10 text-red-400 text-xs font-medium hover:bg-red-950/30 transition-all">Delete selected</button>
+                    <button id="preset-export-btn" class="px-4 py-2.5 rounded-full border border-white/10 bg-stone-900/60 text-stone-300 text-xs font-medium hover:bg-stone-800 transition-all">Export .json</button>
+                    <label class="px-4 py-2.5 rounded-full border border-white/10 bg-stone-900/60 text-stone-300 text-xs font-medium hover:bg-stone-800 transition-all cursor-pointer text-center">
+                        Import .json
+                        <input id="preset-import" type="file" accept="application/json,.json" class="hidden">
+                    </label>
+                </div>
+                <p class="text-[10px] text-stone-600 leading-relaxed">Recipes store all controls and built-in library picks. Custom uploaded files can't be saved inside a recipe — you'll be reminded to re-add them.</p>
+            </div>
+
+        </div>
+
         <!-- Live Status Screen -->
         <div id="console-box" class="text-left text-[10px] font-mono text-stone-400 bg-black/60 p-4 rounded-2xl border border-white/5 w-full max-h-40 overflow-y-auto">
             <strong class="text-stone-300">Intelligent Studio Console:</strong>
-            <div id="console-text" class="text-emerald-500 mt-1">Console online. Import your WAV/MP3 files to build an interactive soundstage...</div>
+            <div id="console-text" class="text-emerald-500 mt-1">Console online. Select a built-in loop, or drop your own, then start the soundstage...</div>
         </div>
         
     </div>
@@ -187,6 +475,7 @@
         let isPlaying = false;
         let isDrifting = false;
         let referencePitch = 432.0;
+        let soundLibraryData = null; // populated by loadLibrary() from library.json
 
         let currentChordIndex = -1;
         let chordInterval = null;
@@ -197,11 +486,27 @@
         let synthGainNode = null;
         let lowpassFilter = null;
 
+        // Pulse (sub-bass rhythm) engine
+        let pulseEnabled = false;
+        let pulseGain = null;
+        let pulseInterval = null;
+        let pulseBeat = 0;
+
+        // Brainwave entrainment (binaural / isochronic) engine
+        let entrainmentNodes = [];
+        let entrainmentOut = null;
+
+        // License gate (free = 60s export cap; full version unlocks all lengths)
+        let isLicensed = false;
+
+        // Session bells
+        let bellTimer = null;
+
         // Custom Slots Data Array (nature / custom samples)
         const slots = [
-            { id: 1, fileInput: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null },
-            { id: 2, fileInput: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null },
-            { id: 3, fileInput: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null }
+            { id: 1, fileInput: null, select: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null },
+            { id: 2, fileInput: null, select: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null },
+            { id: 3, fileInput: null, select: null, audioBuffer: null, sourceNode: null, gainNode: null, volSlider: null, volVal: null, card: null, status: null }
         ];
 
         // Active Synth Voice Tracker
@@ -232,18 +537,62 @@
         const harmonizerBadge = document.getElementById('harmonizer-badge');
         const harmonizerText = document.getElementById('harmonizer-text');
         const harmonizerDot = document.getElementById('harmonizer-dot');
+        const harmonizerMode = document.getElementById('harmonizer-mode');
+
+        const synthTimbre = document.getElementById('synth-timbre');
+        const synthTuning = document.getElementById('synth-tuning');
+        const synthMovement = document.getElementById('synth-movement');
+        const tuningLabel = document.getElementById('tuning-label');
 
         // Initialize slots selectors
         slots.forEach(slot => {
             slot.fileInput = document.getElementById(`file-${slot.id}`);
+            slot.select = document.getElementById(`library-select-${slot.id}`);
             slot.volSlider = document.getElementById(`vol-${slot.id}`);
             slot.volVal = document.getElementById(`val-${slot.id}`);
             slot.card = document.getElementById(`card-${slot.id}`);
             slot.status = document.getElementById(`status-${slot.id}`);
+            slot.lockBtn = document.getElementById(`lock-${slot.id}`);
+            slot.locked = false;
+            slot.baseKeyRoot = 7; // pitch class of this slot's sample key (default G)
 
-            // Handle Local File Imports
+            // Lock toggle — locked layers are kept when shuffling
+            slot.lockBtn.addEventListener('click', () => {
+                slot.locked = !slot.locked;
+                slot.lockBtn.textContent = slot.locked ? '🔒' : '🔓';
+                slot.lockBtn.classList.toggle('text-emerald-400', slot.locked);
+                slot.lockBtn.classList.toggle('text-stone-600', !slot.locked);
+                logMsg(`Slot ${slot.id} ${slot.locked ? 'locked — Shuffle will keep it' : 'unlocked'}.`);
+            });
+
+            // Handle Local File Drag & Drop / Selection
             slot.fileInput.addEventListener('change', (e) => {
+                // Clear dropdown visual selection when uploading custom file
+                slot.select.value = "";
+                slot.baseKeyRoot = 7; // unknown key for custom uploads → assume G
                 handleFileSelect(slot, e.target.files[0]);
+            });
+
+            // Handle Library Dropdown Selection
+            slot.select.addEventListener('change', (e) => {
+                const url = e.target.value;
+                if (url) {
+                    slot.baseKeyRoot = lookupKeyRoot(url); // track the sample's musical key
+                    initAudioContextOnInteraction();
+                    loadRelativeAsset(slot, url);
+                } else {
+                    slot.baseKeyRoot = 7;
+                    // Empty the slot buffer
+                    slot.audioBuffer = null;
+                    stopSlotBuffer(slot);
+                    slot.card.classList.remove('slot-active');
+                    slot.status.innerText = "Empty";
+                    slot.status.className = "text-[10px] text-stone-500";
+                    if (slot.id === 3) {
+                        harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-stone-700";
+                        harmonizerText.innerText = "Auto-Harmonizer inactive";
+                    }
+                }
             });
         });
 
@@ -263,6 +612,48 @@
 
         function midiToFreq(midiNote, reference) {
             return reference * (2.0 ** ((midiNote - 69) / 12.0));
+        }
+
+        // --- Key-aware harmonizer helpers ---
+        // Parse a key string ("C major", "G minor", "F#", ...) to a pitch class 0–11 (C=0).
+        function keyToPitchClass(keyStr) {
+            if (!keyStr) return 7; // default to G
+            const m = keyStr.trim().match(/^([A-Ga-g])([#b]?)/);
+            if (!m) return 7;
+            const base = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[m[1].toUpperCase()];
+            const acc = m[2] === '#' ? 1 : (m[2] === 'b' ? -1 : 0);
+            return (((base + acc) % 12) + 12) % 12;
+        }
+        // Pitch class of a chord's root (its lowest note).
+        function chordRootPC(chord) {
+            return (((chord.notes[0] % 12) + 12) % 12);
+        }
+        // Smallest semitone move (range −6..+6) to shift a sample from its key to a target root.
+        function nearestShift(fromPC, toPC) {
+            let s = (((toPC - fromPC) % 12) + 12) % 12;
+            if (s > 6) s -= 12;
+            return s;
+        }
+        // Look up a library sample's key (pitch class) by its "./file.mp3" url; default G.
+        function lookupKeyRoot(url) {
+            if (!soundLibraryData || !url) return 7;
+            const file = url.replace(/^\.\//, '');
+            for (const cat of Object.keys(soundLibraryData)) {
+                const hit = (soundLibraryData[cat] || []).find(it => it.file === file);
+                if (hit) return keyToPitchClass(hit.key);
+            }
+            return 7;
+        }
+
+        // Unlocks Audio Context securely on any scroll/touch/tap gesture (iOS safeguard)
+        function initAudioContextOnInteraction() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
         }
 
         // Bulletproof Legacy Stereo Panner Fallback for Safari/iOS
@@ -287,10 +678,10 @@
             
             const reader = new FileReader();
             reader.onload = function(evt) {
-                // We need an AudioContext to decode
-                const tempCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                // Ensure context is awake
+                initAudioContextOnInteraction();
                 
-                tempCtx.decodeAudioData(evt.target.result, (buffer) => {
+                audioCtx.decodeAudioData(evt.target.result, (buffer) => {
                     slot.audioBuffer = buffer;
                     slot.card.classList.add('slot-active');
                     slot.status.innerText = "Ready";
@@ -299,8 +690,7 @@
                     
                     if (slot.id === 3) {
                         harmonizerBadge.className = "mt-2 text-[10px] tracking-wide text-emerald-400/85 font-medium flex items-center gap-1.5 duration-500";
-                        harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping";
-                        harmonizerText.innerText = "Auto-Harmonizer active (A=432Hz locked)";
+                        updateHarmonizerBadge();
                     }
 
                     // If already playing, instantly trigger and play the new layer!
@@ -316,11 +706,11 @@
             reader.readAsArrayBuffer(file);
         }
 
-        // Async Loader for relative server files (CORS-friendly on HTTP server)
+        // Async Loader for relative server files (CORS-friendly on HTTP server / GitHub Pages)
         async function loadRelativeAsset(slot, url) {
-            if (!audioCtx) return;
+            initAudioContextOnInteraction();
             slot.status.innerText = "Loading...";
-            logMsg(`HTTP Server: Auto-fetching loop "${url}"...`);
+            logMsg(`Fetching loop asset "${url}"...`);
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -330,12 +720,11 @@
                     slot.card.classList.add('slot-active');
                     slot.status.innerText = "Ready";
                     slot.status.className = "text-[10px] text-emerald-400 font-bold";
-                    logMsg(`Successfully loaded relative asset: ${url}`);
+                    logMsg(`Successfully loaded asset: ${url}`);
                     
                     if (slot.id === 3) {
                         harmonizerBadge.className = "mt-2 text-[10px] tracking-wide text-emerald-400/85 font-medium flex items-center gap-1.5 duration-500";
-                        harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping";
-                        harmonizerText.innerText = "Auto-Harmonizer active (A=432Hz locked)";
+                        updateHarmonizerBadge();
                     }
 
                     if (isPlaying) {
@@ -347,9 +736,9 @@
                     logMsg(`Decode error on auto-load: ${url}`, true);
                 });
             } catch (e) {
-                slot.status.innerText = "CORS Block";
+                slot.status.innerText = "Error";
                 slot.status.className = "text-[10px] text-yellow-400 font-medium";
-                logMsg(`Local file block: "${url}". Please drag-and-drop the file manually or run via local HTTP server to activate auto-loading.`, false);
+                logMsg(`CORS / File access block: Could not fetch "${url}". If you are running locally without an HTTP server, please drag-and-drop the file manually!`, true);
             }
         }
 
@@ -381,11 +770,25 @@
                 synthGainNode.connect(lowpassFilter);
                 synthGainNode.gain.setValueAtTime(volSynthSlider.value / 100, audioCtx.currentTime);
 
-                // Setup the 3 Slots Gain Routing Node
+                // 3b. Pulse (sub-bass) bus — own warm lowpass straight to master
+                pulseGain = audioCtx.createGain();
+                pulseGain.gain.setValueAtTime(1, audioCtx.currentTime);
+                const pulseLP = audioCtx.createBiquadFilter();
+                pulseLP.type = 'lowpass';
+                pulseLP.frequency.setValueAtTime(220, audioCtx.currentTime);
+                pulseLP.Q.setValueAtTime(0.7, audioCtx.currentTime);
+                pulseGain.connect(pulseLP);
+                pulseLP.connect(masterGain);
+
+                // Setup the 3 Slots Gain Routing Node (+ a harmonizer "duck" gain in series)
                 slots.forEach(slot => {
                     slot.gainNode = audioCtx.createGain();
                     slot.gainNode.connect(masterGain);
                     slot.gainNode.gain.setValueAtTime(slot.volSlider.value / 100, audioCtx.currentTime);
+
+                    slot.harmGain = audioCtx.createGain();
+                    slot.harmGain.gain.setValueAtTime(1, audioCtx.currentTime);
+                    slot.harmGain.connect(slot.gainNode);
                 });
 
                 logMsg("Acoustic routing graph successfully built.");
@@ -395,28 +798,61 @@
             }
         }
 
+        // Defines the pad's note set, timbre, stereo spread and motion per movement mode.
+        // Shared by both live playback and the offline render so they always match.
+        //   swells / drone -> full warm chord (original "Warm Velvet" voicing)
+        //   deepbass       -> low root + sub-octave + soft fifth, sine, near-mono (no harsh highs)
+        function getPadVoicing(chord, movement) {
+            if (movement === 'deepbass') {
+                const r = chord.notes[0]; // chord root, already in the bass register
+                return {
+                    timbreOverride: 'sine',
+                    spread: 0.15,
+                    lfoBase: 0.025,
+                    notes: [
+                        { midi: r,      vol: 0.32 }, // warm root
+                        { midi: r - 12, vol: 0.18 }, // sub-octave weight
+                        { midi: r + 7,  vol: 0.09 }  // gentle fifth for body
+                    ]
+                };
+            }
+            return {
+                timbreOverride: null,
+                spread: 0.6,
+                lfoBase: 0.04,
+                notes: chord.notes.map((m, i) => ({ midi: m, vol: i === 0 ? 0.28 : (i === 1 ? 0.18 : 0.12) }))
+            };
+        }
+
         // Play Synthesizer Chord voices (same "Warm Velvet" code!)
         function playSynthChord(chord, crossfadeDuration = 8.0, sustainDuration = 25.0) {
             const now = audioCtx.currentTime;
             const nodes = [];
             const detuneHz = 0.15;
-            
+            const movement = synthMovement ? synthMovement.value : 'swells';
+            const voicing = getPadVoicing(chord, movement);
+            const timbre = voicing.timbreOverride || synthTimbre.value;
+
+            // Warm the floor harder in deep-bass mode (tames the harsh upper partials)
+            if (lowpassFilter) {
+                lowpassFilter.frequency.setTargetAtTime(movement === 'deepbass' ? 180 : 450, now, 0.4);
+            }
+
             logMsg(`Playing Synth background Pad: ${chord.name}...`);
             try {
-                chord.notes.forEach((note, index) => {
-                    const freq = midiToFreq(note, referencePitch);
-                    const isBass = index === 0;
+                voicing.notes.forEach((voice, index) => {
+                    const freq = midiToFreq(voice.midi, referencePitch);
 
                     const oscL = audioCtx.createOscillator();
-                    oscL.type = 'sine';
+                    oscL.type = timbre;
                     oscL.frequency.setValueAtTime(freq - detuneHz, now);
 
                     const oscR = audioCtx.createOscillator();
-                    oscR.type = 'sine';
+                    oscR.type = timbre;
                     oscR.frequency.setValueAtTime(freq + detuneHz, now);
 
-                    const panL = createSafePanner(audioCtx, -0.6, now);
-                    const panR = createSafePanner(audioCtx, 0.6, now);
+                    const panL = createSafePanner(audioCtx, -voicing.spread, now);
+                    const panR = createSafePanner(audioCtx, voicing.spread, now);
 
                     const envelopeGain = audioCtx.createGain();
                     envelopeGain.gain.setValueAtTime(0, now);
@@ -426,10 +862,9 @@
 
                     const lfoOsc = audioCtx.createOscillator();
                     lfoOsc.type = 'sine';
-                    lfoOsc.frequency.setValueAtTime(0.04 + (index * 0.008), now);
+                    lfoOsc.frequency.setValueAtTime(voicing.lfoBase + (index * 0.008), now);
 
                     const lfoModScale = audioCtx.createGain();
-                    const baseVolume = isBass ? 0.28 : (index === 1 ? 0.18 : 0.12);
                     lfoModScale.gain.setValueAtTime(0.15, now);
 
                     // Connect LFO Graph
@@ -446,7 +881,7 @@
                     lfoGain.connect(synthGainNode);
 
                     // Volume Envelope
-                    const targetBaseVolume = baseVolume * 0.65;
+                    const targetBaseVolume = voice.vol * 0.65;
                     envelopeGain.gain.setValueAtTime(0, now);
                     envelopeGain.gain.linearRampToValueAtTime(targetBaseVolume, now + crossfadeDuration);
                     envelopeGain.gain.setValueAtTime(targetBaseVolume, now + sustainDuration - crossfadeDuration);
@@ -487,17 +922,22 @@
                 source.buffer = slot.audioBuffer;
                 source.loop = true; // Auto-loop the nature sound or chime!
 
-                // Connect to the slot's independent gain control
-                source.connect(slot.gainNode);
-                
-                // If it is our Tonal Spark Slot (Slot C / id: 3), let's pitch-shift/harmonize it dynamically!
-                if (slot.id === 3 && currentChordIndex !== -1) {
-                    const currentChord = chords[currentChordIndex];
-                    const targetRate = Math.pow(2.0, currentChord.semitoneShift / 12.0);
-                    source.playbackRate.setValueAtTime(targetRate, now);
-                    logMsg(`Harmonizer: Transposed loaded Slot C sample to match initial chord ${currentChord.name} (pitch ratio: ${targetRate.toFixed(3)})`);
+                // Route through the harmonizer "duck" gain, then the slot's volume gain
+                source.connect(slot.harmGain || slot.gainNode);
+                if (slot.harmGain) { // make sure the duck gain is fully open for the new voice
+                    slot.harmGain.gain.cancelScheduledValues(now);
+                    slot.harmGain.gain.setValueAtTime(1, now);
                 }
-                
+
+                // Tonal Spark Slot (Slot C / id: 3): set initial pitch per harmonizer mode
+                if (slot.id === 3 && harmonizerMode.value !== 'off' && currentChordIndex !== -1) {
+                    const currentChord = chords[currentChordIndex];
+                    const shift = nearestShift(slot.baseKeyRoot, chordRootPC(currentChord));
+                    const targetRate = Math.pow(2.0, shift / 12.0);
+                    source.playbackRate.setValueAtTime(targetRate, now); // instant at start (no swoosh)
+                    logMsg(`Harmonizer: Slot C set to match ${currentChord.name} (${shift >= 0 ? '+' : ''}${shift} st, x${targetRate.toFixed(3)})`);
+                }
+
                 source.start(now);
                 slot.sourceNode = source;
             } catch (e) {
@@ -515,33 +955,72 @@
             }
         }
 
+        // Re-tune Slot C's playback rate. "Glide" sweeps the pitch (tape style);
+        // otherwise (Smooth) it ducks the harmonizer gain, snaps the pitch at the
+        // quietest point, and fades back — so there's no audible speed sweep.
+        function harmonizeSlot3(targetRate, smooth) {
+            const slot3 = slots[2];
+            if (!slot3.sourceNode || !audioCtx) return;
+            const now = audioCtx.currentTime;
+            if (smooth && slot3.harmGain) {
+                const hg = slot3.harmGain.gain;
+                hg.cancelScheduledValues(now);
+                hg.setValueAtTime(Math.max(0.0008, hg.value), now);
+                hg.linearRampToValueAtTime(0.0008, now + 0.22);          // duck down
+                slot3.sourceNode.playbackRate.setValueAtTime(targetRate, now + 0.22); // snap at the bottom
+                hg.linearRampToValueAtTime(1, now + 0.62);               // fade back up
+            } else {
+                slot3.sourceNode.playbackRate.setTargetAtTime(targetRate, now, 0.6); // tape glide
+            }
+        }
+
+        // Keeps the Slot C badge honest about the current harmonizer mode.
+        function updateHarmonizerBadge() {
+            const slot3 = slots[2];
+            const mode = harmonizerMode.value;
+            if (!slot3 || (!slot3.audioBuffer && !slot3.sourceNode)) {
+                harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-stone-700";
+                harmonizerText.innerText = "Auto-Harmonizer inactive";
+                return;
+            }
+            if (mode === 'off') {
+                harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-stone-500";
+                harmonizerText.innerText = "Harmonizer off — natural pitch";
+            } else {
+                harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping";
+                harmonizerText.innerText = mode === 'smooth' ? "Harmonizer ready (Smooth)" : "Harmonizer ready (Glide)";
+            }
+        }
+
         // Step through progression
         function stepProgression() {
             try {
-                currentChordIndex = (currentChordIndex + 1) % chords.length;
+                const movementMode = synthMovement ? synthMovement.value : 'swells';
+                if (movementMode === 'drone') {
+                    currentChordIndex = 0; // Lock on G-Root chord
+                } else {
+                    currentChordIndex = (currentChordIndex + 1) % chords.length;
+                }
                 const currentChord = chords[currentChordIndex];
                 
                 // Play background pad chord
                 playSynthChord(currentChord, 8.0, 25.0);
                 
-                // DYNAMIC HARMONIZER: Transpose Slot C (Instrumental Spark) to fit the new chord!
+                // DYNAMIC HARMONIZER: re-tune Slot C (Instrumental Spark) to fit the new chord!
                 const slot3 = slots[2]; // Slot C is index 2
-                if (slot3.sourceNode) {
-                    const now = audioCtx.currentTime;
-                    // Calculate target playback speed based on the semitone offset relative to G Major
-                    const targetRate = Math.pow(2.0, currentChord.semitoneShift / 12.0);
-                    
-                    logMsg(`Harmonizer: Pitch-shifting Slot C sample to match "${currentChord.name}" (gliding speed to x${targetRate.toFixed(3)})...`);
-                    
-                    // Smooth, click-free pitch glide (exponential tape-glide curve!)
-                    slot3.sourceNode.playbackRate.setTargetAtTime(targetRate, now, 0.6);
-                    
-                    // Update UI indicator
-                    const dirSymbol = currentChord.semitoneShift < 0 ? "↓" : "↑";
-                    const semitoneText = currentChord.semitoneShift === 0 ? "Root" : `${dirSymbol}${Math.abs(currentChord.semitoneShift)} semitones`;
+                const hmode = harmonizerMode.value;
+                if (slot3.sourceNode && hmode !== 'off') {
+                    const shift = nearestShift(slot3.baseKeyRoot, chordRootPC(currentChord));
+                    const targetRate = Math.pow(2.0, shift / 12.0);
+                    harmonizeSlot3(targetRate, hmode === 'smooth');
+
+                    const dirSymbol = shift < 0 ? "↓" : "↑";
+                    const semitoneText = shift === 0 ? "Root" : `${dirSymbol}${Math.abs(shift)} semitones`;
                     harmonizerText.innerText = `Auto-Harmonizing to ${currentChord.name} (${semitoneText} / x${targetRate.toFixed(2)})`;
+                } else if (slot3.sourceNode && hmode === 'off') {
+                    harmonizerText.innerText = `Harmonizer off — playing at natural pitch`;
                 } else if (slot3.audioBuffer) {
-                    harmonizerText.innerText = `Auto-Harmonizer locked. Next chord: ${currentChord.name}`;
+                    harmonizerText.innerText = `Auto-Harmonizer ready. Next chord: ${currentChord.name}`;
                 }
                 
                 // Clean up synth notes
@@ -613,11 +1092,14 @@
                     playBtnText.innerText = "Start Soundstage";
                     
                     driftBtn.classList.remove('drift-glowing');
-                    driftBtnText.innerText = "Enable Auto-Drift Remixing";
+                    driftBtnText.innerText = "Enable Auto-Drift";
                     
                     clearInterval(chordInterval);
                     clearInterval(driftInterval);
-                    
+                    stopPulseInterval();
+                    stopEntrainment();
+                    stopBellInterval();
+
                     logMsg("Stopping master soundstage and freeing audio blocks...");
                     
                     if (masterGain && audioCtx) {
@@ -626,6 +1108,7 @@
                         masterGain.gain.linearRampToValueAtTime(0, now + 1.2);
                         
                         setTimeout(() => {
+                            // Stop synth
                             activeSynthNodes.forEach(item => {
                                 item.nodes.forEach(node => {
                                     try { node.stop(); } catch(e){}
@@ -634,6 +1117,7 @@
                             });
                             activeSynthNodes = [];
 
+                            // Stop slot files
                             slots.forEach(slot => {
                                 stopSlotBuffer(slot);
                                 try { slot.gainNode.disconnect(); } catch(e){}
@@ -643,6 +1127,8 @@
                                 audioCtx.close();
                                 audioCtx = null;
                             }
+                            pulseGain = null;
+                            entrainmentOut = null;
                             
                             // Reset UI state
                             harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-stone-700";
@@ -672,16 +1158,15 @@
                         }
                     });
 
-                    // AUTO-LOAD TRIGGER:
-                    // If running via HTTP server (CORS-friendly), automatically load relative files!
-                    if (window.location.protocol.startsWith('http')) {
-                        logMsg("HTTP Server active! Initiating local auto-loading sequence...");
-                        loadRelativeAsset(slots[0], "./flowing water.mp3");
-                        loadRelativeAsset(slots[1], "./fireplace.mp3");
-                        loadRelativeAsset(slots[2], "./Sample_Floor-pads.mp3");
-                    } else {
-                        logMsg("Local File protocol (file://) active. Drag and drop your files manually.");
-                    }
+                    // Start the sub-bass pulse if it's enabled
+                    if (pulseEnabled) startPulse();
+
+                    // Start brainwave entrainment if a mode is selected
+                    if (entrainMode.value !== 'off') startEntrainment();
+
+                    // Session bells: opening tone + interval schedule
+                    if (bellStart.checked) ringBellNow();
+                    startBellInterval();
                 }
             } catch (e) {
                 logMsg("togglePlay Error: " + e.message, true);
@@ -707,7 +1192,7 @@
             if (isDrifting) {
                 isDrifting = false;
                 driftBtn.classList.remove('drift-glowing');
-                driftBtnText.innerText = "Enable Auto-Drift Remixing";
+                driftBtnText.innerText = "Enable Auto-Drift";
                 clearInterval(driftInterval);
                 logMsg("Auto-Drift disabled. Custom sliders are active.");
             } else {
@@ -736,6 +1221,1064 @@
                 }
             });
         });
+
+        // Event listeners for custom synth floor controls
+        synthTuning.addEventListener('change', () => {
+            referencePitch = parseFloat(synthTuning.value);
+            tuningLabel.innerText = `${referencePitch}Hz`;
+            logMsg(`Master reference pitch adjusted to A=${referencePitch}Hz (Solfeggio tuning)`);
+            
+            // If playing, let's update any active oscillators' pitches
+            if (isPlaying && audioCtx) {
+                logMsg("Pitch adjustments will cascade on the next harmonic cycle.");
+            }
+        });
+
+        synthTimbre.addEventListener('change', () => {
+            logMsg(`Synthesizer waveform timbre set to: ${synthTimbre.value.toUpperCase()}`);
+        });
+
+        synthMovement.addEventListener('change', () => {
+            const labels = { drone: 'STATIC G-ROOT DRONE', deepbass: 'DEEP BASS SWELLS', swells: 'CHORD PROGRESSION SWELLS' };
+            logMsg(`Movement mode set to: ${labels[synthMovement.value] || synthMovement.value}`);
+            if (isPlaying && synthMovement.value === 'drone') {
+                logMsg("Harmonizer: Locking pitch tracking to G-Root.");
+            }
+            // Apply the warmer/brighter floor filter right away (don't wait for next chord)
+            if (audioCtx && lowpassFilter) {
+                lowpassFilter.frequency.setTargetAtTime(synthMovement.value === 'deepbass' ? 180 : 450, audioCtx.currentTime, 0.4);
+            }
+        });
+
+        // Harmonizer mode switch — apply to the playing Slot C right away (smoothly)
+        harmonizerMode.addEventListener('change', () => {
+            const mode = harmonizerMode.value;
+            logMsg(`Harmonizer mode: ${mode}.`);
+            const slot3 = slots[2];
+            if (isPlaying && slot3.sourceNode) {
+                if (mode === 'off') {
+                    harmonizeSlot3(1.0, true); // ease back to natural pitch
+                } else {
+                    const chord = chords[currentChordIndex >= 0 ? currentChordIndex : 0];
+                    const shift = nearestShift(slot3.baseKeyRoot, chordRootPC(chord));
+                    harmonizeSlot3(Math.pow(2.0, shift / 12.0), true); // engage smoothly now
+                }
+            }
+            updateHarmonizerBadge();
+        });
+
+        /* =====================================================================
+           PHASE A — OFFLINE RENDER (fixed-length WAV / MP3 export)
+           Re-builds the soundstage inside an OfflineAudioContext and renders it
+           far faster than real-time, so a 30-min track bounces in seconds.
+        ===================================================================== */
+
+        const RENDER_SAMPLE_RATE = 44100;
+        const CHORD_STEP = 17;     // seconds between chord changes (matches live)
+        const CHORD_SUSTAIN = 25;  // seconds each chord rings (overlap = crossfade)
+        const CHORD_CROSSFADE = 8;
+        const DRIFT_STEP = 25;     // seconds between Auto-Drift volume moves
+
+        // Schedules one synth chord at an absolute time inside any context.
+        // Uses the same getPadVoicing() as live playback so renders match what you hear.
+        function playSynthChordOffline(ctx, synthGain, chord, startTime, refPitch, timbre, movement) {
+            const detuneHz = 0.15;
+            const voicing = getPadVoicing(chord, movement);
+            const useTimbre = voicing.timbreOverride || timbre;
+            voicing.notes.forEach((voice, index) => {
+                const freq = refPitch * (2.0 ** ((voice.midi - 69) / 12.0));
+
+                const oscL = ctx.createOscillator();
+                oscL.type = useTimbre;
+                oscL.frequency.setValueAtTime(freq - detuneHz, startTime);
+                const oscR = ctx.createOscillator();
+                oscR.type = useTimbre;
+                oscR.frequency.setValueAtTime(freq + detuneHz, startTime);
+
+                const panL = ctx.createStereoPanner(); panL.pan.setValueAtTime(-voicing.spread, startTime);
+                const panR = ctx.createStereoPanner(); panR.pan.setValueAtTime(voicing.spread, startTime);
+
+                const envelopeGain = ctx.createGain();
+                const lfoGain = ctx.createGain();
+                lfoGain.gain.setValueAtTime(1.0, startTime);
+
+                const lfoOsc = ctx.createOscillator();
+                lfoOsc.type = 'sine';
+                lfoOsc.frequency.setValueAtTime(voicing.lfoBase + (index * 0.008), startTime);
+                const lfoModScale = ctx.createGain();
+                lfoModScale.gain.setValueAtTime(0.15, startTime);
+                lfoOsc.connect(lfoModScale);
+                lfoModScale.connect(lfoGain.gain);
+
+                oscL.connect(panL); panL.connect(envelopeGain);
+                oscR.connect(panR); panR.connect(envelopeGain);
+                envelopeGain.connect(lfoGain);
+                lfoGain.connect(synthGain);
+
+                const target = voice.vol * 0.65;
+                envelopeGain.gain.setValueAtTime(0, startTime);
+                envelopeGain.gain.linearRampToValueAtTime(target, startTime + CHORD_CROSSFADE);
+                envelopeGain.gain.setValueAtTime(target, startTime + CHORD_SUSTAIN - CHORD_CROSSFADE);
+                envelopeGain.gain.linearRampToValueAtTime(0, startTime + CHORD_SUSTAIN);
+
+                oscL.start(startTime); oscR.start(startTime); lfoOsc.start(startTime);
+                oscL.stop(startTime + CHORD_SUSTAIN);
+                oscR.stop(startTime + CHORD_SUSTAIN);
+                lfoOsc.stop(startTime + CHORD_SUSTAIN);
+            });
+        }
+
+        async function renderOffline(opts) {
+            const { duration, fadeIn, fadeOut, useDrift } = opts;
+            const sr = RENDER_SAMPLE_RATE;
+            const ctx = new OfflineAudioContext(2, Math.ceil(sr * duration), sr);
+            const refPitch = referencePitch;
+            const timbre = synthTimbre.value;
+            const movement = synthMovement.value;
+            const droneMode = movement === 'drone';
+
+            // --- master chain (mirrors initAudio) ---
+            const master = ctx.createGain();
+            master.connect(ctx.destination);
+            const baseLevel = 0.8;
+
+            const lp = ctx.createBiquadFilter();
+            lp.type = 'lowpass';
+            lp.frequency.setValueAtTime(movement === 'deepbass' ? 180 : 450, 0);
+            lp.Q.setValueAtTime(0.8, 0);
+            lp.connect(master);
+
+            const synthGain = ctx.createGain();
+            synthGain.gain.setValueAtTime(volSynthSlider.value / 100, 0);
+            synthGain.connect(lp);
+
+            // --- master fade envelope ---
+            master.gain.setValueAtTime(0.0001, 0);
+            master.gain.linearRampToValueAtTime(baseLevel, Math.max(0.01, fadeIn));
+            const outStart = Math.max(fadeIn, duration - fadeOut);
+            master.gain.setValueAtTime(baseLevel, outStart);
+            master.gain.linearRampToValueAtTime(0.0001, duration);
+
+            // --- chord progression across the whole render ---
+            const chordTimes = [];
+            let idx = -1;
+            for (let t = 0; t < duration; t += CHORD_STEP) {
+                idx = droneMode ? 0 : (idx + 1) % chords.length;
+                chordTimes.push({ t, chord: chords[idx] });
+                playSynthChordOffline(ctx, synthGain, chords[idx], t, refPitch, timbre, movement);
+            }
+
+            // --- sample slots ---
+            slots.forEach(slot => {
+                if (!slot.audioBuffer) return;
+                const g = ctx.createGain();
+                g.connect(master);
+                const lvl = slot.volSlider.value / 100;
+                g.gain.setValueAtTime(lvl, 0);
+
+                // Auto-Drift volume automation (deterministic per render)
+                if (useDrift) {
+                    for (let t = DRIFT_STEP; t < duration; t += DRIFT_STEP) {
+                        const tgt = 0.15 + Math.random() * 0.65;
+                        const fade = 10 + Math.random() * 15;
+                        g.gain.linearRampToValueAtTime(tgt, Math.min(duration, t + fade));
+                    }
+                }
+
+                const src = ctx.createBufferSource();
+                src.buffer = slot.audioBuffer;
+                src.loop = true;
+
+                // Harmonizer pitch-tracking for the tonal Sparks slot (key-aware, mode-aware)
+                const hmode = harmonizerMode.value;
+                if (slot.id === 3 && hmode !== 'off') {
+                    const hg = ctx.createGain();      // duck gain for "smooth" mode
+                    hg.gain.setValueAtTime(1, 0);
+                    hg.connect(g);
+                    src.connect(hg);
+                    const keyRoot = slot.baseKeyRoot;
+                    const rateFor = (chord) => Math.pow(2.0, nearestShift(keyRoot, chordRootPC(chord)) / 12.0);
+                    src.playbackRate.setValueAtTime(rateFor(chordTimes[0].chord), 0);
+                    chordTimes.forEach(({ t, chord }) => {
+                        if (t === 0) return;
+                        if (hmode === 'smooth') {
+                            hg.gain.setValueAtTime(1, Math.max(0, t - 0.22));
+                            hg.gain.linearRampToValueAtTime(0.0008, t);
+                            src.playbackRate.setValueAtTime(rateFor(chord), t);
+                            hg.gain.linearRampToValueAtTime(1, t + 0.4);
+                        } else { // glide
+                            src.playbackRate.setTargetAtTime(rateFor(chord), t, 0.6);
+                        }
+                    });
+                } else {
+                    src.connect(g); // grounding/texture slots, or harmonizer off = natural pitch
+                }
+                src.start(0);
+                src.stop(duration);
+            });
+
+            // Drift the pad too
+            if (useDrift) {
+                for (let t = DRIFT_STEP; t < duration; t += DRIFT_STEP) {
+                    const tgt = 0.3 + Math.random() * 0.5;
+                    const fade = 12 + Math.random() * 12;
+                    synthGain.gain.linearRampToValueAtTime(tgt, Math.min(duration, t + fade));
+                }
+            }
+
+            // Sub-bass pulse, chord-root-locked, scheduled across the render
+            if (pulseEnabled) {
+                const pg = ctx.createGain();
+                pg.gain.setValueAtTime(1, 0);
+                const plp = ctx.createBiquadFilter();
+                plp.type = 'lowpass';
+                plp.frequency.setValueAtTime(220, 0);
+                plp.Q.setValueAtTime(0.7, 0);
+                pg.connect(plp); plp.connect(master);
+
+                const beat = 60 / parseInt(pulseTempo.value, 10);
+                const level = (pulseLevel.value / 100) * 0.9;
+                const pattern = pulsePattern.value;
+                const rootAt = (tt) => {
+                    let c = chordTimes[0].chord;
+                    for (const ct of chordTimes) { if (ct.t <= tt) c = ct.chord; else break; }
+                    return refPitch * (2.0 ** ((c.notes[0] - 12 - 69) / 12.0));
+                };
+                let bi = 0;
+                for (let t = 0.05; t < duration; t += beat) {
+                    const rf = rootAt(t);
+                    if (pattern === 'pulse') {
+                        playPulseHit(ctx, pg, rf, t, level);
+                    } else if (pattern === 'sparse') {
+                        if (bi % 2 === 0) playPulseHit(ctx, pg, rf, t, level);
+                    } else if (pattern === 'heartbeat') {
+                        if (bi % 2 === 0) {
+                            playPulseHit(ctx, pg, rf, t, level);
+                            if (t + 0.22 < duration) playPulseHit(ctx, pg, rf, t + 0.22, level * 0.7);
+                        }
+                    }
+                    bi++;
+                }
+            }
+
+            // Brainwave entrainment, rendered for the whole duration
+            if (entrainMode.value !== 'off') {
+                buildEntrainment(ctx, master, entrainMode.value,
+                    parseFloat(entrainBand.value), parseFloat(entrainCarrier.value),
+                    (entrainLevel.value / 100) * 0.4, 0, duration);
+            }
+
+            // Session bells (tuned to the chord root active at each ring)
+            {
+                const bl = (bellLevel.value / 100) * 0.5;
+                const bellRootAt = (tt) => {
+                    let c = chordTimes[0].chord;
+                    for (const ct of chordTimes) { if (ct.t <= tt) c = ct.chord; else break; }
+                    return midiToFreq(c.notes[0] + 24, refPitch);
+                };
+                if (bellStart.checked) {
+                    const ts = Math.max(0.3, fadeIn);
+                    playBell(ctx, master, bellRootAt(ts), ts, bl);
+                }
+                const im = parseFloat(bellIntervalSelect.value);
+                if (im) {
+                    for (let t = im * 60; t < duration - 5; t += im * 60) playBell(ctx, master, bellRootAt(t), t, bl);
+                }
+                if (bellEnd.checked) {
+                    const te = Math.max(1, duration - Math.max(fadeOut, 2) - 2);
+                    playBell(ctx, master, bellRootAt(te), te, bl);
+                }
+            }
+
+            return await ctx.startRendering();
+        }
+
+        // Peak-normalize an AudioBuffer in place to a target dBFS ceiling.
+        function normalizeBuffer(buffer, targetDb = -1) {
+            let peak = 0;
+            for (let c = 0; c < buffer.numberOfChannels; c++) {
+                const d = buffer.getChannelData(c);
+                for (let i = 0; i < d.length; i++) {
+                    const a = Math.abs(d[i]);
+                    if (a > peak) peak = a;
+                }
+            }
+            if (peak === 0) return;
+            const targetLin = Math.pow(10, targetDb / 20);
+            const gain = targetLin / peak;
+            if (gain >= 1 && gain < 1.0001) return; // already at/over ceiling, leave it
+            for (let c = 0; c < buffer.numberOfChannels; c++) {
+                const d = buffer.getChannelData(c);
+                for (let i = 0; i < d.length; i++) d[i] *= gain;
+            }
+        }
+
+        // Encode an AudioBuffer to a 16-bit PCM WAV Blob.
+        function audioBufferToWav(buffer) {
+            const numCh = buffer.numberOfChannels;
+            const sr = buffer.sampleRate;
+            const len = buffer.length;
+            const bytesPerSample = 2;
+            const blockAlign = numCh * bytesPerSample;
+            const dataSize = len * blockAlign;
+            const ab = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(ab);
+            const writeStr = (off, s) => { for (let i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i)); };
+
+            writeStr(0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeStr(8, 'WAVE');
+            writeStr(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);          // PCM
+            view.setUint16(22, numCh, true);
+            view.setUint32(24, sr, true);
+            view.setUint32(28, sr * blockAlign, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, 16, true);
+            writeStr(36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            const chans = [];
+            for (let c = 0; c < numCh; c++) chans.push(buffer.getChannelData(c));
+            let off = 44;
+            for (let i = 0; i < len; i++) {
+                for (let c = 0; c < numCh; c++) {
+                    let s = Math.max(-1, Math.min(1, chans[c][i]));
+                    s = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                    view.setInt16(off, s, true);
+                    off += 2;
+                }
+            }
+            return new Blob([ab], { type: 'audio/wav' });
+        }
+
+        // Lazy-load the lamejs MP3 encoder only when first needed.
+        let lamePromise = null;
+        function loadLame() {
+            if (lamePromise) return lamePromise;
+            lamePromise = new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = 'https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js';
+                s.onload = () => resolve(window.lamejs);
+                s.onerror = () => reject(new Error('Could not load MP3 encoder (offline?). Use WAV instead.'));
+                document.head.appendChild(s);
+            });
+            return lamePromise;
+        }
+
+        async function audioBufferToMp3(buffer, onProgress) {
+            const lame = await loadLame();
+            const numCh = Math.min(2, buffer.numberOfChannels);
+            const sr = buffer.sampleRate;
+            const enc = new lame.Mp3Encoder(numCh, sr, 320);
+            const left = buffer.getChannelData(0);
+            const right = numCh > 1 ? buffer.getChannelData(1) : left;
+
+            const toInt16 = (f) => { const o = new Int16Array(f.length); for (let i = 0; i < f.length; i++) { const s = Math.max(-1, Math.min(1, f[i])); o[i] = s < 0 ? s * 0x8000 : s * 0x7FFF; } return o; };
+            const l16 = toInt16(left);
+            const r16 = toInt16(right);
+
+            const block = 1152;
+            const parts = [];
+            for (let i = 0; i < l16.length; i += block) {
+                const lc = l16.subarray(i, i + block);
+                const rc = r16.subarray(i, i + block);
+                const buf = numCh > 1 ? enc.encodeBuffer(lc, rc) : enc.encodeBuffer(lc);
+                if (buf.length) parts.push(new Int8Array(buf));
+                if (onProgress && (i % (block * 200) === 0)) {
+                    onProgress(i / l16.length);
+                    await new Promise(r => setTimeout(r, 0)); // yield so UI updates
+                }
+            }
+            const end = enc.flush();
+            if (end.length) parts.push(new Int8Array(end));
+            return new Blob(parts, { type: 'audio/mp3' });
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = filename; a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 4000);
+        }
+
+        const renderBtn = document.getElementById('render-btn');
+        const renderBtnText = document.getElementById('render-btn-text');
+        const renderProgress = document.getElementById('render-progress');
+
+        renderBtn.addEventListener('click', async () => {
+            let duration = parseInt(document.getElementById('render-length').value, 10);
+            if (!isLicensed && duration > 60) {
+                duration = 60;
+                logMsg('Free version: exports are capped at 60s. Unlock the full version for any-length, royalty-free renders.', true);
+            }
+            const format = document.getElementById('render-format').value;
+            const fadeIn = Math.max(0, parseFloat(document.getElementById('render-fadein').value) || 0);
+            const fadeOut = Math.max(0, parseFloat(document.getElementById('render-fadeout').value) || 0);
+            const normalize = document.getElementById('render-normalize').checked;
+
+            renderBtn.disabled = true;
+            const loadedSlots = slots.filter(s => s.audioBuffer).length;
+            renderProgress.textContent = `Rendering ${Math.round(duration/60)} min (${loadedSlots} sample layer${loadedSlots===1?'':'s'} + pad)...`;
+            renderBtnText.textContent = 'Rendering...';
+            logMsg(`Offline render started: ${duration}s, fades ${fadeIn}/${fadeOut}s, drift ${isDrifting ? 'on' : 'off'}.`);
+
+            try {
+                await new Promise(r => setTimeout(r, 50)); // let UI paint
+                const buffer = await renderOffline({ duration, fadeIn, fadeOut, useDrift: isDrifting });
+                if (normalize) { renderProgress.textContent = 'Normalizing levels...'; normalizeBuffer(buffer, -1); }
+
+                const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-');
+                let blob, filename;
+                if (format === 'mp3') {
+                    renderProgress.textContent = 'Encoding MP3 (320 kbps)...';
+                    blob = await audioBufferToMp3(buffer, p => { renderProgress.textContent = `Encoding MP3... ${Math.round(p*100)}%`; });
+                    filename = `Ambient_Studio_${stamp}.mp3`;
+                } else {
+                    renderProgress.textContent = 'Writing WAV file...';
+                    blob = audioBufferToWav(buffer);
+                    filename = `Ambient_Studio_${stamp}.wav`;
+                }
+                downloadBlob(blob, filename);
+                const mb = (blob.size / 1048576).toFixed(1);
+                renderProgress.textContent = `Done — ${filename} (${mb} MB)`;
+                logMsg(`Render complete: ${filename} (${mb} MB).`);
+            } catch (e) {
+                renderProgress.textContent = 'Render failed: ' + e.message;
+                logMsg('Render error: ' + e.message, true);
+            } finally {
+                renderBtn.disabled = false;
+                renderBtnText.textContent = 'Render & Download';
+            }
+        });
+
+        /* =====================================================================
+           PHASE A — PRESET RECIPES (save / load / import / export)
+        ===================================================================== */
+
+        const PRESET_KEY = 'ambientStudioPresets';
+        const presetSelect = document.getElementById('preset-select');
+
+        function loadPresetStore() {
+            try { return JSON.parse(localStorage.getItem(PRESET_KEY)) || {}; }
+            catch (e) { return {}; }
+        }
+        function savePresetStore(store) {
+            localStorage.setItem(PRESET_KEY, JSON.stringify(store));
+        }
+        function refreshPresetDropdown(selectName) {
+            const store = loadPresetStore();
+            presetSelect.innerHTML = '<option value="">[ Select preset... ]</option>';
+            Object.keys(store).sort().forEach(name => {
+                const o = document.createElement('option');
+                o.value = name; o.textContent = name;
+                presetSelect.appendChild(o);
+            });
+            if (selectName) presetSelect.value = selectName;
+        }
+
+        function captureState(name) {
+            return {
+                v: 1,
+                name: name || 'Untitled',
+                created: new Date().toISOString(),
+                synth: {
+                    timbre: synthTimbre.value,
+                    tuning: synthTuning.value,
+                    movement: synthMovement.value,
+                    level: parseInt(volSynthSlider.value, 10)
+                },
+                slots: slots.map(s => ({
+                    select: s.select.value,
+                    vol: parseInt(s.volSlider.value, 10),
+                    custom: !!(s.audioBuffer && !s.select.value)
+                })),
+                drift: isDrifting,
+                harmonizer: harmonizerMode.value,
+                pulse: {
+                    enabled: pulseEnabled,
+                    tempo: pulseTempo.value,
+                    pattern: pulsePattern.value,
+                    level: pulseLevel.value
+                },
+                entrain: {
+                    mode: entrainMode.value,
+                    band: entrainBand.value,
+                    carrier: entrainCarrier.value,
+                    level: entrainLevel.value
+                },
+                bells: {
+                    start: bellStart.checked,
+                    end: bellEnd.checked,
+                    interval: bellIntervalSelect.value,
+                    level: bellLevel.value
+                },
+                render: {
+                    length: document.getElementById('render-length').value,
+                    format: document.getElementById('render-format').value,
+                    fadein: document.getElementById('render-fadein').value,
+                    fadeout: document.getElementById('render-fadeout').value,
+                    normalize: document.getElementById('render-normalize').checked
+                }
+            };
+        }
+
+        function applyState(p) {
+            if (!p || !p.synth) { logMsg('Invalid preset file.', true); return; }
+            // Synth controls
+            synthTimbre.value = p.synth.timbre;
+            synthTuning.value = p.synth.tuning;
+            synthTuning.dispatchEvent(new Event('change'));   // updates referencePitch + label
+            synthMovement.value = p.synth.movement;
+            volSynthSlider.value = p.synth.level;
+            volSynthSlider.dispatchEvent(new Event('input')); // updates label + live gain
+
+            // Slots
+            let needCustom = [];
+            (p.slots || []).forEach((sp, i) => {
+                const slot = slots[i];
+                if (!slot) return;
+                if (sp.select) {
+                    slot.select.value = sp.select;
+                    slot.select.dispatchEvent(new Event('change')); // loads the asset
+                } else if (sp.custom) {
+                    needCustom.push(`Slot ${slot.id}`);
+                }
+                slot.volSlider.value = sp.vol;
+                slot.volSlider.dispatchEvent(new Event('input'));
+            });
+
+            // Harmonizer mode
+            if (p.harmonizer) {
+                harmonizerMode.value = p.harmonizer;
+                harmonizerMode.dispatchEvent(new Event('change'));
+            }
+
+            // Pulse settings
+            if (p.pulse) {
+                pulseTempo.value = p.pulse.tempo;
+                pulseTempo.dispatchEvent(new Event('input'));
+                pulsePattern.value = p.pulse.pattern;
+                pulseLevel.value = p.pulse.level;
+                pulseLevel.dispatchEvent(new Event('input'));
+                if (!!p.pulse.enabled !== pulseEnabled) pulseToggle.click();
+            }
+
+            // Entrainment settings
+            if (p.entrain) {
+                entrainBand.value = p.entrain.band;
+                entrainCarrier.value = p.entrain.carrier;
+                entrainCarrier.dispatchEvent(new Event('input'));
+                entrainLevel.value = p.entrain.level;
+                entrainLevel.dispatchEvent(new Event('input'));
+                entrainMode.value = p.entrain.mode;
+                entrainMode.dispatchEvent(new Event('change'));
+            }
+
+            // Bell settings
+            if (p.bells) {
+                bellStart.checked = !!p.bells.start;
+                bellEnd.checked = !!p.bells.end;
+                bellIntervalSelect.value = p.bells.interval;
+                bellLevel.value = p.bells.level;
+                bellLevel.dispatchEvent(new Event('input'));
+            }
+
+            // Render settings
+            if (p.render) {
+                document.getElementById('render-length').value = p.render.length;
+                document.getElementById('render-format').value = p.render.format;
+                document.getElementById('render-fadein').value = p.render.fadein;
+                document.getElementById('render-fadeout').value = p.render.fadeout;
+                document.getElementById('render-normalize').checked = !!p.render.normalize;
+            }
+
+            logMsg(`Preset "${p.name}" loaded.`);
+            if (needCustom.length) {
+                logMsg(`Note: ${needCustom.join(', ')} used a custom uploaded file — please re-add it manually.`, true);
+            }
+        }
+
+        document.getElementById('preset-save-btn').addEventListener('click', () => {
+            const name = (prompt('Name this recipe:', '') || '').trim();
+            if (!name) return;
+            const store = loadPresetStore();
+            store[name] = captureState(name);
+            savePresetStore(store);
+            refreshPresetDropdown(name);
+            logMsg(`Preset "${name}" saved.`);
+        });
+
+        document.getElementById('preset-delete-btn').addEventListener('click', () => {
+            const name = presetSelect.value;
+            if (!name) { logMsg('Select a preset to delete first.', true); return; }
+            const store = loadPresetStore();
+            delete store[name];
+            savePresetStore(store);
+            refreshPresetDropdown();
+            logMsg(`Preset "${name}" deleted.`);
+        });
+
+        presetSelect.addEventListener('change', () => {
+            const name = presetSelect.value;
+            if (!name) return;
+            const store = loadPresetStore();
+            if (store[name]) applyState(store[name]);
+        });
+
+        document.getElementById('preset-export-btn').addEventListener('click', () => {
+            const name = presetSelect.value;
+            const store = loadPresetStore();
+            const state = (name && store[name]) ? store[name] : captureState(name || 'current');
+            const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+            downloadBlob(blob, `recipe_${(state.name || 'preset').replace(/\s+/g, '_')}.json`);
+            logMsg(`Recipe exported: ${state.name}`);
+        });
+
+        document.getElementById('preset-import').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    const p = JSON.parse(reader.result);
+                    const name = (p.name || file.name.replace(/\.json$/i, '')).trim();
+                    const store = loadPresetStore();
+                    store[name] = p;
+                    savePresetStore(store);
+                    refreshPresetDropdown(name);
+                    applyState(p);
+                    logMsg(`Recipe imported and saved as "${name}".`);
+                } catch (err) {
+                    logMsg('Could not import recipe: ' + err.message, true);
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        });
+
+        // Populate presets on load
+        refreshPresetDropdown();
+
+        /* =====================================================================
+           DATA-DRIVEN SOUND LIBRARY
+           Dropdowns are built from library.json so adding a sample = drop the
+           file in this folder + run ./update_library.sh (no HTML editing).
+        ===================================================================== */
+        const LIBRARY_SLOT_CATEGORY = { 1: 'grounding', 2: 'texture', 3: 'sparks' };
+
+        async function loadLibrary() {
+            try {
+                const res = await fetch('library.json', { cache: 'no-store' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const lib = await res.json();
+                soundLibraryData = lib;
+                let total = 0;
+                slots.forEach(slot => {
+                    const items = lib[LIBRARY_SLOT_CATEGORY[slot.id]] || [];
+                    // Preserve the existing placeholder, replace the rest
+                    const placeholder = slot.select.querySelector('option[value=""]');
+                    slot.select.innerHTML = '';
+                    if (placeholder) slot.select.appendChild(placeholder);
+                    items.forEach(it => {
+                        const o = document.createElement('option');
+                        o.value = './' + it.file;
+                        o.textContent = it.name;
+                        slot.select.appendChild(o);
+                        total++;
+                    });
+                });
+                logMsg(`Sound library loaded: ${total} samples across ${Object.keys(lib).length} categories.`);
+            } catch (e) {
+                logMsg(`Could not load library.json (${e.message}). Use the file-upload option in each slot instead.`, true);
+            }
+        }
+        loadLibrary();
+
+        /* =====================================================================
+           SURRENDER & SHUFFLE — one-tap random sanctuary
+           Picks a random sound per category (skipping locked slots),
+           randomizes levels, starts playback, and engages Auto-Drift.
+        ===================================================================== */
+        const SHUFFLE_CATEGORY = { 1: 'grounding', 2: 'texture', 3: 'sparks' };
+
+        function surrenderShuffle() {
+            if (!soundLibraryData) {
+                logMsg('Sound library still loading — try Shuffle again in a moment.', true);
+                return;
+            }
+            // Start the soundstage first so the audio graph + gain nodes exist,
+            // then loading each sample auto-plays it into the live mix.
+            if (!isPlaying) togglePlay();
+
+            logMsg('Surrendering to the forest — composing a new mix...');
+            let chosen = [];
+            slots.forEach(slot => {
+                if (slot.locked) { logMsg(`Slot ${slot.id} locked — kept.`); return; }
+                const items = soundLibraryData[SHUFFLE_CATEGORY[slot.id]] || [];
+                if (!items.length) return;
+
+                const pick = items[Math.floor(Math.random() * items.length)];
+                slot.select.value = './' + pick.file;
+                slot.select.dispatchEvent(new Event('change')); // loads + auto-plays
+
+                const vol = 30 + Math.floor(Math.random() * 50); // 30–80%
+                slot.volSlider.value = vol;
+                slot.volSlider.dispatchEvent(new Event('input'));
+                chosen.push(`${pick.name} (${vol}%)`);
+            });
+
+            // Vary the pad level too
+            const padVol = 40 + Math.floor(Math.random() * 40);
+            volSynthSlider.value = padVol;
+            volSynthSlider.dispatchEvent(new Event('input'));
+
+            // Engage Auto-Drift for evolving movement (only if not already on)
+            if (!isDrifting) driftBtn.click();
+
+            logMsg(chosen.length ? `New sanctuary: ${chosen.join(' · ')}` : 'All slots locked — nothing to shuffle.');
+        }
+
+        document.getElementById('shuffle-btn').addEventListener('click', surrenderShuffle);
+
+        /* =====================================================================
+           PULSE ENGINE — warm synthesized sub-bass beats, chord-root locked.
+           Shared hit function is used by both live playback and offline render.
+        ===================================================================== */
+        const pulseToggle = document.getElementById('pulse-toggle');
+        const pulseTempo = document.getElementById('pulse-tempo');
+        const pulseTempoVal = document.getElementById('pulse-tempo-val');
+        const pulsePattern = document.getElementById('pulse-pattern');
+        const pulseLevel = document.getElementById('pulse-level');
+        const pulseLevelVal = document.getElementById('pulse-level-val');
+
+        // One warm sub-bass hit: sine with a quick pitch drop + soft envelope.
+        function playPulseHit(ctx, dest, rootFreq, t, level) {
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(rootFreq * 1.5, t);
+            osc.frequency.exponentialRampToValueAtTime(Math.max(20, rootFreq), t + 0.12);
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.0001, t);
+            g.gain.exponentialRampToValueAtTime(Math.max(0.001, level), t + 0.02);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+            osc.connect(g);
+            g.connect(dest);
+            osc.start(t);
+            osc.stop(t + 1.0);
+        }
+
+        function pulseTick() {
+            if (!isPlaying || !pulseEnabled || !audioCtx || !pulseGain) return;
+            const t = audioCtx.currentTime + 0.04;
+            const chord = chords[currentChordIndex >= 0 ? currentChordIndex : 0];
+            const rootFreq = midiToFreq(chord.notes[0] - 12, referencePitch);
+            const level = (pulseLevel.value / 100) * 0.9;
+            const pattern = pulsePattern.value;
+            if (pattern === 'pulse') {
+                playPulseHit(audioCtx, pulseGain, rootFreq, t, level);
+            } else if (pattern === 'sparse') {
+                if (pulseBeat % 2 === 0) playPulseHit(audioCtx, pulseGain, rootFreq, t, level);
+            } else if (pattern === 'heartbeat') {
+                if (pulseBeat % 2 === 0) {
+                    playPulseHit(audioCtx, pulseGain, rootFreq, t, level);
+                    playPulseHit(audioCtx, pulseGain, rootFreq, t + 0.22, level * 0.7);
+                }
+            }
+            pulseBeat++;
+        }
+
+        function startPulse() {
+            if (!audioCtx) return;
+            stopPulseInterval();
+            pulseBeat = 0;
+            const bpm = parseInt(pulseTempo.value, 10);
+            pulseTick();
+            pulseInterval = setInterval(pulseTick, 60000 / bpm);
+        }
+
+        function stopPulseInterval() {
+            if (pulseInterval) { clearInterval(pulseInterval); pulseInterval = null; }
+        }
+
+        pulseToggle.addEventListener('click', () => {
+            pulseEnabled = !pulseEnabled;
+            pulseToggle.textContent = pulseEnabled ? 'Pulse Active' : 'Enable Pulse';
+            pulseToggle.classList.toggle('bg-emerald-500', pulseEnabled);
+            pulseToggle.classList.toggle('text-slate-950', pulseEnabled);
+            pulseToggle.classList.toggle('text-emerald-400', !pulseEnabled);
+            pulseToggle.classList.toggle('border-emerald-500', pulseEnabled);
+            logMsg(`Pulse engine ${pulseEnabled ? 'enabled' : 'disabled'}.`);
+            if (pulseEnabled && isPlaying) startPulse();
+            else stopPulseInterval();
+        });
+
+        pulseTempo.addEventListener('input', () => {
+            pulseTempoVal.textContent = pulseTempo.value;
+            if (pulseEnabled && isPlaying) startPulse(); // re-grid at the new tempo
+        });
+
+        pulseLevel.addEventListener('input', () => {
+            pulseLevelVal.textContent = pulseLevel.value;
+        });
+
+        /* =====================================================================
+           ENTRAINMENT ENGINE — binaural beats & isochronic tones.
+           Binaural: two pure tones, one per ear (true L/R separation via a
+           ChannelMerger), differing by the chosen beat frequency.
+           Isochronic: one tone amplitude-pulsed at the beat rate (triangle LFO),
+           which works on speakers. Shared by live playback and offline render.
+        ===================================================================== */
+        const entrainMode = document.getElementById('entrain-mode');
+        const entrainBand = document.getElementById('entrain-band');
+        const entrainCarrier = document.getElementById('entrain-carrier');
+        const entrainCarrierVal = document.getElementById('entrain-carrier-val');
+        const entrainLevel = document.getElementById('entrain-level');
+        const entrainLevelVal = document.getElementById('entrain-level-val');
+
+        // Creates the entrainment voices, connects them to `dest`, and starts them.
+        // stopTime = null keeps them running (live); a number stops them (offline).
+        // Returns the created nodes for later teardown.
+        function buildEntrainment(ctx, dest, mode, beatHz, carrier, level, startTime, stopTime) {
+            const out = ctx.createGain();
+            out.gain.setValueAtTime(level, startTime);
+            out.connect(dest);
+            const nodes = [out];
+
+            if (mode === 'binaural') {
+                const merger = ctx.createChannelMerger(2);
+                merger.connect(out);
+                const oL = ctx.createOscillator();
+                oL.type = 'sine';
+                oL.frequency.setValueAtTime(carrier, startTime);
+                const oR = ctx.createOscillator();
+                oR.type = 'sine';
+                oR.frequency.setValueAtTime(carrier + beatHz, startTime);
+                oL.connect(merger, 0, 0); // left ear
+                oR.connect(merger, 0, 1); // right ear
+                oL.start(startTime); oR.start(startTime);
+                if (stopTime != null) { oL.stop(stopTime); oR.stop(stopTime); }
+                nodes.push(merger, oL, oR);
+            } else if (mode === 'isochronic') {
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(carrier, startTime);
+                const ampGain = ctx.createGain();
+                ampGain.gain.setValueAtTime(0.5, startTime); // mid-point; LFO swings ±0.5
+                const lfo = ctx.createOscillator();
+                lfo.type = 'triangle'; // gentler than a hard square pulse
+                lfo.frequency.setValueAtTime(beatHz, startTime);
+                const lfoScale = ctx.createGain();
+                lfoScale.gain.setValueAtTime(0.5, startTime);
+                lfo.connect(lfoScale);
+                lfoScale.connect(ampGain.gain);
+                osc.connect(ampGain);
+                ampGain.connect(out);
+                osc.start(startTime); lfo.start(startTime);
+                if (stopTime != null) { osc.stop(stopTime); lfo.stop(stopTime); }
+                nodes.push(osc, ampGain, lfo, lfoScale);
+            }
+            return nodes;
+        }
+
+        function startEntrainment() {
+            stopEntrainment();
+            if (!audioCtx || !masterGain) return;
+            const mode = entrainMode.value;
+            if (mode === 'off') return;
+            const beat = parseFloat(entrainBand.value);
+            const carrier = parseFloat(entrainCarrier.value);
+            const level = (entrainLevel.value / 100) * 0.4; // kept gentle
+            entrainmentNodes = buildEntrainment(audioCtx, masterGain, mode, beat, carrier, level, audioCtx.currentTime + 0.05, null);
+            entrainmentOut = entrainmentNodes[0];
+        }
+
+        function stopEntrainment() {
+            entrainmentNodes.forEach(n => {
+                try { if (n.stop) n.stop(); } catch (e) {}
+                try { n.disconnect(); } catch (e) {}
+            });
+            entrainmentNodes = [];
+            entrainmentOut = null;
+        }
+
+        entrainMode.addEventListener('change', () => {
+            const label = { off: 'Off', binaural: 'Binaural (headphones)', isochronic: 'Isochronic' }[entrainMode.value];
+            logMsg(`Entrainment mode: ${label}.`);
+            if (isPlaying) startEntrainment(); // rebuilds (or tears down if 'off')
+        });
+        entrainBand.addEventListener('change', () => {
+            if (isPlaying && entrainMode.value !== 'off') startEntrainment();
+        });
+        entrainCarrier.addEventListener('input', () => {
+            entrainCarrierVal.textContent = entrainCarrier.value;
+            if (isPlaying && entrainMode.value !== 'off') startEntrainment();
+        });
+        entrainLevel.addEventListener('input', () => {
+            entrainLevelVal.textContent = entrainLevel.value;
+            // Adjust level live without rebuilding (avoids clicks)
+            if (entrainmentOut && audioCtx) {
+                entrainmentOut.gain.setTargetAtTime((entrainLevel.value / 100) * 0.4, audioCtx.currentTime, 0.1);
+            }
+        });
+
+        /* =====================================================================
+           LICENSE GATE — free demo caps exports at 60s; a valid Gumroad key
+           unlocks all lengths. Validation goes through a serverless function
+           (works once deployed to Netlify); offline/static hosting = free demo.
+        ===================================================================== */
+        const LICENSE_STORAGE_KEY = 'ambientStudioLicense';
+        const LICENSE_VERIFY_URL = '/.netlify/functions/verify-license';
+        // Where people buy the full version — set this to your Gumroad product URL.
+        const PURCHASE_URL = 'https://pinedesign.gumroad.com/l/ambient-soundscape-studio';
+
+        const licenseStatus = document.getElementById('license-status');
+        const licenseBuy = document.getElementById('license-buy');
+        const licenseBuyInline = document.getElementById('license-buy-inline');
+        const licenseToggle = document.getElementById('license-toggle');
+        const licenseUnlockRow = document.getElementById('license-unlock-row');
+        const licenseKeyInput = document.getElementById('license-key-input');
+        const licenseUnlockBtn = document.getElementById('license-unlock-btn');
+        const licenseMsg = document.getElementById('license-msg');
+        const renderLengthSelect = document.getElementById('render-length');
+
+        function applyLicenseState() {
+            // Lock every export length except 60s when unlicensed
+            Array.from(renderLengthSelect.options).forEach(opt => {
+                if (opt.value !== '60') opt.disabled = !isLicensed;
+            });
+            if (!isLicensed && renderLengthSelect.value !== '60') renderLengthSelect.value = '60';
+
+            if (isLicensed) {
+                licenseStatus.textContent = '✓ Full version unlocked — export any length, royalty-free';
+                licenseStatus.className = 'text-emerald-400';
+                licenseToggle.classList.add('hidden');
+                licenseBuy.classList.add('hidden');
+                licenseUnlockRow.classList.add('hidden');
+            } else {
+                licenseStatus.textContent = 'Free version · mix & listen freely · exports capped at 60s';
+                licenseStatus.className = 'text-stone-400';
+                licenseToggle.classList.remove('hidden');
+                licenseBuy.classList.remove('hidden');
+            }
+        }
+
+        function setLicensed(key) {
+            isLicensed = true;
+            try { localStorage.setItem(LICENSE_STORAGE_KEY, key); } catch (e) {}
+            applyLicenseState();
+        }
+        function clearLicense() {
+            isLicensed = false;
+            try { localStorage.removeItem(LICENSE_STORAGE_KEY); } catch (e) {}
+            applyLicenseState();
+        }
+
+        async function validateLicense(key) {
+            const resp = await fetch(LICENSE_VERIFY_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ license_key: key })
+            });
+            if (!resp.ok) throw new Error('Licensing server unavailable');
+            return await resp.json(); // { valid: bool, message, email? }
+        }
+
+        // Point the buy links at the purchase page.
+        if (licenseBuy) licenseBuy.href = PURCHASE_URL;
+        if (licenseBuyInline) licenseBuyInline.href = PURCHASE_URL;
+
+        licenseToggle.addEventListener('click', () => {
+            licenseUnlockRow.classList.toggle('hidden');
+            licenseKeyInput.focus();
+        });
+
+        licenseUnlockBtn.addEventListener('click', async () => {
+            const key = licenseKeyInput.value.trim();
+            if (!key) { licenseMsg.textContent = 'Enter your license key.'; licenseMsg.className = 'text-[10px] text-yellow-400'; return; }
+            licenseMsg.textContent = 'Checking...'; licenseMsg.className = 'text-[10px] text-stone-400';
+            licenseUnlockBtn.disabled = true;
+            try {
+                const res = await validateLicense(key);
+                if (res.valid) {
+                    setLicensed(key);
+                    licenseMsg.textContent = 'Unlocked! Thank you. 🌲'; licenseMsg.className = 'text-[10px] text-emerald-400';
+                    logMsg('Full version unlocked.');
+                } else {
+                    licenseMsg.textContent = res.message || 'Invalid license key.'; licenseMsg.className = 'text-[10px] text-red-400';
+                }
+            } catch (e) {
+                licenseMsg.textContent = 'Could not verify right now (needs internet / the licensing server).';
+                licenseMsg.className = 'text-[10px] text-red-400';
+            } finally {
+                licenseUnlockBtn.disabled = false;
+            }
+        });
+
+        /* =====================================================================
+           SESSION BELLS — synthesized singing-bowl tones (inharmonic partials,
+           soft attack, long decay), pitched to the chord root. Shared by live
+           playback and the offline render.
+        ===================================================================== */
+        const bellStart = document.getElementById('bell-start');
+        const bellEnd = document.getElementById('bell-end');
+        const bellIntervalSelect = document.getElementById('bell-interval');
+        const bellLevel = document.getElementById('bell-level');
+        const bellLevelVal = document.getElementById('bell-level-val');
+
+        // One bell strike at absolute time t in any context.
+        function playBell(ctx, dest, freq, t, level) {
+            const partials = [[1, 1.0, 6], [2.0, 0.5, 5], [2.76, 0.32, 4], [5.4, 0.12, 2.6]];
+            partials.forEach(([ratio, gain, decay]) => {
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq * ratio, t);
+                const g = ctx.createGain();
+                g.gain.setValueAtTime(0.0001, t);
+                g.gain.exponentialRampToValueAtTime(Math.max(0.001, level * gain), t + 0.006); // soft strike
+                g.gain.exponentialRampToValueAtTime(0.0001, t + decay);                          // long ring-out
+                osc.connect(g); g.connect(dest);
+                osc.start(t); osc.stop(t + decay + 0.1);
+            });
+        }
+
+        // Ring a bell now, tuned to the current chord root (2 octaves up = chime register).
+        function ringBellNow() {
+            if (!audioCtx || !masterGain) return;
+            const chord = chords[currentChordIndex >= 0 ? currentChordIndex : 0];
+            const freq = midiToFreq(chord.notes[0] + 24, referencePitch);
+            playBell(audioCtx, masterGain, freq, audioCtx.currentTime + 0.3, (bellLevel.value / 100) * 0.5);
+        }
+
+        function startBellInterval() {
+            stopBellInterval();
+            const min = parseFloat(bellIntervalSelect.value);
+            if (!min) return;
+            bellTimer = setInterval(() => { if (isPlaying) ringBellNow(); }, min * 60 * 1000);
+        }
+        function stopBellInterval() {
+            if (bellTimer) { clearInterval(bellTimer); bellTimer = null; }
+        }
+
+        bellLevel.addEventListener('input', () => { bellLevelVal.textContent = bellLevel.value; });
+        // If interval changes mid-session, re-grid it
+        bellIntervalSelect.addEventListener('change', () => { if (isPlaying) startBellInterval(); });
+
+        // Restore a saved license on load (optimistic), then re-verify in the background.
+        (function initLicense() {
+            let cached = null;
+            try { cached = localStorage.getItem(LICENSE_STORAGE_KEY); } catch (e) {}
+            if (cached) {
+                isLicensed = true;
+                applyLicenseState();
+                validateLicense(cached)
+                    .then(res => { if (res && res.valid === false) clearLicense(); })
+                    .catch(() => { /* offline: keep the cached unlock */ });
+            } else {
+                applyLicenseState();
+            }
+        })();
     </script>
 </body>
 </html>
