@@ -985,23 +985,71 @@
             }
         }
 
-        // Re-tune Slot C's playback rate. "Glide" sweeps the pitch (tape style);
-        // otherwise (Smooth) it ducks the harmonizer gain, snaps the pitch at the
-        // quietest point, and fades back — so there's no audible speed sweep.
+        // Re-tune Slot C. "Smooth" crossfades to a second voice already playing
+        // at the target pitch — equal-power, so there's no pitch swoop and no
+        // dropout, just a gentle bloom into the new harmony. "Glide" keeps the
+        // tape-style pitch sweep on the single voice.
         function harmonizeSlot3(targetRate, smooth) {
             const slot3 = slots[2];
             if (!slot3.sourceNode || !audioCtx) return;
             const now = audioCtx.currentTime;
-            if (smooth && slot3.harmGain) {
-                const hg = slot3.harmGain.gain;
-                hg.cancelScheduledValues(now);
-                hg.setValueAtTime(Math.max(0.0008, hg.value), now);
-                hg.linearRampToValueAtTime(0.0008, now + 0.22);          // duck down
-                slot3.sourceNode.playbackRate.setValueAtTime(targetRate, now + 0.22); // snap at the bottom
-                hg.linearRampToValueAtTime(1, now + 0.62);               // fade back up
-            } else {
-                slot3.sourceNode.playbackRate.setTargetAtTime(targetRate, now, 0.6); // tape glide
+
+            // Glide: sweep the existing voice's speed (tape character).
+            if (!smooth) {
+                slot3.sourceNode.playbackRate.setTargetAtTime(targetRate, now, 0.6);
+                return;
             }
+
+            // Smooth: equal-power crossfade between the old voice and a fresh one
+            // started at the target pitch. Falls back to a quick glide if the
+            // buffer isn't available for some reason.
+            if (!slot3.audioBuffer) {
+                slot3.sourceNode.playbackRate.setTargetAtTime(targetRate, now, 0.25);
+                return;
+            }
+
+            const oldSrc  = slot3.sourceNode;
+            const oldGain = slot3.harmGain;
+
+            const newGain = audioCtx.createGain();
+            newGain.gain.setValueAtTime(0.0001, now);
+            newGain.connect(slot3.gainNode);
+
+            const newSrc = audioCtx.createBufferSource();
+            newSrc.buffer = slot3.audioBuffer;
+            newSrc.loop = true;
+            newSrc.playbackRate.setValueAtTime(targetRate, now);
+            newSrc.connect(newGain);
+            newSrc.start(now);
+
+            const xfade = 0.9, steps = 48;
+            const fadeOut = new Float32Array(steps), fadeIn = new Float32Array(steps);
+            for (let i = 0; i < steps; i++) {
+                const x = i / (steps - 1);
+                fadeOut[i] = Math.max(0.0001, Math.cos(x * Math.PI / 2)); // equal-power out
+                fadeIn[i]  = Math.max(0.0001, Math.sin(x * Math.PI / 2)); // equal-power in
+            }
+            if (oldGain) {
+                try {
+                    oldGain.gain.cancelScheduledValues(now);
+                    oldGain.gain.setValueAtTime(Math.max(0.0001, oldGain.gain.value), now);
+                    oldGain.gain.setValueCurveAtTime(fadeOut, now, xfade);
+                } catch (e) { oldGain.gain.linearRampToValueAtTime(0.0001, now + xfade); }
+            }
+            try {
+                newGain.gain.setValueCurveAtTime(fadeIn, now, xfade);
+            } catch (e) { newGain.gain.linearRampToValueAtTime(1, now + xfade); }
+
+            // Retire the old voice once it has faded out.
+            try { oldSrc.stop(now + xfade + 0.08); } catch (e) {}
+            oldSrc.onended = () => {
+                try { oldSrc.disconnect(); } catch (e) {}
+                try { if (oldGain) oldGain.disconnect(); } catch (e) {}
+            };
+
+            // The new voice + its gain are now the live ones for the next change.
+            slot3.sourceNode = newSrc;
+            slot3.harmGain   = newGain;
         }
 
         // Keeps the Slot C badge honest about the current harmonizer mode.
