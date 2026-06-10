@@ -310,8 +310,8 @@
                     <input id="bell-end" type="checkbox" class="accent-emerald-500 w-4 h-4">
                 </label>
                 <div class="flex flex-col gap-1 text-xs text-stone-400">
-                    <span>Level (<span id="bell-level-val">60</span>%)</span>
-                    <input id="bell-level" type="range" min="0" max="100" value="60" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                    <span>Level (<span id="bell-level-val">40</span>%)</span>
+                    <input id="bell-level" type="range" min="0" max="100" value="40" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
                 </div>
             </div>
             <p class="text-[10px] text-stone-600 leading-relaxed">In the live preview you'll hear the start &amp; interval bells. The <strong>ending bell</strong> rings near the close of your <strong>exported</strong> track (live playback has no fixed end).</p>
@@ -347,11 +347,42 @@
                     <input id="entrain-carrier" type="range" min="80" max="400" value="200" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
                 </div>
                 <div class="flex flex-col gap-1 text-xs text-stone-400">
-                    <span>Level (<span id="entrain-level-val">40</span>%)</span>
-                    <input id="entrain-level" type="range" min="0" max="100" value="40" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                    <span>Level (<span id="entrain-level-val">25</span>%)</span>
+                    <input id="entrain-level" type="range" min="0" max="100" value="25" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
                 </div>
             </div>
             <p class="text-[10px] text-stone-600 leading-relaxed">🎧 Binaural beats require headphones (each ear hears a slightly different tone). Isochronic tones pulse a single tone on/off and work on speakers. Keep levels gentle; not a medical treatment.</p>
+        </div>
+
+        <!-- ============ VOICE-OVER (GUIDED NARRATION) ============ -->
+        <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+            <div>
+                <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Narration</span>
+                <h3 class="text-lg font-normal text-stone-200 mt-2">Voice-over</h3>
+                <p class="text-xs text-stone-400 font-light mt-1">Layer a guided narration over the soundscape — the music gently dips beneath your voice. Upload a recording (or an AI-voiced track); it plays live to preview and is baked into your export.</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 items-end">
+                <div class="flex flex-col gap-1 text-xs text-stone-400 col-span-2">
+                    <span>Recording</span>
+                    <label class="cursor-pointer">
+                        <input id="voice-file" type="file" accept="audio/*" class="hidden">
+                        <span class="block text-center px-3 py-2 rounded-lg border border-white/10 bg-stone-900 text-[11px] text-stone-300 hover:bg-stone-800 transition-all">Upload voice…</span>
+                    </label>
+                    <span id="voice-status" class="text-[10px] text-stone-500">No narration loaded</span>
+                </div>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Voice level (<span id="voice-level-val">90</span>%)</span>
+                    <input id="voice-level" type="range" min="0" max="100" value="90" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+                <div class="flex flex-col gap-1 text-xs text-stone-400">
+                    <span>Music ducks (−<span id="voice-duck-val">55</span>%)</span>
+                    <input id="voice-duck" type="range" min="0" max="90" value="55" class="w-full h-1 rounded-lg bg-stone-800 accent-emerald-500 outline-none cursor-pointer">
+                </div>
+            </div>
+            <div class="flex items-center gap-3 flex-wrap">
+                <button id="voice-play-btn" class="px-4 py-2 rounded-full border border-white/10 bg-stone-900/60 text-stone-300 text-xs font-medium hover:bg-stone-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed" disabled>▶ Play voice-over</button>
+                <p class="text-[10px] text-stone-600 leading-relaxed">Plays once over the live mix to preview. In your <strong>export</strong> it begins after the intro fade and the music ducks for its full length.</p>
+            </div>
         </div>
 
         <!-- ============ STUDIO EXPORTS & PRESETS ============ -->
@@ -492,6 +523,9 @@
 
         // Sound Engine Routing Nodes
         let masterGain = null;
+        let musicDuck = null;       // sits between masterGain and destination; ducks under voice-over
+        let voiceBuffer = null;     // decoded narration buffer
+        let voiceSource = null;     // live voice-over playback source
         let synthGainNode = null;
         let lowpassFilter = null;
 
@@ -785,7 +819,10 @@
 
                 // 1. Master volume node
                 masterGain = audioCtx.createGain();
-                masterGain.connect(audioCtx.destination);
+                musicDuck = audioCtx.createGain();
+                musicDuck.gain.setValueAtTime(1, audioCtx.currentTime);
+                masterGain.connect(musicDuck);
+                musicDuck.connect(audioCtx.destination);
                 masterGain.gain.setValueAtTime(0.8, audioCtx.currentTime); 
 
                 // 2. Warm lowpass filter for the synth pad (keeps it soft and sub-aquatic)
@@ -1177,6 +1214,7 @@
                     stopPulseInterval();
                     stopEntrainment();
                     stopBellInterval();
+                    stopVoiceOver();
 
                     logMsg("Stopping master soundstage and freeing audio blocks...");
                     
@@ -1207,6 +1245,7 @@
                             }
                             pulseGain = null;
                             entrainmentOut = null;
+                            musicDuck = null;
                             
                             // Reset UI state
                             harmonizerDot.className = "w-1.5 h-1.5 rounded-full bg-stone-700";
@@ -1417,7 +1456,10 @@
 
             // --- master chain (mirrors initAudio) ---
             const master = ctx.createGain();
-            master.connect(ctx.destination);
+            const duckBus = ctx.createGain();          // ducks all music beneath the voice-over
+            duckBus.gain.setValueAtTime(1, 0);
+            master.connect(duckBus);
+            duckBus.connect(ctx.destination);
             const baseLevel = 0.8;
 
             const lp = ctx.createBiquadFilter();
@@ -1566,6 +1608,25 @@
                     const te = Math.max(1, duration - Math.max(fadeOut, 2) - 2);
                     playBell(ctx, master, bellRootAt(te), te, bl);
                 }
+            }
+
+            // Voice-over: baked in after the intro fade; the music ducks beneath it.
+            if (voiceBuffer) {
+                const vStart = Math.max(fadeIn, 0.3);
+                const vEnd   = Math.min(duration, vStart + voiceBuffer.duration);
+                const vg = ctx.createGain();
+                vg.gain.setValueAtTime(voiceLevel.value / 100, 0);
+                vg.connect(ctx.destination);           // parallel to the music, so it isn't ducked
+                const vsrc = ctx.createBufferSource();
+                vsrc.buffer = voiceBuffer;
+                vsrc.connect(vg);
+                vsrc.start(vStart);
+                vsrc.stop(vEnd + 0.05);
+                const duckTo = Math.max(0.0001, 1 - (voiceDuck.value / 100));
+                duckBus.gain.setValueAtTime(1, Math.max(0, vStart - 0.4));
+                duckBus.gain.linearRampToValueAtTime(duckTo, vStart);
+                duckBus.gain.setValueAtTime(duckTo, Math.max(vStart, vEnd - 0.8));
+                duckBus.gain.linearRampToValueAtTime(1, vEnd);
             }
 
             return await ctx.startRendering();
@@ -2342,6 +2403,87 @@
         bellLevel.addEventListener('input', () => { bellLevelVal.textContent = bellLevel.value; });
         // If interval changes mid-session, re-grid it
         bellIntervalSelect.addEventListener('change', () => { if (isPlaying) startBellInterval(); });
+
+        /* =====================================================================
+           VOICE-OVER — upload a narration, preview it over the live mix, and
+           bake it into the export with the music ducking beneath it.
+        ===================================================================== */
+        const voiceFile     = document.getElementById('voice-file');
+        const voiceStatus   = document.getElementById('voice-status');
+        const voiceLevel    = document.getElementById('voice-level');
+        const voiceLevelVal = document.getElementById('voice-level-val');
+        const voiceDuck     = document.getElementById('voice-duck');
+        const voiceDuckVal  = document.getElementById('voice-duck-val');
+        const voicePlayBtn  = document.getElementById('voice-play-btn');
+
+        voiceLevel.addEventListener('input', () => {
+            voiceLevelVal.textContent = voiceLevel.value;
+            if (voiceSource && voiceSource._vg && audioCtx) {
+                voiceSource._vg.gain.setValueAtTime(voiceLevel.value / 100, audioCtx.currentTime);
+            }
+        });
+        voiceDuck.addEventListener('input', () => { voiceDuckVal.textContent = voiceDuck.value; });
+
+        // Decode an uploaded narration into voiceBuffer.
+        voiceFile.addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            voiceStatus.textContent = "Decoding…";
+            initAudioContextOnInteraction();
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                audioCtx.decodeAudioData(ev.target.result, (buffer) => {
+                    voiceBuffer = buffer;
+                    voicePlayBtn.disabled = false;
+                    voiceStatus.textContent = `${file.name} · ${buffer.duration.toFixed(1)}s`;
+                    logMsg(`Voice-over loaded: "${file.name}" (${buffer.duration.toFixed(1)}s)`);
+                }, () => {
+                    voiceStatus.textContent = "Couldn't read that file";
+                    logMsg(`Failed to decode voice-over "${file.name}".`, true);
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        // Smoothly ramp the music duck gain (1 = full music, lower = ducked).
+        function setMusicDuck(target, ramp) {
+            if (!musicDuck || !audioCtx) return;
+            const now = audioCtx.currentTime;
+            musicDuck.gain.cancelScheduledValues(now);
+            musicDuck.gain.setValueAtTime(musicDuck.gain.value, now);
+            musicDuck.gain.linearRampToValueAtTime(Math.max(0.0001, target), now + ramp);
+        }
+
+        function stopVoiceOver() {
+            if (voiceSource) {
+                try { voiceSource.onended = null; voiceSource.stop(); voiceSource.disconnect(); } catch (e) {}
+                if (voiceSource._vg) { try { voiceSource._vg.disconnect(); } catch (e) {} }
+                voiceSource = null;
+            }
+            setMusicDuck(1, 0.5);
+            voicePlayBtn.textContent = "▶ Play voice-over";
+        }
+
+        function playVoiceOver() {
+            if (!voiceBuffer) return;
+            initAudioContextOnInteraction();
+            if (voiceSource) { stopVoiceOver(); return; }   // toggle off if already playing
+            const now = audioCtx.currentTime;
+            const vg = audioCtx.createGain();
+            vg.gain.setValueAtTime(voiceLevel.value / 100, now);
+            vg.connect(audioCtx.destination);               // bypass the duck so the voice stays full
+            const src = audioCtx.createBufferSource();
+            src.buffer = voiceBuffer;
+            src.connect(vg);
+            src._vg = vg;
+            src.start(now + 0.05);
+            voiceSource = src;
+            setMusicDuck(1 - (voiceDuck.value / 100), 0.4);  // duck the music under the voice
+            voicePlayBtn.textContent = "■ Stop voice-over";
+            src.onended = () => { if (voiceSource === src) stopVoiceOver(); };
+        }
+
+        voicePlayBtn.addEventListener('click', playVoiceOver);
 
         // Restore a saved license on load (optimistic), then re-verify in the background.
         (function initLicense() {
