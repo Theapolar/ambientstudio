@@ -655,10 +655,31 @@
         }
 
         // Unlocks Audio Context securely on any scroll/touch/tap gesture (iOS safeguard)
+        // Soften the very start and end of a decoded loop so the loop seam
+        // doesn't click/pop. MP3 encoding adds padding that breaks an otherwise
+        // seamless loop; a ~5ms fade at each edge removes the discontinuity.
+        function deClickLoop(buffer) {
+            try {
+                const fade = Math.min(Math.floor(buffer.sampleRate * 0.005),
+                                      Math.floor(buffer.length / 2));
+                if (fade < 1) return buffer;
+                for (let ch = 0; ch < buffer.numberOfChannels; ch++) {
+                    const data = buffer.getChannelData(ch);
+                    const n = data.length;
+                    for (let i = 0; i < fade; i++) {
+                        const g = i / fade;
+                        data[i] *= g;            // fade in at the start
+                        data[n - 1 - i] *= g;    // fade out at the end
+                    }
+                }
+            } catch (e) { /* leave buffer untouched on any error */ }
+            return buffer;
+        }
+
         function initAudioContextOnInteraction() {
             if (!audioCtx) {
                 const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                audioCtx = new AudioContextClass();
+                audioCtx = new AudioContextClass({ latencyHint: 'playback' });
             }
             if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
@@ -691,7 +712,7 @@
                 initAudioContextOnInteraction();
                 
                 audioCtx.decodeAudioData(evt.target.result, (buffer) => {
-                    slot.audioBuffer = buffer;
+                    slot.audioBuffer = deClickLoop(buffer);
                     slot.card.classList.add('slot-active');
                     slot.status.innerText = "Ready";
                     slot.status.className = "text-[10px] text-emerald-400 font-bold";
@@ -725,7 +746,7 @@
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const arrayBuffer = await response.arrayBuffer();
                 audioCtx.decodeAudioData(arrayBuffer, (decodedBuffer) => {
-                    slot.audioBuffer = decodedBuffer;
+                    slot.audioBuffer = deClickLoop(decodedBuffer);
                     slot.card.classList.add('slot-active');
                     slot.status.innerText = "Ready";
                     slot.status.className = "text-[10px] text-emerald-400 font-bold";
@@ -756,7 +777,7 @@
             logMsg("Initializing Master Audio Context...");
             try {
                 const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                audioCtx = new AudioContextClass();
+                audioCtx = new AudioContextClass({ latencyHint: 'playback' });
                 
                 if (audioCtx.state === 'suspended') {
                     audioCtx.resume();
