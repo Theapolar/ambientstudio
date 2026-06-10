@@ -1,38 +1,203 @@
 {
   "grounding": [
-    { "name": "Fjord Stream", "file": "nature-flowing water.mp3" },
-    { "name": "Whispering Wind", "file": "nature-soft wind.mp3" },
-    { "name": "Deep Ocean Swell", "file": "nature-ocean-noise.mp3" },
-    { "name": "Ocean Waves", "file": "nature-ocean waves.mp3" },
-    { "name": "Lush Rain & Crackles", "file": "nature-rain - crackling.mp3" }
+    {
+      "name": "Fjord Stream",
+      "file": "nature-flowing water.mp3"
+    },
+    {
+      "name": "Ocean Waves",
+      "file": "nature-ocean waves.mp3"
+    },
+    {
+      "name": "Deep Ocean Swell",
+      "file": "nature-ocean-noise.mp3"
+    },
+    {
+      "name": "Lush Rain & Crackles",
+      "file": "nature-rain - crackling.mp3"
+    },
+    {
+      "name": "Whispering Wind",
+      "file": "nature-soft wind.mp3"
+    }
   ],
   "texture": [
-    { "name": "Hearth Fire", "file": "texture-fireplace.mp3" },
-    { "name": "Wind & Chimes", "file": "texture-wind and chimes.mp3" },
-    { "name": "ASMR Bubbling Water", "file": "texture- asmr- bubbling water.mp3" },
-    { "name": "ASMR Crackling Ice", "file": "texture-asmr- crackling-ice.mp3" },
-    { "name": "Beach Swoosh", "file": "texture-beach-swoosh.mp3" }
+    {
+      "name": "ASMR Bubbling Water",
+      "file": "texture- asmr- bubbling water.mp3"
+    },
+    {
+      "name": "ASMR Crackling Ice",
+      "file": "texture-asmr- crackling-ice.mp3"
+    },
+    {
+      "name": "Beach Swoosh",
+      "file": "texture-beach-swoosh.mp3"
+    },
+    {
+      "name": "Hearth Fire",
+      "file": "texture-fireplace.mp3"
+    },
+    {
+      "name": "Wind & Chimes",
+      "file": "texture-wind and chimes.mp3"
+    }
   ],
   "sparks": [
-    { "name": "Forest Drone", "file": "Sample_forest-drone.mp3", "key": "G major" },
-    { "name": "Velvet G-Pads", "file": "Sample_Floor-pads.mp3", "key": "G major" },
-    { "name": "G-Bass Shimmer", "file": "Sample_bass-shimmer.mp3", "key": "G major" },
-    { "name": "Whispering Flutes", "file": "whispering flutes.mp3", "key": "C major" },
-    { "name": "Singing Bowl Bass", "file": "singing bowl bass.mp3", "key": "C major" },
-    { "name": "Panning Woodwind", "file": "panning woodwind.mp3", "key": "C major" },
-    { "name": "Ethereal Voice Flutes", "file": "etheral voicelike flutes.mp3", "key": "C major" },
-    { "name": "Bell Whispers & Breaths", "file": "bell whispers and breaths.mp3", "key": "G major" },
-    { "name": "Bell Ambience", "file": "bell ambience.mp3", "key": "G major" },
-    { "name": "Clinktubes & Atmowhistles", "file": "clinktubes and atmowhistles.mp3", "key": "G minor" },
-    { "name": "Ambient Dub", "file": "ambient-dub.mp3", "key": "G minor" },
-    { "name": "Analog Dreams Shimmer", "file": "analog dreams-pitchedshimmer.mp3", "key": "A minor" },
-    { "name": "Heavenly Organ", "file": "Heavenly organ-pureo.mp3", "key": "D major" },
-    { "name": "Organ", "file": "organ.mp3", "key": "C major" },
-    { "name": "King Organ", "file": "king organ.mp3", "key": "D major" },
-    { "name": "Velvet Brass", "file": "simple velvet brass.mp3", "key": "D minor" },
-    { "name": "String Pads", "file": "string pads.mp3", "key": "C major" },
-    { "name": "Deep Pad Ambience", "file": "deep pad ambience.mp3", "key": "C minor" },
-    { "name": "Wet Wooden Oracle", "file": "wet wooden oracle.mp3", "key": "C major" },
-    { "name": "Earth Strings", "file": "earth strings.mp3", "key": "A minor" }
+    {
+      "name": "G 80 Additive Etheral Loop (1)",
+      "file": "G-80-additive-etheral_loop (1).mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Additive Etheral Loop",
+      "file": "G-80-additive-etheral_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Airpiano Loop",
+      "file": "G-80-airpiano_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Astralis Analogdreams Loop",
+      "file": "G-80-astralis-analogdreams_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Brightlights Analogdreams Loop",
+      "file": "G-80-brightlights-analogdreams_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Brightlights Loop",
+      "file": "G-80-brightlights_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Cleanpluck Arturia Loop",
+      "file": "G-80-cleanpluck-arturia_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Colors Analogdreams Loop",
+      "file": "G-80-colors-analogdreams_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Digitalvoices Arturia Loop",
+      "file": "G-80-digitalvoices-arturia_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Dualwoodjuicypedal Analogdream Loop",
+      "file": "G-80-dualwoodjuicypedal-analogdream_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "G 80 Harmonicchaos Analogdreams Loop",
+      "file": "G-80-harmonicchaos-analogdreams_loop.mp3",
+      "key": "G"
+    },
+    {
+      "name": "Heavenly Organ",
+      "file": "Heavenly organ-pureo.mp3",
+      "key": "D major"
+    },
+    {
+      "name": "Velvet G-Pads",
+      "file": "Sample_Floor-pads.mp3",
+      "key": "G major"
+    },
+    {
+      "name": "G-Bass Shimmer",
+      "file": "Sample_bass-shimmer.mp3",
+      "key": "G major"
+    },
+    {
+      "name": "Forest Drone",
+      "file": "Sample_forest-drone.mp3",
+      "key": "G major"
+    },
+    {
+      "name": "Ambient Dub",
+      "file": "ambient-dub.mp3",
+      "key": "G minor"
+    },
+    {
+      "name": "Analog Dreams Shimmer",
+      "file": "analog dreams-pitchedshimmer.mp3",
+      "key": "A minor"
+    },
+    {
+      "name": "Bell Ambience",
+      "file": "bell ambience.mp3",
+      "key": "G major"
+    },
+    {
+      "name": "Bell Whispers & Breaths",
+      "file": "bell whispers and breaths.mp3",
+      "key": "G major"
+    },
+    {
+      "name": "Clinktubes & Atmowhistles",
+      "file": "clinktubes and atmowhistles.mp3",
+      "key": "G minor"
+    },
+    {
+      "name": "Deep Pad Ambience",
+      "file": "deep pad ambience.mp3",
+      "key": "C minor"
+    },
+    {
+      "name": "Earth Strings",
+      "file": "earth strings.mp3",
+      "key": "A minor"
+    },
+    {
+      "name": "Ethereal Voice Flutes",
+      "file": "etheral voicelike flutes.mp3",
+      "key": "C major"
+    },
+    {
+      "name": "King Organ",
+      "file": "king organ.mp3",
+      "key": "D major"
+    },
+    {
+      "name": "Organ",
+      "file": "organ.mp3",
+      "key": "C major"
+    },
+    {
+      "name": "Panning Woodwind",
+      "file": "panning woodwind.mp3",
+      "key": "C major"
+    },
+    {
+      "name": "Velvet Brass",
+      "file": "simple velvet brass.mp3",
+      "key": "D minor"
+    },
+    {
+      "name": "Singing Bowl Bass",
+      "file": "singing bowl bass.mp3",
+      "key": "C major"
+    },
+    {
+      "name": "String Pads",
+      "file": "string pads.mp3",
+      "key": "C major"
+    },
+    {
+      "name": "Wet Wooden Oracle",
+      "file": "wet wooden oracle.mp3",
+      "key": "C major"
+    },
+    {
+      "name": "Whispering Flutes",
+      "file": "whispering flutes.mp3",
+      "key": "C major"
+    }
   ]
 }
