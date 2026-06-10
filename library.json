@@ -19,6 +19,10 @@
     {
       "name": "Whispering Wind",
       "file": "nature-soft wind.mp3"
+    },
+    {
+      "name": "Crickets",
+      "file": "nature-crickets_loop.mp3"
     }
   ],
   "texture": [
@@ -41,6 +45,22 @@
     {
       "name": "Wind & Chimes",
       "file": "texture-wind and chimes.mp3"
+    },
+    {
+      "name": "Ballroom Chatter",
+      "file": "texture-ballroom-chatter_loop.mp3"
+    },
+    {
+      "name": "Crackle",
+      "file": "texture-crackle_loop.mp3"
+    },
+    {
+      "name": "Soft White Noise",
+      "file": "texture-soft-whitenoise_loop.mp3"
+    },
+    {
+      "name": "Underwater",
+      "file": "texture-under-water_loop.mp3"
     }
   ],
   "sparks": [
