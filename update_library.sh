@@ -32,12 +32,12 @@ MANIFEST = "library.json"
 TAG_MAP = {
     "cinematic": "cinematic",
     "grounded": "grounded",
-    "etheral": "etheral", "ethereal": "etheral",
+    "etheral": "ethereal", "ethereal": "ethereal",
     "deep": "deep", "depth": "deep",
     "nostalgic": "nostalgic",
     "hopeful": "hopeful", "hopefull": "hopeful",
 }
-TAG_ORDER = ["cinematic", "grounded", "etheral", "deep", "nostalgic", "hopeful"]
+TAG_ORDER = ["cinematic", "grounded", "ethereal", "deep", "nostalgic", "hopeful"]
 NOISE = {"sample", "loop"}  # dropped from generated names
 
 # 1. Load existing manifest so curated names/keys/tags survive.
@@ -124,7 +124,9 @@ for f in files:
         # The key written in the filename is the source of truth (it's the
         # explicit intent); fall back to any curated key, then G.
         key = pkey or (prev.get("key") if prev else None) or "G"
-        tags = (prev.get("tags") if (prev and prev.get("tags")) else ptags)
+        # Tags come from the filename (source of truth); keep any curated tags
+        # only when the filename carries none.
+        tags = ptags if ptags else ((prev.get("tags") if prev else None) or [])
         entry = {"name": name, "file": f, "key": key, "tags": tags}
     else:
         name = (prev.get("name") if prev else None) or pretty(f)
