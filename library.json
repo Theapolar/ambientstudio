@@ -65,174 +65,279 @@
   ],
   "sparks": [
     {
-      "name": "G 80 Additive Etheral Loop",
-      "file": "G-80-additive-etheral_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Airpiano Loop",
-      "file": "G-80-airpiano_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Astralis Analogdreams Loop",
-      "file": "G-80-astralis-analogdreams_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Brightlights Analogdreams Loop",
-      "file": "G-80-brightlights-analogdreams_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Brightlights Loop",
-      "file": "G-80-brightlights_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Cleanpluck Arturia Loop",
-      "file": "G-80-cleanpluck-arturia_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Colors Analogdreams Loop",
-      "file": "G-80-colors-analogdreams_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Digitalvoices Arturia Loop",
-      "file": "G-80-digitalvoices-arturia_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Dualwoodjuicypedal Analogdream Loop",
-      "file": "G-80-dualwoodjuicypedal-analogdream_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "G 80 Harmonicchaos Analogdreams Loop",
-      "file": "G-80-harmonicchaos-analogdreams_loop.mp3",
-      "key": "G"
-    },
-    {
-      "name": "Heavenly Organ",
-      "file": "Heavenly organ-pureo.mp3",
-      "key": "D major"
-    },
-    {
-      "name": "Velvet G-Pads",
-      "file": "Sample_Floor-pads.mp3",
-      "key": "G major"
-    },
-    {
-      "name": "G-Bass Shimmer",
-      "file": "Sample_bass-shimmer.mp3",
-      "key": "G major"
-    },
-    {
-      "name": "Forest Drone",
-      "file": "Sample_forest-drone.mp3",
-      "key": "G major"
-    },
-    {
-      "name": "Ambient Dub",
-      "file": "ambient-dub.mp3",
-      "key": "G minor"
-    },
-    {
-      "name": "Analog Dreams Shimmer",
-      "file": "analog dreams-pitchedshimmer.mp3",
-      "key": "A minor"
-    },
-    {
-      "name": "Bell Ambience",
-      "file": "bell ambience.mp3",
-      "key": "G major"
-    },
-    {
-      "name": "Bell Whispers & Breaths",
-      "file": "bell whispers and breaths.mp3",
-      "key": "G major"
-    },
-    {
-      "name": "Clinktubes & Atmowhistles",
-      "file": "clinktubes and atmowhistles.mp3",
-      "key": "G minor"
-    },
-    {
-      "name": "Complete Peace Flutes",
-      "file": "complete peace flutes.mp3",
-      "key": "G"
-    },
-    {
-      "name": "Dark Before Dawn",
-      "file": "dark before dawn.mp3",
-      "key": "G"
-    },
-    {
-      "name": "Deep Pad Ambience",
-      "file": "deep pad ambience.mp3",
-      "key": "C minor"
-    },
-    {
-      "name": "Deep Voices",
-      "file": "deep voices.mp3",
-      "key": "G"
+      "name": "Neutral Drone Floor",
+      "file": "Abmaj-grounded- neutral drone floor.mp3",
+      "key": "Ab major",
+      "tags": [
+        "grounded"
+      ]
     },
     {
       "name": "Earth Strings",
-      "file": "earth strings.mp3",
-      "key": "A minor"
+      "file": "Amin-deep-grounded-cinematic-earth strings.mp3",
+      "key": "A minor",
+      "tags": [
+        "cinematic",
+        "grounded",
+        "deep"
+      ]
     },
     {
-      "name": "Ethereal Voice Flutes",
-      "file": "etheral voicelike flutes.mp3",
-      "key": "C major"
+      "name": "Heavenly Bliss Organ",
+      "file": "Cmaj-cinematic- heavenly bliss organ.mp3",
+      "key": "C major",
+      "tags": [
+        "cinematic"
+      ]
     },
     {
-      "name": "King Organ",
-      "file": "king organ.mp3",
-      "key": "D major"
+      "name": "Orchestral Bliss Pads",
+      "file": "Cmaj-cinematic-orchestral bliss pads.mp3",
+      "key": "C major",
+      "tags": [
+        "cinematic"
+      ]
     },
     {
-      "name": "Neutral Bliss Pads",
-      "file": "neutral bliss pads.mp3",
-      "key": "G"
-    },
-    {
-      "name": "Organ",
-      "file": "organ.mp3",
-      "key": "C major"
-    },
-    {
-      "name": "Panning Woodwind",
-      "file": "panning woodwind.mp3",
-      "key": "C major"
-    },
-    {
-      "name": "Velvet Brass",
-      "file": "simple velvet brass.mp3",
-      "key": "D minor"
+      "name": "Pads And Voices With Breathy Flutes",
+      "file": "Cmaj-deep pads and voices with breathy flutes.mp3",
+      "key": "C major",
+      "tags": [
+        "deep"
+      ]
     },
     {
       "name": "Singing Bowl Bass",
-      "file": "singing bowl bass.mp3",
-      "key": "C major"
+      "file": "Cmaj-deep-singing bowl bass.mp3",
+      "key": "C major",
+      "tags": [
+        "deep"
+      ]
     },
     {
-      "name": "String Pads",
-      "file": "string pads.mp3",
-      "key": "C major"
+      "name": "Complete Peace Flutes",
+      "file": "Cmaj-etheral-grounded-complete peace flutes.mp3",
+      "key": "C major",
+      "tags": [
+        "grounded",
+        "etheral"
+      ]
     },
     {
-      "name": "Wet Wooden Oracle",
-      "file": "wet wooden oracle.mp3",
-      "key": "C major"
+      "name": "Panning Woodwind",
+      "file": "Cmaj-etheral-grounded-panning woodwind.mp3",
+      "key": "C major",
+      "tags": [
+        "grounded",
+        "etheral"
+      ]
     },
     {
       "name": "Whispering Flutes",
-      "file": "whispering flutes.mp3",
-      "key": "C major"
+      "file": "Cmaj-etheral-grounded-whispering flutes.mp3",
+      "key": "C major",
+      "tags": [
+        "grounded",
+        "etheral"
+      ]
+    },
+    {
+      "name": "Bell Ambience",
+      "file": "Cmaj-grounded-deep-bell ambience.mp3",
+      "key": "C major",
+      "tags": [
+        "grounded",
+        "deep"
+      ]
+    },
+    {
+      "name": "Bell Whispers And Breaths",
+      "file": "Cmaj-grounded-etheral-bell whispers and breaths.mp3",
+      "key": "C major",
+      "tags": [
+        "grounded",
+        "etheral"
+      ]
+    },
+    {
+      "name": "Dripping Ambience Voicelike Flutes",
+      "file": "Cmaj-grounded-etheral-dripping ambience voicelike flutes.mp3",
+      "key": "C major",
+      "tags": [
+        "grounded",
+        "etheral"
+      ]
+    },
+    {
+      "name": "Wet Wooden Oracle",
+      "file": "Cmaj-grounded-etheral-wet wooden oracle.mp3",
+      "key": "C major",
+      "tags": [
+        "grounded",
+        "etheral"
+      ]
+    },
+    {
+      "name": "String Pads",
+      "file": "Cmaj-grounded-hopeful-string pads.mp3",
+      "key": "C major",
+      "tags": [
+        "grounded",
+        "hopeful"
+      ]
+    },
+    {
+      "name": "Cave Ambience",
+      "file": "Cmin-deep - cave ambience.mp3",
+      "key": "C minor",
+      "tags": [
+        "deep"
+      ]
+    },
+    {
+      "name": "Bells And String Swells",
+      "file": "Dmaj-cinematic- bells and string swells.mp3",
+      "key": "D major",
+      "tags": [
+        "cinematic"
+      ]
+    },
+    {
+      "name": "King Organ",
+      "file": "Dmaj-cinematic-king organ.mp3",
+      "key": "D major",
+      "tags": [
+        "cinematic"
+      ]
+    },
+    {
+      "name": "Heavenly Organ Pureo",
+      "file": "Dmaj-grounded-deep-Heavenly organ-pureo.mp3",
+      "key": "D major",
+      "tags": [
+        "grounded",
+        "deep"
+      ]
+    },
+    {
+      "name": "Intro Shimmer",
+      "file": "Dmin-cinematic-grounded-Intro shimmer.mp3",
+      "key": "D minor",
+      "tags": [
+        "cinematic",
+        "grounded"
+      ]
+    },
+    {
+      "name": "Simple Velvet Horn",
+      "file": "Dmin-grounded-cinematic-simple velvet horn.mp3",
+      "key": "D minor",
+      "tags": [
+        "cinematic",
+        "grounded"
+      ]
+    },
+    {
+      "name": "Brass Analog Dreams",
+      "file": "G-cinematic - brass analog dreams.mp3",
+      "key": "G",
+      "tags": [
+        "cinematic"
+      ]
+    },
+    {
+      "name": "Dark Driving Brass",
+      "file": "G-cinematic-dark driving brass.mp3",
+      "key": "G",
+      "tags": [
+        "cinematic"
+      ]
+    },
+    {
+      "name": "Bright Lights Pads",
+      "file": "G-etheral-hopeful bright lights pads.mp3",
+      "key": "G",
+      "tags": [
+        "etheral",
+        "hopeful"
+      ]
+    },
+    {
+      "name": "Air Piano",
+      "file": "G-grounded-etheral- air piano.mp3",
+      "key": "G",
+      "tags": [
+        "grounded",
+        "etheral"
+      ]
+    },
+    {
+      "name": "Digital Voices",
+      "file": "G-grounded-etheral-digital voices.mp3",
+      "key": "G",
+      "tags": [
+        "grounded",
+        "etheral"
+      ]
+    },
+    {
+      "name": "Analog Dreams",
+      "file": "G-grounded-nostalgic analog dreams.mp3",
+      "key": "G",
+      "tags": [
+        "grounded",
+        "nostalgic"
+      ]
+    },
+    {
+      "name": "Shimmering Pads And Flutes",
+      "file": "G-hopeful-shimmering pads and flutes.mp3",
+      "key": "G",
+      "tags": [
+        "hopeful"
+      ]
+    },
+    {
+      "name": "Synth Waves",
+      "file": "G-nostalgic-synth waves.mp3",
+      "key": "G",
+      "tags": [
+        "nostalgic"
+      ]
+    },
+    {
+      "name": "Clinktubes And Atmowhistles",
+      "file": "Gmin-grounded-clinktubes and atmowhistles.mp3",
+      "key": "G minor",
+      "tags": [
+        "grounded"
+      ]
+    },
+    {
+      "name": "Neutral Soothing Pad Waves",
+      "file": "Gmin-grounded-neutral soothing pad waves.mp3",
+      "key": "G minor",
+      "tags": [
+        "grounded"
+      ]
+    },
+    {
+      "name": "Pitched Shimmer",
+      "file": "Gmin-grounded-nostalgic-pitched shimmer.mp3",
+      "key": "G minor",
+      "tags": [
+        "grounded",
+        "nostalgic"
+      ]
+    },
+    {
+      "name": "Floor Pads",
+      "file": "nostalgic-grounded-Floor pads.mp3",
+      "key": "G",
+      "tags": [
+        "grounded",
+        "nostalgic"
+      ]
     }
   ]
 }

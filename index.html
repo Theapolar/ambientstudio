@@ -12,6 +12,20 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: radial-gradient(circle at center, #0f1c14 0%, #060907 100%);
         }
+        /* Clickable sound lists + tag chips + segmented toggles
+           (replacing the old dropdowns) */
+        .lib-list { display:flex; flex-direction:column; gap:4px; max-height:11rem; overflow-y:auto; margin-bottom:12px; padding-right:4px; }
+        .lib-list:empty { display:none; }
+        .lib-item { text-align:left; font-size:12px; color:#d6d3cb; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:7px 10px; cursor:pointer; transition:background .15s ease, border-color .15s ease, color .15s ease; }
+        .lib-item:hover { background:rgba(255,255,255,0.07); border-color:rgba(16,185,129,0.35); }
+        .lib-item-active { background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.6); color:#ecfdf5; }
+        .chip { font-size:10px; letter-spacing:.03em; text-transform:capitalize; color:#a8a29e; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:999px; padding:3px 11px; cursor:pointer; transition:all .15s ease; }
+        .chip:hover { color:#e7e5e4; border-color:rgba(16,185,129,0.4); }
+        .chip-active { background:rgba(16,185,129,0.18); border-color:rgba(16,185,129,0.6); color:#ecfdf5; }
+        .seg { display:flex; flex-wrap:wrap; gap:4px; }
+        .seg-btn { font-size:11px; color:#d6d3cb; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:6px 10px; cursor:pointer; transition:all .15s ease; }
+        .seg-btn:hover { border-color:rgba(16,185,129,0.4); }
+        .seg-btn-active { background:rgba(16,185,129,0.18); border-color:rgba(16,185,129,0.6); color:#ecfdf5; }
         .slot-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
@@ -143,9 +157,10 @@
                     <p class="text-xs text-stone-400 font-light mt-1 mb-3">Choose from your library or drop your own loop:</p>
                     
                     <!-- Sound Library Dropdown -->
-                    <select id="library-select-1" class="bg-stone-900/80 border border-white/10 rounded-xl p-2.5 text-xs text-stone-300 w-full mb-3 focus:outline-none focus:border-emerald-500/40">
+                    <select id="library-select-1" class="hidden">
                         <option value="">[ Select Grounding Sound... ]</option>
                     </select>
+                    <div id="library-list-1" class="lib-list"></div>
 
                     <span class="text-[10px] text-stone-500 block text-center mb-1">- or import local file -</span>
 
@@ -178,9 +193,10 @@
                     <p class="text-xs text-stone-400 font-light mt-1 mb-3">Choose from your library or drop your own loop:</p>
                     
                     <!-- Sound Library Dropdown -->
-                    <select id="library-select-2" class="bg-stone-900/80 border border-white/10 rounded-xl p-2.5 text-xs text-stone-300 w-full mb-3 focus:outline-none focus:border-emerald-500/40">
+                    <select id="library-select-2" class="hidden">
                         <option value="">[ Select Texture Sound... ]</option>
                     </select>
+                    <div id="library-list-2" class="lib-list"></div>
 
                     <span class="text-[10px] text-stone-500 block text-center mb-1">- or import local file -</span>
 
@@ -213,9 +229,11 @@
                     <p class="text-xs text-stone-400 font-light mt-1 mb-3">Tonal samples that follow the chords via the Auto-Harmonizer:</p>
 
                     <!-- Sound Library Dropdown -->
-                    <select id="library-select-3" class="bg-stone-900/80 border border-white/10 rounded-xl p-2.5 text-xs text-stone-300 w-full mb-3 focus:outline-none focus:border-emerald-500/40">
+                    <select id="library-select-3" class="hidden">
                         <option value="">[ Select Melody Spark... ]</option>
                     </select>
+                    <div id="spark-tags" class="seg" style="margin-bottom:8px;"></div>
+                    <div id="library-list-3" class="lib-list"></div>
 
                     <!-- Harmonizer mode -->
                     <div class="flex justify-between items-center text-xs text-stone-400 bg-stone-950/40 p-2 rounded-xl border border-white/5 mb-1">
@@ -327,20 +345,22 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div class="flex flex-col gap-1 text-xs text-stone-400">
                     <span>Mode</span>
-                    <select id="entrain-mode" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                    <select id="entrain-mode" class="hidden">
                         <option value="off" selected>Off</option>
                         <option value="binaural">Binaural (headphones)</option>
                         <option value="isochronic">Isochronic (speakers OK)</option>
                     </select>
+                    <div id="entrain-mode-seg" class="seg"></div>
                 </div>
                 <div class="flex flex-col gap-1 text-xs text-stone-400">
                     <span>Brainwave band</span>
-                    <select id="entrain-band" class="bg-stone-900 border border-white/10 rounded-lg p-2 text-[11px] text-stone-300 focus:outline-none">
+                    <select id="entrain-band" class="hidden">
                         <option value="2.5">Delta · Deep sleep (2.5 Hz)</option>
                         <option value="6">Theta · Meditation (6 Hz)</option>
                         <option value="10" selected>Alpha · Relaxed (10 Hz)</option>
                         <option value="18">Beta · Focus (18 Hz)</option>
                     </select>
+                    <div id="entrain-band-seg" class="seg"></div>
                 </div>
                 <div class="flex flex-col gap-1 text-xs text-stone-400">
                     <span>Carrier (<span id="entrain-carrier-val">200</span> Hz)</span>
@@ -610,8 +630,9 @@
 
             // Handle Local File Drag & Drop / Selection
             slot.fileInput.addEventListener('change', (e) => {
-                // Clear dropdown visual selection when uploading custom file
+                // Clear library selection (dropdown + clickable list) on upload
                 slot.select.value = "";
+                if (typeof syncLibActive === 'function') syncLibActive(slot);
                 slot.baseKeyRoot = 7; // unknown key for custom uploads → assume G
                 handleFileSelect(slot, e.target.files[0]);
             });
@@ -2007,6 +2028,71 @@
         ===================================================================== */
         const LIBRARY_SLOT_CATEGORY = { 1: 'grounding', 2: 'texture', 3: 'sparks' };
 
+        // ---- Clickable sound lists (drive the hidden <select> so the audio
+        //      engine and Shuffle keep working unchanged) ----
+        const SPARK_TAGS = ['cinematic', 'grounded', 'etheral', 'deep', 'nostalgic', 'hopeful'];
+        const activeSparkTags = new Set();
+
+        function syncLibActive(slot) {
+            const list = document.getElementById('library-list-' + slot.id);
+            if (!list) return;
+            const cur = slot.select.value;
+            list.querySelectorAll('.lib-item').forEach(b => {
+                b.classList.toggle('lib-item-active', b.dataset.file === cur);
+            });
+        }
+
+        function renderSlotList(slot, items) {
+            const list = document.getElementById('library-list-' + slot.id);
+            if (!list) return;
+            list.innerHTML = '';
+            items.forEach(it => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'lib-item';
+                b.textContent = it.name;
+                b.dataset.file = './' + it.file;
+                if (it.tags && it.tags.length) b.dataset.tags = it.tags.join(',');
+                b.addEventListener('click', () => {
+                    initAudioContextOnInteraction();
+                    // Click the active one again to clear the slot.
+                    slot.select.value = (slot.select.value === b.dataset.file) ? '' : b.dataset.file;
+                    slot.select.dispatchEvent(new Event('change'));
+                });
+                list.appendChild(b);
+            });
+            syncLibActive(slot);
+        }
+
+        function renderSparkChips() {
+            const wrap = document.getElementById('spark-tags');
+            if (!wrap) return;
+            wrap.innerHTML = '';
+            SPARK_TAGS.forEach(tag => {
+                const c = document.createElement('button');
+                c.type = 'button';
+                c.className = 'chip' + (activeSparkTags.has(tag) ? ' chip-active' : '');
+                c.textContent = tag;
+                c.addEventListener('click', () => {
+                    if (activeSparkTags.has(tag)) activeSparkTags.delete(tag);
+                    else activeSparkTags.add(tag);
+                    c.classList.toggle('chip-active');
+                    applySparkFilter();
+                });
+                wrap.appendChild(c);
+            });
+        }
+
+        function applySparkFilter() {
+            const list = document.getElementById('library-list-3');
+            if (!list) return;
+            list.querySelectorAll('.lib-item').forEach(b => {
+                if (activeSparkTags.size === 0) { b.style.display = ''; return; }
+                const tags = (b.dataset.tags || '').split(',').filter(Boolean);
+                b.style.display = tags.some(t => activeSparkTags.has(t)) ? '' : 'none';
+            });
+        }
+
         async function loadLibrary() {
             try {
                 const res = await fetch('library.json', { cache: 'no-store' });
@@ -2027,7 +2113,13 @@
                         slot.select.appendChild(o);
                         total++;
                     });
+                    renderSlotList(slot, items);
                 });
+                renderSparkChips();
+                applySparkFilter();
+                // Keep the clickable highlight in sync with any value change
+                // (clicks, Shuffle, presets all dispatch 'change' on the select).
+                slots.forEach(s => s.select.addEventListener('change', () => syncLibActive(s)));
                 logMsg(`Sound library loaded: ${total} samples across ${Object.keys(lib).length} categories.`);
             } catch (e) {
                 logMsg(`Could not load library.json (${e.message}). Use the file-upload option in each slot instead.`, true);
@@ -2261,6 +2353,31 @@
                 entrainmentOut.gain.setTargetAtTime((entrainLevel.value / 100) * 0.4, audioCtx.currentTime, 0.1);
             }
         });
+
+        // ---- Toggle buttons for the entrainment dropdowns. They drive the
+        //      hidden <select> so the audio engine reads the same .value. ----
+        function buildSegFromSelect(selectId, segId) {
+            const sel = document.getElementById(selectId);
+            const seg = document.getElementById(segId);
+            if (!sel || !seg) return;
+            seg.innerHTML = '';
+            Array.from(sel.options).forEach(opt => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'seg-btn' + (opt.selected ? ' seg-btn-active' : '');
+                b.textContent = opt.textContent;
+                b.dataset.value = opt.value;
+                b.addEventListener('click', () => {
+                    sel.value = opt.value;
+                    seg.querySelectorAll('.seg-btn').forEach(x =>
+                        x.classList.toggle('seg-btn-active', x.dataset.value === sel.value));
+                    sel.dispatchEvent(new Event('change'));
+                });
+                seg.appendChild(b);
+            });
+        }
+        buildSegFromSelect('entrain-mode', 'entrain-mode-seg');
+        buildSegFromSelect('entrain-band', 'entrain-band-seg');
 
         /* =====================================================================
            LICENSE GATE — free demo caps exports at 60s; a valid Gumroad key
