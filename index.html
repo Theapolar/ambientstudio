@@ -1182,34 +1182,36 @@
             function driftMix() {
                 if (!isPlaying || !isDrifting) return;
                 
-                logMsg("Intelligent Remixer calculating new acoustic parameters...");
-                
+                logMsg("Auto-Drift: gently breathing the levels around your mix...");
+
+                // Drift each layer GENTLY within a band anchored to the level
+                // YOU set (read live from the slider). Target = 60–100% of your
+                // level, so a layer only ever dips and recovers — never louder
+                // than you dialed it, and your slider/balance is left untouched.
                 slots.forEach(slot => {
-                    if (slot.audioBuffer) {
-                        const now = audioCtx.currentTime;
-                        const randomTarget = 0.15 + (Math.random() * 0.65);
-                        const fadeDuration = 10 + (Math.random() * 15);
-                        
-                        logMsg("Remixer drifting Slot " + slot.id + " volume to " + Math.round(randomTarget*100) + "% over " + Math.round(fadeDuration) + "s...");
-                        
-                        slot.volSlider.value = Math.round(randomTarget * 100);
-                        slot.volVal.innerText = `${Math.round(randomTarget * 100)}%`;
-                        
-                        slot.gainNode.gain.setValueAtTime(slot.gainNode.gain.value, now);
-                        slot.gainNode.gain.exponentialRampToValueAtTime(randomTarget, now + fadeDuration);
-                    }
+                    if (!slot.audioBuffer || !slot.gainNode) return;
+                    const anchor = slot.volSlider.value / 100;
+                    if (anchor <= 0) return; // muted by you — leave it silent
+                    const now = audioCtx.currentTime;
+                    const target = anchor * (0.6 + Math.random() * 0.4);
+                    const fadeDuration = 14 + (Math.random() * 16); // 14–30s, slow
+                    const startVal = Math.max(slot.gainNode.gain.value, 0.0001);
+                    slot.gainNode.gain.cancelScheduledValues(now);
+                    slot.gainNode.gain.setValueAtTime(startVal, now);
+                    slot.gainNode.gain.exponentialRampToValueAtTime(Math.max(target, 0.0001), now + fadeDuration);
                 });
-                
-                // Drift pad
-                const now = audioCtx.currentTime;
-                const randomSynthTarget = 0.3 + (Math.random() * 0.5);
-                const fadeDurationSynth = 12 + (Math.random() * 12);
-                logMsg(`Remixer drifting Synth Pad volume to ${Math.round(randomSynthTarget*100)}%...`);
-                volSynthSlider.value = Math.round(randomSynthTarget * 100);
-                valSynthText.innerText = `${Math.round(randomSynthTarget * 100)}%`;
-                
-                synthGainNode.gain.setValueAtTime(synthGainNode.gain.value, now);
-                synthGainNode.gain.exponentialRampToValueAtTime(randomSynthTarget, now + fadeDurationSynth);
+
+                // Drift the synth pad the same way, anchored to its slider.
+                const synthAnchor = volSynthSlider.value / 100;
+                if (synthGainNode && synthAnchor > 0) {
+                    const now = audioCtx.currentTime;
+                    const synthTarget = synthAnchor * (0.6 + Math.random() * 0.4);
+                    const fadeDurationSynth = 16 + (Math.random() * 14);
+                    const sStart = Math.max(synthGainNode.gain.value, 0.0001);
+                    synthGainNode.gain.cancelScheduledValues(now);
+                    synthGainNode.gain.setValueAtTime(sStart, now);
+                    synthGainNode.gain.exponentialRampToValueAtTime(Math.max(synthTarget, 0.0001), now + fadeDurationSynth);
+                }
             }
             
             driftMix();
@@ -1517,11 +1519,12 @@
                 const lvl = slot.volSlider.value / 100;
                 g.gain.setValueAtTime(lvl, 0);
 
-                // Auto-Drift volume automation (deterministic per render)
-                if (useDrift) {
+                // Auto-Drift volume automation — gentle dips anchored to the
+                // set level (60–100% of it), matching live playback.
+                if (useDrift && lvl > 0) {
                     for (let t = DRIFT_STEP; t < duration; t += DRIFT_STEP) {
-                        const tgt = 0.15 + Math.random() * 0.65;
-                        const fade = 10 + Math.random() * 15;
+                        const tgt = lvl * (0.6 + Math.random() * 0.4);
+                        const fade = 14 + Math.random() * 16;
                         g.gain.linearRampToValueAtTime(tgt, Math.min(duration, t + fade));
                     }
                 }
@@ -1558,11 +1561,12 @@
                 src.stop(duration);
             });
 
-            // Drift the pad too
-            if (useDrift) {
+            // Drift the pad too — anchored to its set level (60–100%).
+            const synthLvl = volSynthSlider.value / 100;
+            if (useDrift && synthLvl > 0) {
                 for (let t = DRIFT_STEP; t < duration; t += DRIFT_STEP) {
-                    const tgt = 0.3 + Math.random() * 0.5;
-                    const fade = 12 + Math.random() * 12;
+                    const tgt = synthLvl * (0.6 + Math.random() * 0.4);
+                    const fade = 16 + Math.random() * 14;
                     synthGain.gain.linearRampToValueAtTime(tgt, Math.min(duration, t + fade));
                 }
             }
