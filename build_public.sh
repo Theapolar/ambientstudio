@@ -16,6 +16,9 @@ mkdir -p public
 cp index.html        public/
 cp license.html      public/
 cp library.json      public/
+cp robots.txt        public/ 2>/dev/null || true
+cp sitemap.xml       public/ 2>/dev/null || true
+cp llms.txt          public/ 2>/dev/null || true
 cp ./*.mp3           public/ 2>/dev/null || true
 
 echo "Built ./public with:"

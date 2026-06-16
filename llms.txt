@@ -1,0 +1,35 @@
+# Ambient Soundscape Studio
+
+> A browser-based studio (by PineDesign Studios) for building meditation and ambient soundscapes and exporting them as royalty-free audio. No install or account needed — it runs entirely in the browser. Free to try; a one-time license unlocks full-length exports.
+
+Ambient Soundscape Studio lets anyone compose a personal, evolving soundscape by layering sounds and shaping them in real time, then render the result to a downloadable audio file of any length (great for meditation, sleep, focus, yoga, study, streaming backgrounds, and content creators who need royalty-free ambience).
+
+## What it does
+
+- **Three sound layers**: Grounding (nature beds — rain, ocean, wind, crickets), Texture (ASMR and atmospheres — fireplace, white noise, crackles), and tonal "Sparks" (pads, organs, flutes, strings) you pick from a built-in library or by uploading your own loop.
+- **Self-tuning pads**: generative 432 Hz / 528 Hz / 440 Hz ambient pads with selectable timbre and movement, and an auto-harmonizer that keeps tonal layers in key.
+- **Tag filtering**: tonal sounds are tagged (cinematic, grounded, ethereal, deep, nostalgic, hopeful) for quick browsing.
+- **Brainwave entrainment**: optional binaural beats (headphones) or isochronic tones (speakers) across Delta, Theta, Alpha, and Beta bands, with adjustable carrier and level.
+- **Gentle pulses and interval bells** for rhythm and time markers.
+- **Auto-Drift**: slowly breathes the layer volumes around the mix you set, so long sessions stay alive without drifting too loud.
+- **Export**: render the live mix to royalty-free WAV (lossless) or MP3 at any session length (1 minute to 60 minutes).
+
+## How it works
+
+The app runs client-side using the Web Audio API. You start the soundstage, choose and balance layers, optionally add entrainment, pulses, or bells, then export. The free version exports a 60-second preview; entering a valid license key unlocks full-length exports.
+
+## Use cases
+
+- Personalized meditation, sleep, and relaxation tracks
+- Focus / study / deep-work background sound
+- Royalty-free ambience for video, streams, and podcasts
+- Yoga, massage, and therapy session backdrops
+
+## Links
+
+- App: https://pinedesignstudio.netlify.app/
+- License terms: https://pinedesignstudio.netlify.app/license.html
+
+## Maker
+
+PineDesign Studios. Exported audio is royalty-free for the buyer to use in personal and commercial projects (see the license page for details).
