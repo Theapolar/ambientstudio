@@ -19,6 +19,7 @@ cp library.json      public/
 cp robots.txt        public/ 2>/dev/null || true
 cp sitemap.xml       public/ 2>/dev/null || true
 cp llms.txt          public/ 2>/dev/null || true
+cp google*.html      public/ 2>/dev/null || true   # Google Search Console verification file
 cp ./*.mp3           public/ 2>/dev/null || true
 
 echo "Built ./public with:"
