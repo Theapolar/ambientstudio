@@ -20,6 +20,9 @@ cp robots.txt        public/ 2>/dev/null || true
 cp sitemap.xml       public/ 2>/dev/null || true
 cp llms.txt          public/ 2>/dev/null || true
 cp google*.html      public/ 2>/dev/null || true   # Google Search Console verification file
+cp favicon-32.png    public/ 2>/dev/null || true   # served favicon (1024 favicon.png kept in repo as source only)
+cp apple-touch-icon.png public/ 2>/dev/null || true
+cp og-image.png      public/ 2>/dev/null || true   # social link preview image
 cp ./*.mp3           public/ 2>/dev/null || true
 
 echo "Built ./public with:"
