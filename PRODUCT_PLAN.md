@@ -6,7 +6,7 @@
 > licensed app (free demo + paid unlock via Gumroad), with add-on sample/preset packs,
 > alongside the existing Etsy meditation-music packs.
 
-_Last updated: 2026-06-03_
+_Last updated: 2026-07-15_
 
 > **See also:** `STRATEGY_AND_BUILD_PLAN.md` (2026-07-05) — market positioning review
 > (creator tool, not consumer app), differentiators, UX direction, and the current
@@ -17,7 +17,9 @@ _Last updated: 2026-06-03_
 
 ## 1. Where it runs (today)
 
-- **Source of truth:** `~/Ambient_Studio/index.html` (single file, Web Audio API, Tailwind CDN, no build step).
+- **Source of truth:** `~/Ambient_Studio/` (static Web Audio app, Tailwind CDN, no build step).
+  `index.html` retains the audio/render engine; the guided setup and workspace layout are
+  split into `studio-ui.js`, `workspace-layout.js`, `session-presets.js`, and `studio-ui.css`.
 - **Always-on locally:** systemd user service `ambient-studio.service` → `python http.server :8000` from this folder.
   - Reach it at: LAN `http://10.0.0.50:8000`, Tailscale `http://100.116.232.18:8000`, or SSH tunnel.
   - Edits to `index.html` appear on browser refresh — no restart needed.
@@ -30,6 +32,16 @@ _Last updated: 2026-06-03_
 ---
 
 ## 2. Done so far ✅
+
+- **Outcome-first redesign (2026-07-15):** new-session wizard asks for session type,
+  duration, and feeling before revealing a four-step workspace: Narration, Soundscape,
+  Session Moments, and Save/Export. Includes responsive/sticky navigation, plain-language
+  labels, and progressive disclosure for specialist pad controls.
+- **Curated starting soundscapes (2026-07-15):** five session profiles × four mood palettes
+  configure compatible sample pools, levels, pad motion/timbre, tones, pulse, bells,
+  narration ducking, fades, and Auto-Drift. “Another curated variation” stays within the
+  chosen palette; unrestricted Shuffle remains available. Sleep textures are restricted
+  to Soft White Noise, Underwater, or Fireplace. All 20 combinations browser-tested.
 
 - **Core engine:** 3 sample slots (Grounding / Texture / Sparks) + procedural 432Hz synth-pad floor.
 - **Auto-Harmonizer:** pitch-tracks the tonal Sparks slot across a G→C→Em→D progression.

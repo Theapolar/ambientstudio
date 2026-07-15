@@ -118,6 +118,10 @@
 #card-narration { border-color: rgba(52, 211, 153, .24); background: linear-gradient(145deg, rgba(16, 185, 129, .07), rgba(255,255,255,.025)); }
 #studio-transport { margin-top: 0; }
 #studio-shuffle { margin-top: -.4rem; }
+.curated-variation { display: flex; align-items: center; justify-content: center; gap: .75rem; margin-top: -.55rem; }
+.curated-variation button { color: #6ee7b7; border: 1px solid rgba(52,211,153,.28); border-radius: 999px; font-size: .7rem; padding: .55rem .85rem; transition: background .15s ease, border-color .15s ease; }
+.curated-variation button:hover { background: rgba(16,185,129,.1); border-color: rgba(52,211,153,.55); }
+.curated-variation span { color: #57534e; font-size: .62rem; }
 .moment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 #card-entrainment { grid-column: 1 / -1; }
 
@@ -139,6 +143,7 @@
     .workspace-nav { justify-content: flex-start; width: 100%; }
     .moment-grid { grid-template-columns: 1fr; }
     #card-entrainment { grid-column: auto; }
+    .curated-variation { flex-direction: column; gap: .35rem; text-align: center; }
 }
 
 @media (max-width: 430px) {

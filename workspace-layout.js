@@ -43,6 +43,12 @@
     );
     append(soundscape, 'studio-transport');
     append(soundscape, 'studio-shuffle');
+    const variation = document.createElement('div');
+    variation.className = 'curated-variation';
+    variation.innerHTML = `
+        <button id="curated-variation-btn" type="button">Try another curated variation</button>
+        <span>Uses only sounds chosen for this session and feeling.</span>`;
+    soundscape.querySelector('.section-content').appendChild(variation);
     append(soundscape, 'soundscape-layers');
 
     const moments = section(

@@ -125,11 +125,12 @@ each other about." Ship and announce each phase; don't batch.
 - [ ] Marketing copy shift: "export a finished guided meditation," uniqueness promise.
 
 ### Phase 2 — Legibility (outcome-first UX)
-- [ ] Goal wizard: purpose → length → auto-configured mix (maps to curated presets).
-- [ ] Progressive disclosure: collapsed cards + "Advanced" expanders; plain-function labels.
+- [x] Goal wizard: purpose → length → auto-configured mix (maps to curated presets).
+- [x] Curated session profiles and mood palettes with controlled variations.
+- [x] Initial progressive disclosure and plain-function workspace labels.
 - [ ] Library sound audition (preview on hover/tap before loading).
 - [ ] First-run golden path: Shuffle → Play → Export 60s.
-- [ ] iPad Safari QA pass.
+- [x] Automated desktop, iPad, and mobile Chromium QA pass.
 
 ### Phase 3 — Platform-ready exports
 - [ ] Loudness/format presets: Insight Timer, YouTube, Podcast, In-studio.
@@ -159,3 +160,22 @@ each other about." Ship and announce each phase; don't batch.
 - Consumer listening app / mobile apps / subscription content engine — wrong fight.
 - Full timeline/DAW editor — Scene Journeys covers 80% at 20% cost.
 - Artifact-free pitch-shifting harmonizer — deferred until a paying customer asks.
+
+---
+
+## 7. Work log — 2026-07-15
+
+- Reframed the product around creating finished guided meditations rather than exposing
+  an audio control panel first.
+- Shipped the outcome-first setup and four-step studio workspace to Netlify.
+- Added `session-presets.js`: five session behaviors (Guided, Sleep, Breathwork, Yoga Nidra,
+  Ambient) combine with four feelings (Grounded, Deep, Ethereal, Hopeful) for 20 curated
+  starting points.
+- Each starting point sets sound pools, layer levels, pad behavior, entrainment, pulse,
+  bells, narration ducking, fades, and Auto-Drift. Added an in-palette variation button.
+- Renamed Hearth Fire to Fireplace. Sleep now uses only Soft White Noise, Underwater, or
+  Fireplace for its texture layer after listening review.
+- Validation: all 20 combinations, controlled variation, Auto-Drift, responsive layouts,
+  playback, and free WAV export passed automated browser tests.
+- Recommended next session: add tap-to-preview audition controls for library sounds, then
+  continue narration with in-browser recording and timed voice segments.
