@@ -56,6 +56,7 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="studio-ui.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
         body {
@@ -100,19 +101,77 @@
 <body class="flex flex-col items-center justify-center min-h-screen text-slate-200 py-12 px-4 select-none">
 
     <!-- App Container -->
-    <div class="max-w-2xl w-full flex flex-col space-y-10 z-10">
+    <div class="studio-shell w-full flex flex-col space-y-10 z-10">
         
         <!-- Header -->
         <div class="text-center space-y-3">
             <span class="text-xs tracking-[0.3em] text-emerald-500 uppercase font-semibold">PineDesign Studios</span>
-            <h1 class="text-4xl font-light tracking-wide text-stone-100">Ambient Soundscape Studio</h1>
+            <h1 class="text-4xl font-light tracking-wide text-stone-100">Create a guided meditation that sounds like you</h1>
             <p class="text-sm text-stone-400 font-light max-w-md mx-auto">
-                Build endless meditation &amp; ambient soundscapes — layer nature and ASMR textures over self-tuning 432Hz pads, add binaural beats, gentle pulses and bells, then export royalty-free tracks at any session length.
+                Bring your voice, choose a feeling, and shape an original soundscape from hand-crafted recordings. Ambient Studio handles the music, gentle ducking, bells, fades and export.
             </p>
         </div>
 
+        <!-- Outcome-first session setup. The existing studio remains available below. -->
+        <section id="session-setup" class="session-setup slot-card rounded-3xl p-6 sm:p-8" aria-labelledby="session-setup-title">
+            <div class="flex items-start justify-between gap-5 mb-7">
+                <div>
+                    <span class="eyebrow">New session</span>
+                    <h2 id="session-setup-title" class="text-2xl text-stone-100 font-light mt-2">What would you like to create?</h2>
+                    <p class="text-sm text-stone-400 mt-2">We’ll prepare a calm starting mix. You can change every detail in the studio.</p>
+                </div>
+                <span class="step-badge">1 minute setup</span>
+            </div>
+
+            <fieldset class="setup-group">
+                <legend>Session type</legend>
+                <div class="choice-grid choice-grid-wide" data-choice-group="session-type">
+                    <button type="button" class="setup-choice is-selected" data-value="guided" aria-pressed="true"><span>Guided meditation</span><small>Voice, music and automatic ducking</small></button>
+                    <button type="button" class="setup-choice" data-value="sleep" aria-pressed="false"><span>Sleep journey</span><small>Deep, slow and softly evolving</small></button>
+                    <button type="button" class="setup-choice" data-value="breathwork" aria-pressed="false"><span>Breathwork</span><small>Grounded with a gentle pulse</small></button>
+                    <button type="button" class="setup-choice" data-value="yoga" aria-pressed="false"><span>Yoga nidra</span><small>Spacious, warm and immersive</small></button>
+                    <button type="button" class="setup-choice" data-value="ambient" aria-pressed="false"><span>Ambient background</span><small>Music without narration</small></button>
+                </div>
+            </fieldset>
+
+            <div class="setup-columns">
+                <fieldset class="setup-group">
+                    <legend>Length</legend>
+                    <div class="choice-grid" data-choice-group="session-length">
+                        <button type="button" class="setup-choice compact" data-value="300" aria-pressed="false"><span>5 min</span></button>
+                        <button type="button" class="setup-choice compact is-selected" data-value="600" aria-pressed="true"><span>10 min</span></button>
+                        <button type="button" class="setup-choice compact" data-value="1200" aria-pressed="false"><span>20 min</span></button>
+                        <button type="button" class="setup-choice compact" data-value="1800" aria-pressed="false"><span>30 min</span></button>
+                    </div>
+                </fieldset>
+                <fieldset class="setup-group">
+                    <legend>Feeling</legend>
+                    <div class="choice-grid" data-choice-group="session-mood">
+                        <button type="button" class="setup-choice compact is-selected" data-value="grounded" aria-pressed="true"><span>Grounded</span></button>
+                        <button type="button" class="setup-choice compact" data-value="deep" aria-pressed="false"><span>Deep</span></button>
+                        <button type="button" class="setup-choice compact" data-value="ethereal" aria-pressed="false"><span>Ethereal</span></button>
+                        <button type="button" class="setup-choice compact" data-value="hopeful" aria-pressed="false"><span>Hopeful</span></button>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="setup-actions">
+                <button id="create-session-btn" type="button" class="primary-action">Create my starting soundscape <span aria-hidden="true">→</span></button>
+                <button id="skip-setup-btn" type="button" class="quiet-action">Open the full studio</button>
+            </div>
+        </section>
+
+        <div id="studio-workspace" class="studio-workspace" hidden>
+            <div class="workspace-heading">
+                <div>
+                    <span class="eyebrow">Your session</span>
+                    <h2 id="workspace-title" class="text-2xl text-stone-100 font-light mt-1">Guided meditation · 10 minutes</h2>
+                </div>
+                <button id="change-session-btn" type="button" class="quiet-action">Change setup</button>
+            </div>
+
         <!-- Master Play and Intelligent Drift Buttons -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div id="studio-transport" class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <!-- Master Play Button -->
             <button id="master-play" class="w-full sm:w-auto px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold tracking-wide flex items-center justify-center gap-3 shadow-lg transition-all duration-300 hover:scale-102 active:scale-98">
                 <svg id="play-icon" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -131,7 +190,7 @@
         </div>
 
         <!-- Surrender & Shuffle -->
-        <div class="flex justify-center -mt-4">
+        <div id="studio-shuffle" class="flex justify-center -mt-4">
             <button id="shuffle-btn" class="px-7 py-3 rounded-full bg-gradient-to-r from-emerald-600/80 to-teal-600/80 hover:from-emerald-500 hover:to-teal-500 text-white font-medium tracking-wide flex items-center justify-center gap-2.5 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95">
                 <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
                 <span>Surrender &amp; Shuffle</span>
@@ -139,16 +198,16 @@
         </div>
 
         <!-- The 3 Dynamic Slots + Synth Pad -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div id="soundscape-layers" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             <!-- SLOT 0: Customizable Synth Pad -->
-            <div class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4 slot-active">
+            <div id="card-synth" class="slot-card rounded-2xl p-6 flex flex-col justify-between space-y-4 slot-active">
                 <div>
                     <div class="flex justify-between items-start">
-                        <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Acoustic Floor</span>
+                        <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Background Pad</span>
                         <span id="tuning-label" class="text-xs text-stone-500">432Hz</span>
                     </div>
-                    <h3 class="text-lg font-normal text-stone-200 mt-2">Harmonic Floor Swells</h3>
+                    <h3 class="text-lg font-normal text-stone-200 mt-2">Warm Background Pad</h3>
                     <p class="text-xs text-stone-400 font-light mt-1 mb-3">Generates procedural background pads in real-time to bind your soundstage together.</p>
 
                     <!-- Synth Control Inputs -->
@@ -321,7 +380,7 @@
         </div>
 
         <!-- ============ PULSE / SUB-BASS RHYTHM ============ -->
-        <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+        <div id="card-pulse" class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
             <div class="flex justify-between items-start gap-4">
                 <div>
                     <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Pulse Engine</span>
@@ -351,7 +410,7 @@
         </div>
 
         <!-- ============ SESSION BELLS ============ -->
-        <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+        <div id="card-bells" class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
             <div>
                 <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Session Bells</span>
                 <h3 class="text-lg font-normal text-stone-200 mt-2">Bells &amp; Timing</h3>
@@ -386,9 +445,9 @@
         </div>
 
         <!-- ============ BRAINWAVE ENTRAINMENT (BINAURAL / ISOCHRONIC) ============ -->
-        <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+        <div id="card-entrainment" class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
             <div>
-                <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Entrainment</span>
+                <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Focus &amp; Meditation Tones</span>
                 <h3 class="text-lg font-normal text-stone-200 mt-2">Binaural &amp; Isochronic Tones</h3>
                 <p class="text-xs text-stone-400 font-light mt-1">Subtle pure tones tuned to brainwave rhythms, layered beneath the mix. Many find them deeply settling.</p>
             </div>
@@ -425,7 +484,7 @@
         </div>
 
         <!-- ============ VOICE-OVER (GUIDED NARRATION) ============ -->
-        <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
+        <div id="card-narration" class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
             <div>
                 <span class="text-[10px] tracking-widest text-emerald-400 uppercase font-bold">Narration</span>
                 <h3 class="text-lg font-normal text-stone-200 mt-2">Voice-over</h3>
@@ -456,7 +515,7 @@
         </div>
 
         <!-- ============ STUDIO EXPORTS & PRESETS ============ -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div id="studio-exports" class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <!-- Render / Export Panel -->
             <div class="slot-card rounded-2xl p-6 flex flex-col space-y-4">
@@ -564,6 +623,8 @@
             <strong class="text-stone-300">Intelligent Studio Console:</strong>
             <div id="console-text" class="text-emerald-500 mt-1">Console online. Select a built-in loop, or drop your own, then start the soundstage...</div>
         </div>
+
+        </div><!-- /studio-workspace -->
 
         <!-- Footer -->
         <footer class="text-center text-[11px] text-stone-500 pt-2 pb-1 space-x-3">
@@ -2671,5 +2732,7 @@
             }
         })();
     </script>
+    <script src="studio-ui.js"></script>
+    <script src="workspace-layout.js"></script>
 </body>
 </html>

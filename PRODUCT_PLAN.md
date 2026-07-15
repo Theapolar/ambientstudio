@@ -8,6 +8,11 @@
 
 _Last updated: 2026-06-03_
 
+> **See also:** `STRATEGY_AND_BUILD_PLAN.md` (2026-07-05) — market positioning review
+> (creator tool, not consumer app), differentiators, UX direction, and the current
+> prioritized build plan. That doc now leads on *what to build next*; this one remains
+> the engineering log + licensing/GTM detail.
+
 ---
 
 ## 1. Where it runs (today)

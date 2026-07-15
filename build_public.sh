@@ -14,6 +14,9 @@ rm -rf public
 mkdir -p public
 
 cp index.html        public/
+cp studio-ui.css     public/
+cp studio-ui.js      public/
+cp workspace-layout.js public/
 cp license.html      public/
 cp library.json      public/
 cp robots.txt        public/ 2>/dev/null || true
